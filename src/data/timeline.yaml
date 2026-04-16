@@ -750,17 +750,17 @@ presentation:
         - type: quote
           id: steve-say-no-with-data
           modalStep:
-            name: "The offsite turns no into a leadership duty"
+            name: "Steve calls the meeting the morning after his call with Bill"
             script: >-
-              Back at the offsite, Steve makes the change public. He admits he was wrong,
-              says he made the IT problems worse, and starts rebuilding trust with the team.
-              Only after that does Bill make the deeper case that IT has been acting like
-              compliant order takers, accepting work without proving it can be delivered.
-              Steve's answer is that leaders are supposed to say no when the system cannot
-              carry more load, but that no has to be backed by real demand-and-capacity
-              data. Erik then makes the test concrete: before accepting work, ask whether it
-              increases the flow of project work through IT, whether it improves operational
-              stability or recovery time, and whether it increases capacity at the bottleneck.
+              The next morning Bill drives into work for what Steve is calling an off-site,
+              even though the meeting is in Building 2's corporate boardroom. Chris, Wes,
+              and Patty are already there. John arrives late — Steve had forgotten to invite
+              him. Before any business is discussed, Steve asks everyone to share something
+              from their personal history. The room goes quiet. Then Chris goes first, then
+              Wes, then Patty, then Bill. By the time Bill finishes, he is crying for the
+              first time in thirty years. What Steve is doing is creating the foundation of
+              trust the team has never had. Only after that does the real conversation about
+              IT commitments, capacity, and demand begin.
           globalStep:
             name: "Capacity planning becomes the basis for commitment"
             script: >-
@@ -776,14 +776,14 @@ presentation:
           modalStep:
             name: "The project freeze"
             script: >-
-              Steve pulls the senior leadership group into an offsite, with Bill, Dick,
-              Sarah, John, and the other leaders who have been battering one another over
-              Phoenix finally forced to sit in the same room and talk honestly. The team
-              becomes honest with one another in a way it never has before. Personal stories
-              get told. Trust starts to form. And when they come out, they announce a project
-              freeze: stop launching more work until the system can actually finish what it
-              has already started and build the data needed to judge future commitments
-              rationally.
+              Once the trust is in the room, the honest business conversation can happen.
+              Bill lays out the full picture: thirty-five business projects, seventy-five
+              ops projects, thousands of changes in the backlog, and an ever-growing pile
+              of unplanned work, all competing for the same constrained people. The team
+              is way over capacity and nobody has been saying so out loud. The decision that
+              comes out of the meeting is a project freeze: stop launching new work until
+              the system can actually finish what it has already started, and build the data
+              needed to make rational commitments in future.
           globalStep:
             name: "Stopping becomes the first real systems decision"
             script: >-
