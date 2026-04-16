@@ -1243,7 +1243,7 @@ presentation:
             name: "Failure becomes a teacher"
             script: >-
               A deep cultural shift is underway. Failure stops being something to hide and starts
-              becoming something the team studies and learns from.
+              becoming something the team studies and learns from. That is the heart of the Third Way.
 
         - type: concept
           id: third-way
@@ -1310,9 +1310,30 @@ presentation:
       end: "60:00"
       phase: outro
       pageScript: >-
-        By the end, the problem is no longer just servers, tickets, or org charts. It is
-        the system underneath them: the flow of work, the constraint, the feedback loops,
-        and the culture that determines whether people can improve it. Bill Palmer begins as
-        a reluctant manager trying to survive the week. He ends understanding how the
-        business actually runs.
+        Bill starts with what looks like three separate disasters: payroll chaos, Phoenix
+        turmoil, and a crushing audit. By the end, it is clear they were all symptoms of the
+        same deeper problem. Work was invisible, commitments outran capacity, handoffs hid
+        delay, Brent carried too much of the system in his head, and feedback arrived only
+        after the damage was already done. What Erik keeps forcing into view is that the real
+        battleground is not one outage or one project. It is the flow of work through the
+        whole system.
+
+        That is the path Bill walks across the entire timeline. First he learns to see the
+        work, the overload, and the constraint. Then he learns that quality depends on
+        faster feedback, shorter loops, and understanding where the business actually relies
+        on a control. Finally he learns that high performance requires practice,
+        experimentation, automation, and the courage to keep improving under real pressure.
+        The lessons are simple to say and hard to live: make work visible, protect the
+        bottleneck, reduce batch size, shorten feedback loops, and build a culture that can
+        learn faster than problems can spread.
+
+        Parts Unlimited changes because IT changes. It stops acting like a separate service
+        organization that the business visits only when something breaks. It becomes a core
+        business capability that can deploy safely, test ideas in the market, harden systems,
+        and help set direction. Unicorn proves that technology can create revenue, not just
+        cost. Narwhal and the MRP fight prove the work is not finished, but the future is no
+        longer about surviving the next outage. It is about integrating technology and
+        business so tightly that Parts Unlimited can keep learning, keep adapting, and keep
+        winning. Bill begins the story trying to survive the week. He ends it being prepared
+        to help lead what comes next.
       reveals: []

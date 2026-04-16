@@ -64,26 +64,6 @@ challenges:
     severity: critical
     color: "#ef4444"
 
-  - id: bottleneck-people
-    title: "People as Bottlenecks"
-    subtitle: "Key experts overwhelmed"
-    segment: segment-2
-    description: "A few critical experts (like Brent) become the constraint for the entire organization. Every major task requires their involvement, creating an impossible queue of work waiting for their attention."
-    impact: "The organization's throughput is limited to the capacity of its most constrained resource."
-    icon: "user-x"
-    severity: critical
-    color: "#8b5cf6"
-
-  - id: missed-deadlines
-    title: "Missed Deadlines"
-    subtitle: "Consistent failure to deliver on time"
-    segment: segment-2
-    description: "Despite heroic effort, deadlines are missed consistently. The team works overtime, weekends, and holidays, but the gap between commitments and capacity is too large to close with effort alone."
-    impact: "Business trust erodes further. 'Death march' culture leads to burnout and turnover."
-    icon: "clock"
-    severity: high
-    color: "#f43f5e"
-
   - id: value-blind-staffing
     title: "Staffing Looks Like Cost"
     subtitle: "IT is judged by expense before value"
@@ -93,6 +73,16 @@ challenges:
     icon: "badge-dollar-sign"
     severity: high
     color: "#6366f1"
+
+  - id: bottleneck-people
+    title: "People as Bottlenecks"
+    subtitle: "Key experts overwhelmed"
+    segment: segment-2
+    description: "A few critical experts (like Brent) become the constraint for the entire organization. Every major task requires their involvement, creating an impossible queue of work waiting for their attention."
+    impact: "The organization's throughput is limited to the capacity of its most constrained resource."
+    icon: "user-x"
+    severity: critical
+    color: "#8b5cf6"
 
   - id: task-switching
     title: "Constant Task Switching"
@@ -114,6 +104,16 @@ challenges:
     severity: high
     color: "#eab308"
 
+  - id: missed-deadlines
+    title: "Missed Deadlines"
+    subtitle: "Consistent failure to deliver on time"
+    segment: segment-2
+    description: "Despite heroic effort, deadlines are missed consistently. The team works overtime, weekends, and holidays, but the gap between commitments and capacity is too large to close with effort alone."
+    impact: "Business trust erodes further. 'Death march' culture leads to burnout and turnover."
+    icon: "clock"
+    severity: high
+    color: "#f43f5e"
+
   - id: incomplete-changes
     title: "Changes Go In, Never Come Out"
     subtitle: "Scheduled work stalls in the system"
@@ -127,7 +127,7 @@ challenges:
   # Segment 3: Bottlenecks and Flow
   - id: business-pressure
     title: "Business Pressure Overrides Readiness"
-    subtitle: "Market promises turn Phoenix into a forced launch"
+    subtitle: "Promises turn Phoenix into a forced launch"
     segment: segment-3
     description: "Competition, slipping market share, board scrutiny, analyst expectations, and Sarah's constant escalation turn Phoenix into more than a project. Meanwhile Brent keeps getting pulled between outages and Phoenix prep, development still cannot hand over a clean operating plan, and Operations is asked to support a launch it has barely been allowed to prepare for. Even so, Steve and Sarah still lock in the date."
     impact: "Operational warnings are treated as hesitation, critical preparation gets starved by competing priorities, and the launch date becomes a business promise long before the system is actually ready to carry it."
@@ -137,7 +137,7 @@ challenges:
 
   - id: deployment-chaos
     title: "Deployment Chaos"
-    subtitle: "Go-live begins with missing files, bad versions, and no stable test run"
+    subtitle: "Go-live begins without end-to-end testing"
     segment: segment-3
     description: "By Friday evening, the deployment has technically started but nobody can run it cleanly. QA cannot get Phoenix to pass smoke tests, developers keep sending partial fixes and changing versions midstream, Operations is still discovering missing files and firewall requirements, and every team is learning critical deployment facts during the rollout instead of before it."
     impact: "The launch becomes a death march before the true point of no return is even reached. Fatigue rises, coordination collapses, and the company burns hours discovering basics that should have been settled days or weeks earlier."
@@ -147,7 +147,7 @@ challenges:
 
   - id: irreversible-rollout
     title: "Point Of No Return"
-    subtitle: "The database conversion commits the business to a bad launch"
+    subtitle: "Untested migrations create a launch trap"
     segment: segment-3
     description: "Bill can still stop Phoenix until the overnight database conversion begins. Once the conversion starts, the rollout cannot be cleanly stopped or restarted. When that process crawls and the POS systems depend on it to come back up, the company is trapped inside a launch it should never have crossed into."
     impact: "From that moment on, the business can only fail forward. Stores, customers, and Finance are now hostage to the outcome of a rollout that no longer has a safe exit."
@@ -157,7 +157,7 @@ challenges:
 
   - id: ground-floor-disconnect
     title: "Ground-Floor Reality Gets Ignored"
-    subtitle: "Store operations absorb the cost of a bad launch"
+    subtitle: "Store operations pay for IT's failures"
     segment: segment-3
     description: "After the overnight rollout crosses the point of no return, Saturday morning lands on store staff and customers. With POS systems down, stores fall back to manual tills, manual card swipes, shoeboxes full of carbon-copy receipts, emergency trips for change supplies, and frantic calls into IT from around 120 stores. The launch decision was made far above the ground floor, but the damage is felt immediately by the people trying to serve customers."
     impact: "The core operational lesson becomes visible: IT systems are not back-office abstractions. When they fail, frontline work breaks, customers wait, and the business literally cannot transact normally."
@@ -167,7 +167,7 @@ challenges:
 
   - id: order-integrity-collapse
     title: "Order Integrity Collapses In Public"
-    subtitle: "Missing orders, duplicate charges, and a security breach"
+    subtitle: "Missing orders, extra charges, and a breach"
     segment: segment-3
     description: "The Phoenix failure is not just slowness. Orders go missing, some customers are double- or triple-charged, Finance has to open another war room to process faxed problem orders, and the website eventually leaks customer credit card numbers when sessions crash. What began as a go-live turns into a public fiasco with security, finance, operations, and customer trust all breaking at once."
     impact: "Customer trust is damaged, reconciliation work explodes, journalists and social media amplify the failure, and the company is forced into costly remediation while normal business operations remain unstable."
