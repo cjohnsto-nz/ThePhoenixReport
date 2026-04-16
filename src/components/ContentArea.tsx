@@ -123,6 +123,13 @@ export function ContentArea() {
     () => challengesData.challenges.filter((challenge) => currentSegmentRevealIds.has(challenge.id)),
     [currentSegmentRevealIds],
   );
+  const hasSummaryLeftColumn =
+    sectionSummaryEpics.length > 0 ||
+    sectionSummaryFourTypes.length > 0 ||
+    sectionSummaryThreeWays.length > 0;
+  const hasSummaryCharacters = sectionSummaryCharacters.length > 0;
+  const hasSummaryChallenges = sectionSummaryChallenges.length > 0;
+  const hasSummaryRightColumn = hasSummaryCharacters || hasSummaryChallenges;
 
   const allFourTypesTotal = conceptsData.fourTypesOfWork.items.length;
   const allThreeWaysTotal = conceptsData.threeWays.items.length;
@@ -271,80 +278,96 @@ export function ContentArea() {
                 )}
               </div>
 
-              <div className="flex-1 grid grid-cols-5 grid-rows-[1fr_auto] gap-3 min-h-0">
-                <div className="col-span-1 row-span-1 flex flex-col gap-3 min-h-0">
-                  <DashboardPanel
-                    title="Epics"
-                    accent="#f97316"
-                    count={sectionSummaryEpics.length}
-                    total={sectionSummaryEpics.length}
-                    className="min-h-0 flex-[6]"
-                  >
-                    <div className="flex flex-col gap-1.5">
-                      {sectionSummaryEpics.map((epic, index) => (
-                        <EpicCard key={epic.id} epic={epic} revealed={true} index={index} />
-                      ))}
+              {(hasSummaryLeftColumn || hasSummaryRightColumn) && (
+                <div className="flex-1 grid grid-cols-5 gap-3 min-h-0">
+                  {hasSummaryLeftColumn && (
+                    <div className={`${hasSummaryRightColumn ? 'col-span-1' : 'col-span-5'} flex flex-col gap-3 min-h-0`}>
+                      {sectionSummaryEpics.length > 0 && (
+                        <DashboardPanel
+                          title="Epics"
+                          accent="#f97316"
+                          count={sectionSummaryEpics.length}
+                          total={sectionSummaryEpics.length}
+                          className="min-h-0 flex-[6]"
+                        >
+                          <div className="flex flex-col gap-1.5">
+                            {sectionSummaryEpics.map((epic, index) => (
+                              <EpicCard key={epic.id} epic={epic} revealed={true} index={index} />
+                            ))}
+                          </div>
+                        </DashboardPanel>
+                      )}
+                      {sectionSummaryFourTypes.length > 0 && (
+                        <DashboardPanel
+                          title="Four Types of Work"
+                          accent="#ff8511"
+                          count={sectionSummaryFourTypes.length}
+                          total={sectionSummaryFourTypes.length}
+                          className="min-h-0 flex-[5]"
+                        >
+                          <div className="flex flex-col gap-1.5">
+                            {sectionSummaryFourTypes.map((concept, index) => (
+                              <ConceptCard key={concept.id} concept={concept} revealed={true} index={index} revealedIds={revealedIds} />
+                            ))}
+                          </div>
+                        </DashboardPanel>
+                      )}
+                      {sectionSummaryThreeWays.length > 0 && (
+                        <DashboardPanel
+                          title="The Three Ways"
+                          accent="#f06a07"
+                          count={sectionSummaryThreeWays.length}
+                          total={sectionSummaryThreeWays.length}
+                          className="min-h-0 flex-[4]"
+                        >
+                          <div className="flex flex-col gap-1.5">
+                            {sectionSummaryThreeWays.map((concept, index) => (
+                              <ConceptCard key={concept.id} concept={concept} revealed={true} index={index} revealedIds={revealedIds} />
+                            ))}
+                          </div>
+                        </DashboardPanel>
+                      )}
                     </div>
-                  </DashboardPanel>
-                  <DashboardPanel
-                    title="Four Types of Work"
-                    accent="#ff8511"
-                    count={sectionSummaryFourTypes.length}
-                    total={sectionSummaryFourTypes.length}
-                    className="min-h-0 flex-[5]"
-                  >
-                    <div className="flex flex-col gap-1.5">
-                      {sectionSummaryFourTypes.map((concept, index) => (
-                        <ConceptCard key={concept.id} concept={concept} revealed={true} index={index} revealedIds={revealedIds} />
-                      ))}
-                    </div>
-                  </DashboardPanel>
-                  <DashboardPanel
-                    title="The Three Ways"
-                    accent="#f06a07"
-                    count={sectionSummaryThreeWays.length}
-                    total={sectionSummaryThreeWays.length}
-                    className="min-h-0 flex-[4]"
-                  >
-                    <div className="flex flex-col gap-1.5">
-                      {sectionSummaryThreeWays.map((concept, index) => (
-                        <ConceptCard key={concept.id} concept={concept} revealed={true} index={index} revealedIds={revealedIds} />
-                      ))}
-                    </div>
-                  </DashboardPanel>
-                </div>
+                  )}
 
-                <div className="col-span-4 row-span-1 flex flex-col gap-3 min-h-0">
-                  <div className="h-1/2 min-h-0">
-                    <DashboardPanel
-                      title="Characters"
-                      accent="#3668fc"
-                      count={sectionSummaryCharacters.length}
-                      total={sectionSummaryCharacters.length}
-                      className="h-full"
-                    >
-                      <div className="grid grid-cols-3 xl:grid-cols-4 gap-1.5">
-                        {sectionSummaryCharacters.map((character, index) => (
-                          <CharacterCard key={character.id} character={character} revealed={true} index={index} />
-                        ))}
-                      </div>
-                    </DashboardPanel>
-                  </div>
-                  <DashboardPanel
-                    title="Challenges"
-                    accent="#ef4444"
-                    count={sectionSummaryChallenges.length}
-                    total={sectionSummaryChallenges.length}
-                    className="flex-1 min-h-0"
-                  >
-                    <div className="grid grid-cols-3 xl:grid-cols-4 gap-1.5">
-                      {sectionSummaryChallenges.map((challenge, index) => (
-                        <ChallengeCard key={challenge.id} challenge={challenge} revealed={true} index={index} />
-                      ))}
+                  {hasSummaryRightColumn && (
+                    <div className={`${hasSummaryLeftColumn ? 'col-span-4' : 'col-span-5'} flex flex-col gap-3 min-h-0`}>
+                      {hasSummaryCharacters && (
+                        <div className={`${hasSummaryChallenges ? 'h-1/2' : 'flex-1'} min-h-0`}>
+                          <DashboardPanel
+                            title="Characters"
+                            accent="#3668fc"
+                            count={sectionSummaryCharacters.length}
+                            total={sectionSummaryCharacters.length}
+                            className="h-full"
+                          >
+                            <div className="grid grid-cols-3 xl:grid-cols-4 gap-1.5">
+                              {sectionSummaryCharacters.map((character, index) => (
+                                <CharacterCard key={character.id} character={character} revealed={true} index={index} />
+                              ))}
+                            </div>
+                          </DashboardPanel>
+                        </div>
+                      )}
+                      {hasSummaryChallenges && (
+                        <DashboardPanel
+                          title="Challenges"
+                          accent="#ef4444"
+                          count={sectionSummaryChallenges.length}
+                          total={sectionSummaryChallenges.length}
+                          className="flex-1 min-h-0"
+                        >
+                          <div className="grid grid-cols-3 xl:grid-cols-4 gap-1.5">
+                            {sectionSummaryChallenges.map((challenge, index) => (
+                              <ChallengeCard key={challenge.id} challenge={challenge} revealed={true} index={index} />
+                            ))}
+                          </div>
+                        </DashboardPanel>
+                      )}
                     </div>
-                  </DashboardPanel>
+                  )}
                 </div>
-              </div>
+              )}
             </div>
           </motion.div>
         </AnimatePresence>
