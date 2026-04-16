@@ -1,0 +1,135 @@
+// Core type definitions for the Phoenix Report
+
+export interface TimelineReveal {
+  type: 'challenge' | 'concept' | 'character' | 'epic';
+  id: string;
+  delaySeconds: number;
+}
+
+export interface TimelineSegment {
+  id: string;
+  title: string;
+  subtitle: string;
+  duration: number;
+  phase: string;
+  narrativeArc?: string;
+  takeaway?: string;
+  reveals: TimelineReveal[];
+}
+
+export interface TimelineData {
+  presentation: {
+    totalDuration: number;
+    segments: TimelineSegment[];
+  };
+}
+
+export interface ConceptItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  examples?: string[];
+  icon: string;
+  color: string;
+}
+
+export interface ConceptPrinciple {
+  id: string;
+  title: string;
+  description: string;
+  icon: string;
+}
+
+export interface WayItem {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  icon: string;
+  color: string;
+  principles: ConceptPrinciple[];
+}
+
+export interface ConceptsData {
+  fourTypesOfWork: {
+    title: string;
+    description: string;
+    icon: string;
+    color: string;
+    items: ConceptItem[];
+  };
+  threeWays: {
+    title: string;
+    description: string;
+    icon: string;
+    color: string;
+    items: WayItem[];
+  };
+}
+
+export interface Character {
+  id: string;
+  name: string;
+  role: string;
+  archetype: string;
+  traits: string;
+  segment: string;
+  reportsTo: string | null;
+  description: string;
+  arc: string;
+  quote: string;
+  avatar: string;
+  color: string;
+}
+
+export interface CharactersData {
+  characters: Character[];
+}
+
+export interface Challenge {
+  id: string;
+  title: string;
+  subtitle: string;
+  segment: string;
+  description: string;
+  impact: string;
+  icon: string;
+  severity: 'critical' | 'high' | 'medium';
+  color: string;
+}
+
+export interface ChallengesData {
+  challenges: Challenge[];
+}
+
+export interface Epic {
+  id: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  status: string;
+  icon: string;
+  color: string;
+}
+
+export interface EpicsData {
+  epics: Epic[];
+}
+
+export type RevealedItem = {
+  type: 'challenge' | 'concept' | 'character' | 'epic';
+  id: string;
+  revealedAt: number; // timestamp
+};
+
+export type PresentationMode = 'presentation' | 'explore';
+
+export type PresentationState = {
+  mode: PresentationMode;
+  currentSegmentIndex: number;
+  segmentElapsedSeconds: number;
+  totalElapsedSeconds: number;
+  isRunning: boolean;
+  revealedIds: Set<string>;
+};

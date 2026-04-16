@@ -1,0 +1,228 @@
+# Challenges faced throughout The Phoenix Project
+# Organized by segment/phase
+
+challenges:
+  # Segment 1: Chaos and Invisible Work
+  - id: firefighting
+    title: "Constant Firefighting"
+    subtitle: "Incidents dominate the day"
+    segment: segment-1
+    description: "The IT team spends the majority of their time responding to incidents and emergencies. There's no time for planned work because the team is perpetually in crisis mode. Every day brings a new fire to put out."
+    impact: "Planned work is constantly displaced, morale drops, and the team can never get ahead."
+    icon: "flame"
+    severity: critical
+    color: "#ef4444"
+
+  - id: no-visibility
+    title: "No Visibility Into Work"
+    subtitle: "Total work demand is invisible"
+    segment: segment-1
+    description: "Nobody knows how much work is in the system. There's no centralized view of all commitments, projects, and tasks. Work arrives from everywhere — email, hallway conversations, executive demands — and nothing is tracked holistically."
+    impact: "Impossible to prioritize, plan capacity, or make rational decisions about what to work on."
+    icon: "eye-off"
+    severity: critical
+    color: "#f97316"
+
+  - id: knowledge-silos
+    title: "Knowledge Silos"
+    subtitle: "Critical knowledge in few individuals"
+    segment: segment-1
+    description: "A small number of people hold all the critical knowledge about key systems. When they're unavailable, work stops. There's no documentation, no cross-training, and no resilience."
+    impact: "Single points of failure create fragility and bottlenecks across the entire organization."
+    icon: "lock"
+    severity: high
+    color: "#eab308"
+
+  - id: blind-commitments
+    title: "Blind Commitments"
+    subtitle: "Promises made without understanding capacity"
+    segment: segment-1
+    description: "Business leaders commit to timelines and deliverables without consulting IT about capacity or feasibility. Projects are promised to customers before anyone understands the work required."
+    impact: "Unrealistic expectations, constant deadline pressure, and broken trust between IT and the business."
+    icon: "calendar-x"
+    severity: high
+    color: "#f43f5e"
+
+  - id: it-unreliable
+    title: "IT Perceived as Unreliable"
+    subtitle: "Business sees IT as slow and broken"
+    segment: segment-1
+    description: "The business has lost confidence in IT's ability to deliver. Every interaction reinforces the perception that IT is a cost center that can't execute. Outsourcing threats loom."
+    impact: "IT loses credibility, funding, and autonomy. The threat of outsourcing adds existential pressure."
+    icon: "thumbs-down"
+    severity: high
+    color: "#6366f1"
+
+  # Segment 2: Overload and Multitasking
+  - id: high-wip
+    title: "Too Many Concurrent Projects"
+    subtitle: "Dangerously high work-in-progress"
+    segment: segment-2
+    description: "The organization has far too many projects running simultaneously. Everyone is assigned to multiple projects, creating the illusion of progress while actually slowing everything down."
+    impact: "Nothing finishes on time. Resources are spread impossibly thin across competing priorities."
+    icon: "layers"
+    severity: critical
+    color: "#ef4444"
+
+  - id: task-switching
+    title: "Constant Task Switching"
+    subtitle: "Context switching destroys efficiency"
+    segment: segment-2
+    description: "Engineers are constantly pulled between projects, incidents, and meetings. Each context switch carries a cognitive cost, and the cumulative effect is devastating to productivity."
+    impact: "Studies show context switching can consume 20-80% of productive capacity. The team is busy but accomplishing little."
+    icon: "shuffle"
+    severity: high
+    color: "#f97316"
+
+  - id: stalled-projects
+    title: "Stalled Projects"
+    subtitle: "Projects stuck on dependencies"
+    segment: segment-2
+    description: "Projects stall because they depend on shared resources, other teams, or key individuals who are overloaded. The project board is full of work that's 'in progress' but not moving."
+    impact: "Lead times balloon. Features that should take weeks take months. Business value is delayed indefinitely."
+    icon: "pause"
+    severity: high
+    color: "#eab308"
+
+  - id: bottleneck-people
+    title: "People as Bottlenecks"
+    subtitle: "Key experts overwhelmed"
+    segment: segment-2
+    description: "A few critical experts (like Brent) become the constraint for the entire organization. Every major task requires their involvement, creating an impossible queue of work waiting for their attention."
+    impact: "The organization's throughput is limited to the capacity of its most constrained resource."
+    icon: "user-x"
+    severity: critical
+    color: "#8b5cf6"
+
+  - id: missed-deadlines
+    title: "Missed Deadlines"
+    subtitle: "Consistent failure to deliver on time"
+    segment: segment-2
+    description: "Despite heroic effort, deadlines are missed consistently. The team works overtime, weekends, and holidays, but the gap between commitments and capacity is too large to close with effort alone."
+    impact: "Business trust erodes further. 'Death march' culture leads to burnout and turnover."
+    icon: "clock"
+    severity: high
+    color: "#f43f5e"
+
+  # Segment 3: Bottlenecks and Flow
+  - id: work-piles-up
+    title: "Work Piles Up at Bottlenecks"
+    subtitle: "Queues grow at constraint points"
+    segment: segment-3
+    description: "Work accumulates at bottleneck resources. Like cars merging into a single lane, the queue grows even when individual workers are efficient. The constraint sets the pace for everything."
+    impact: "Overall throughput is governed by the bottleneck's capacity, regardless of how fast other teams work."
+    icon: "bar-chart"
+    severity: critical
+    color: "#ef4444"
+
+  - id: long-lead-times
+    title: "Long Lead Times"
+    subtitle: "Busy teams, slow delivery"
+    segment: segment-3
+    description: "Everyone is busy, yet it takes forever for anything to be delivered. The paradox of high utilization — as a system approaches 100% utilization, wait times approach infinity."
+    impact: "Business opportunities are missed. Competitors who move faster gain advantage."
+    icon: "trending-up"
+    severity: high
+    color: "#f97316"
+
+  - id: local-optimization
+    title: "Local Optimization"
+    subtitle: "Teams efficient in isolation, poor overall"
+    segment: segment-3
+    description: "Individual teams optimize their own processes, but these local improvements don't translate to global improvement. Development works fast but Operations can't deploy. Each silo optimizes at the expense of the whole."
+    impact: "The system's performance is determined by the interactions between components, not the components themselves."
+    icon: "box"
+    severity: high
+    color: "#eab308"
+
+  - id: no-ownership
+    title: "Lack of End-to-End Ownership"
+    subtitle: "Nobody owns the full value stream"
+    segment: segment-3
+    description: "No one is responsible for the complete journey of work from request to delivery. Each team owns their piece but nobody owns the outcome. Problems fall through the cracks between teams."
+    impact: "Handoffs become failure points. Nobody feels accountable for customer value."
+    icon: "git-branch"
+    severity: high
+    color: "#6366f1"
+
+  # Segment 4: Quality, Feedback, and Risk Reduction
+  - id: deployment-failures
+    title: "Deployment Failures"
+    subtitle: "High failure rates during releases"
+    segment: segment-4
+    description: "Deployments are risky, manual, and error-prone. Each release is a potential disaster. The team dreads deployment days because something almost always goes wrong."
+    impact: "Fear of deployment leads to infrequent, large batches — which paradoxically increases risk even further."
+    icon: "x-circle"
+    severity: critical
+    color: "#ef4444"
+
+  - id: late-detection
+    title: "Late Issue Detection"
+    subtitle: "Problems found after release"
+    segment: segment-4
+    description: "Issues are discovered in production rather than during development or testing. The feedback loop is too long — by the time problems are found, the cost to fix them has multiplied."
+    impact: "Exponentially more expensive to fix. Customer trust damaged. Emergency patches create more unplanned work."
+    icon: "alert-circle"
+    severity: high
+    color: "#f97316"
+
+  - id: long-recovery
+    title: "Long Recovery Times"
+    subtitle: "Slow restoration after outages"
+    segment: segment-4
+    description: "When things break in production, it takes too long to recover. There's no quick rollback capability, insufficient monitoring, and unclear runbooks."
+    impact: "Extended outages cost revenue, damage reputation, and consume resources that could be doing planned work."
+    icon: "activity"
+    severity: high
+    color: "#eab308"
+
+  - id: dev-ops-tension
+    title: "Dev vs Ops Tension"
+    subtitle: "Speed versus stability conflict"
+    segment: segment-4
+    description: "Development wants to ship fast. Operations wants stability. These competing objectives create organizational conflict, finger-pointing, and a culture of blame."
+    impact: "The 'wall of confusion' between Dev and Ops becomes a structural barrier to improvement."
+    icon: "zap-off"
+    severity: high
+    color: "#8b5cf6"
+
+  # Segment 5: Learning Organization
+  - id: fear-of-failure
+    title: "Fear of Failure"
+    subtitle: "Innovation stifled by blame culture"
+    segment: segment-5
+    description: "People are afraid to try new things because failure is punished. The blame culture means that the safest career move is to avoid risk, which prevents the experimentation needed for improvement."
+    impact: "Innovation dies. People hide problems instead of surfacing them. The organization stagnates."
+    icon: "shield-off"
+    severity: high
+    color: "#ef4444"
+
+  - id: repeated-mistakes
+    title: "Repeated Mistakes"
+    subtitle: "Same failures, different day"
+    segment: segment-5
+    description: "The organization keeps making the same mistakes because there's no systematic learning. Incidents are resolved but not analyzed. The root causes remain, guaranteeing recurrence."
+    impact: "Without learning, the organization is trapped in a cycle of repeated failure."
+    icon: "rotate-ccw"
+    severity: high
+    color: "#f97316"
+
+  - id: heroics-over-systems
+    title: "Heroics Over Systems"
+    subtitle: "Reliance on individual heroes"
+    segment: segment-5
+    description: "The organization relies on individual heroics rather than systemic solutions. When things break, they depend on heroes working through the night instead of building systems that don't break."
+    impact: "Unsustainable. Heroes burn out. The system never improves because heroics mask systemic problems."
+    icon: "star"
+    severity: high
+    color: "#eab308"
+
+  - id: tech-debt-vs-features
+    title: "Technical Debt vs Features"
+    subtitle: "Infrastructure neglected for features"
+    segment: segment-5
+    description: "The business constantly pushes for new features while technical debt accumulates. Infrastructure deteriorates, systems become fragile, and the cost of change increases over time."
+    impact: "Eventually the accumulated debt creates a crisis that forces a reckoning — either invest or collapse."
+    icon: "credit-card"
+    severity: high
+    color: "#6366f1"

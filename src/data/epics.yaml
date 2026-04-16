@@ -1,0 +1,42 @@
+# Epics — major projects and storylines in The Phoenix Project
+
+epics:
+  - id: payroll-failure
+    title: "Payroll System Failure"
+    subtitle: "The crisis that starts it all"
+    description: "A catastrophic payroll system failure on Bill's first day as VP of IT Operations. Employees don't get paid, and the cascading failure exposes just how fragile and interconnected the systems are. This incident is the inciting event that reveals the depth of the organization's problems."
+    status: "Critical incident"
+    icon: "💰"
+    color: "#ef4444"
+
+  - id: phoenix-project
+    title: "The Phoenix Project"
+    subtitle: "The critical business initiative"
+    description: "The company's most important project — a massive, high-visibility application rewrite intended to save the business. It's behind schedule, over budget, and becomes the catalyst for everything that follows. The Phoenix Project represents every dysfunctional mega-project: unclear scope, no capacity planning, and immense political pressure."
+    status: "Behind schedule, at risk"
+    icon: "🔥"
+    color: "#f97316"
+
+  - id: project-freeze
+    title: "Change Freeze"
+    subtitle: "Stopping the bleeding"
+    description: "A bold decision to freeze all changes while the team gets control of their processes. Initially met with resistance from the business, the freeze becomes a turning point — proving that controlled change management is possible and that slowing down can actually speed things up."
+    status: "Strategic decision"
+    icon: "❄️"
+    color: "#06b6d4"
+
+  - id: audit-compliance
+    title: "SOX-404 Audit"
+    subtitle: "Compliance and security crisis"
+    description: "A looming SOX-404 IT audit threatens the company with regulatory penalties. The audit exposes gaps in change management, access controls, and separation of duties. It forces the team to confront the chaos in their processes and becomes a forcing function for implementing proper controls — aligning with the Second Way's emphasis on feedback and quality."
+    status: "Non-compliant, urgent remediation"
+    icon: "📋"
+    color: "#eab308"
+
+  - id: unicorn-project
+    title: "The Unicorn Project"
+    subtitle: "Innovation through deployment mastery"
+    description: "The Unicorn Project represents the organization's hard-won ability to innovate once the foundational work is in place. Central to this is the deployment pipeline — an automated, repeatable path from code commit to production that enables smaller, safer, and more frequent releases. Moving from manual, error-prone deployments to a true pipeline is where the Three Ways come to life in practice, and where the team finally shifts from firefighting to sustained value creation."
+    status: "Transformational"
+    icon: "🦄"
+    color: "#8b5cf6"
