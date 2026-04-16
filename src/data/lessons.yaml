@@ -31,6 +31,15 @@ segments:
           The audit reveals that weak change control, fragile systems, and unclear ownership
           have already become systemic business risk.
 
+      - id: segment-1-trust-collapse
+        title: "Lost credibility turns valid warnings into excuses"
+        description: >-
+          Once IT is seen as slow and untrustworthy, technically correct risk warnings get
+          reframed as hesitation or excuse-making. Sarah dismisses Bill's operational
+          concerns not because they are wrong but because the track record has already
+          decided how they will be received. Credibility is an operational resource —
+          once spent, the right advice stops landing.
+
   - segmentId: segment-2
     items:
       - id: segment-2-demand
@@ -145,6 +154,15 @@ segments:
           John's breakthrough is not more security but better scoping. Controls matter only when
           they protect a business outcome the company actually relies on.
 
+      - id: segment-4-feedback-timing
+        title: "The later a problem surfaces, the more it costs"
+        description: >-
+          Problems discovered during payroll runs, major releases, or annual audits have
+          already spread into enormous blast radii. Shortening feedback loops — earlier
+          testing, tighter monitoring, faster escalation — converts expensive crises into
+          cheap corrections. The payroll failure, Phoenix deployment failures, and repeat
+          audit findings are all evidence that feedback arrived too late.
+
   - segmentId: segment-5
     items:
       - id: segment-5-improvement-habit
@@ -180,3 +198,12 @@ segments:
         description: >-
           The final shift is cultural as much as technical. Development, Operations, Security,
           product, and executives start acting as one system, not separate silos.
+
+      - id: segment-5-deliberate-failure
+        title: "Resilience is built by practicing failure, not avoiding it"
+        description: >-
+          The team starts deliberately injecting failure in controlled ways to harden the
+          platform before reality does it for them. The goal shifts from preventing every
+          outage to learning faster than the next outage will arrive. Blameless reviews,
+          fault injection, and production drills turn failure from something to hide into
+          something the organisation studies and gets better at surviving.

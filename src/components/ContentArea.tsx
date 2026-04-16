@@ -760,6 +760,7 @@ function DashboardPanel({
 
 function LessonCard({ lesson, index }: { lesson: Lesson; index: number }) {
   const [isOpen, setIsOpen] = useState(false);
+  const { isCardLegibilityMode } = useControls();
 
   return (
     <>
@@ -767,7 +768,7 @@ function LessonCard({ lesson, index }: { lesson: Lesson; index: number }) {
         type="button"
         layout
         onClick={() => setIsOpen(true)}
-        className="w-full text-left rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 overflow-hidden"
+        className={`w-full rounded-lg border border-white/[0.06] bg-white/[0.02] overflow-hidden ${isCardLegibilityMode ? 'px-3.5 py-3 text-center' : 'px-3 py-2 text-left'}`}
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.25, delay: index * 0.03 }}
@@ -775,12 +776,14 @@ function LessonCard({ lesson, index }: { lesson: Lesson; index: number }) {
           boxShadow: '0 0 20px -8px rgba(245, 158, 11, 0.18), inset 0 1px 0 0 rgba(255,255,255,0.06)',
         }}
       >
-        <h3 className="text-sm font-medium text-white/85 mb-1 leading-snug">
+        <h3 className={`${isCardLegibilityMode ? 'text-lg font-semibold text-white/92' : 'text-sm font-medium text-white/85 mb-1'} leading-snug`}>
           {lesson.title}
         </h3>
-        <p className="text-xs text-white/55 leading-relaxed line-clamp-2">
-          {lesson.description}
-        </p>
+        {!isCardLegibilityMode && (
+          <p className="text-xs text-white/55 leading-relaxed line-clamp-2">
+            {lesson.description}
+          </p>
+        )}
       </motion.button>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} accentColor="#f59e0b">
