@@ -23,8 +23,11 @@ export function WindowPortal({
 }: WindowPortalProps) {
   const [container, setContainer] = useState<HTMLElement | null>(null);
   const popupRef = useRef<Window | null>(null);
+  const shouldCloseOnUnmountRef = useRef(true);
 
   useEffect(() => {
+    shouldCloseOnUnmountRef.current = true;
+
     const screenX = window.screenX ?? window.screenLeft ?? 0;
     const screenY = (window.screenY ?? window.screenTop ?? 0) + window.outerHeight - height - 80;
 
@@ -53,6 +56,13 @@ export function WindowPortal({
 
     popupRef.current = popup;
     popup.document.title = title;
+
+    const handleParentBeforeUnload = () => {
+      // Keep the popup alive across parent-window reloads/HMR cycles.
+      shouldCloseOnUnmountRef.current = false;
+    };
+
+    window.addEventListener('beforeunload', handleParentBeforeUnload);
 
     // ── Copy styles from parent so Tailwind classes work ──
     const copyStyles = () => {
@@ -94,9 +104,13 @@ export function WindowPortal({
     popup.document.body.style.overflow = 'hidden';
     popup.document.body.style.fontFamily = 'Inter, system-ui, sans-serif';
 
-    const div = popup.document.createElement('div');
+    const existingRoot = popup.document.getElementById('portal-root') as HTMLElement | null;
+    const div = existingRoot ?? popup.document.createElement('div');
     div.id = 'portal-root';
-    popup.document.body.appendChild(div);
+    div.replaceChildren();
+    if (!existingRoot) {
+      popup.document.body.appendChild(div);
+    }
     setContainer(div);
 
     const handleClose = () => {
@@ -109,7 +123,8 @@ export function WindowPortal({
     return () => {
       observer.disconnect();
       popup.removeEventListener('beforeunload', handleClose);
-      if (!popup.closed) popup.close();
+      window.removeEventListener('beforeunload', handleParentBeforeUnload);
+      if (shouldCloseOnUnmountRef.current && !popup.closed) popup.close();
     };
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

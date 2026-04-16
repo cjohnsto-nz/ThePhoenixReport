@@ -1,0 +1,192 @@
+segments:
+  - segmentId: segment-1
+    items:
+      - id: segment-1-visibility
+        title: "You cannot manage work you cannot see"
+        description: >-
+          Without a shared view of changes, commitments, queues, and ownership, Bill cannot make
+          reliable tradeoffs. Prioritization turns into politics, and diagnosis turns into guesswork
+          dressed up as urgency.
+
+      - id: segment-1-business-impact
+        title: "Reliability failures are business failures"
+        description: >-
+          The payroll outage proves that an IT failure never stays technical for long. It becomes
+          a crisis for employees, unions, finance, executives, and the company reputation almost the
+          moment service breaks.
+
+      - id: segment-1-change-discipline
+        title: "Change discipline is a safeguard, not bureaucracy"
+        description: >-
+          Hidden changes, rushed fixes, and missing controls do not make the team faster. They
+          create secondary failures, erase confidence, and force recovery work to multiply faster
+          than the system can absorb it.
+
+      - id: segment-1-readiness
+        title: "A deadline does not make a reckless launch safe"
+        description: >-
+          Phoenix keeps moving because leadership has promised a date, even when Operations knows
+          the environments, handoffs, and readiness work are not in place. Commitment pressure is
+          replacing judgment.
+
+      - id: segment-1-governance-debt
+        title: "Audit pain exposes governance debt"
+        description: >-
+          The audit does not create a new problem. It exposes the old one: weak change control,
+          fragile systems, unclear ownership, and unmanaged commitments have already become
+          systemic business risk.
+
+  - segmentId: segment-2
+    items:
+      - id: segment-2-demand
+        title: "Real demand must be counted before work can be managed"
+        description: >-
+          Once the workload is finally counted, Bill sees dozens of projects and constant break-fix
+          work competing for the same people. Until demand is visible, every promise the system
+          makes is mostly fiction.
+
+      - id: segment-2-constraint
+        title: "The constraint sets the pace of the whole system"
+        description: >-
+          Brent is where projects, changes, outages, and tribal knowledge converge. The system
+          cannot speed up by demanding more from him; it has to protect him and reduce how much
+          critical work depends on him.
+
+      - id: segment-2-change-work
+        title: "Changes are real work, not background noise"
+        description: >-
+          The change board exposes hundreds of hidden changes and forces the team to count them as
+          real work. Operational load stops being invisible background noise and becomes part of the
+          same queue as everything else.
+
+      - id: segment-2-wip
+        title: "High WIP makes work enter faster than it can leave"
+        description: >-
+          When only forty percent of scheduled changes complete, unfinished work piles up like
+          inventory at a bottleneck. The organization feels busy and overloaded, but busy is not the
+          same thing as flow.
+
+      - id: segment-2-date-pressure
+        title: "Date pressure turns known risk into deliberate recklessness"
+        description: >-
+          By the end of the section, everyone can see Phoenix is not ready, yet the launch keeps
+          moving. Risk stops being treated as a reason to pause and becomes a cost Operations is
+          expected to absorb.
+
+      - id: segment-2-staffing-value
+        title: "Understaffing is part of a larger value-recognition failure"
+        description: >-
+          The team is genuinely short on capacity, but leadership first experiences IT as an
+          expensive function that still misses promises. Until IT's business value is visible, more
+          capacity sounds like overhead, not throughput.
+
+  - segmentId: segment-3
+    items:
+      - id: segment-3-unplanned-work
+        title: "Unplanned work is anti-work that destroys planned work"
+        description: >-
+          Phoenix wipes the change board clean and shows Bill what unplanned work really does.
+          Firefighting does not just add more load to the system; it destroys the projects and
+          changes the organization meant to finish.
+
+      - id: segment-3-protect-constraint
+        title: "The constraint must be protected from both outages and dependency"
+        description: >-
+          Brent is overloaded not because he is merely helpful, but because the system routes
+          knowledge, escalations, and critical implementation work through one person. The
+          constraint has to be protected and reduced.
+
+      - id: segment-3-technical-debt
+        title: "Technical debt compounds through shortcuts and rework"
+        description: >-
+          Every shortcut taken to satisfy today's demand creates future unplanned work. Over time,
+          the organization spends more and more of its calories paying interest on that debt instead
+          of delivering useful planned work.
+
+      - id: segment-3-capacity
+        title: "Work should be accepted based on capacity, not desire"
+        description: >-
+          The offsite forces the leadership team to confront a basic failure of management. Parts
+          Unlimited keeps accepting work without understanding demand, load, or whether the system
+          can actually honor the commitments already made.
+
+      - id: segment-3-freeze
+        title: "Stopping intake is sometimes the first act of real control"
+        description: >-
+          The project freeze looks passive, but it is the first decision that actually respects
+          flow. It reduces WIP and intake instead of pretending that more heroics will fix an
+          overloaded system.
+
+  - segmentId: segment-4
+    items:
+      - id: segment-4-release-control
+        title: "Flow only improves when new work is released deliberately"
+        description: >-
+          The project freeze works, but it also exposes the next management problem. Once the
+          freeze lifts, the old priority conflicts will return unless intake, sequencing, and release
+          are controlled deliberately.
+
+      - id: segment-4-standardize
+        title: "Recurring work must be standardized before it can scale"
+        description: >-
+          Patty's service-request lanes show that much IT work is far more repetitive than the
+          organization admits. Once steps, prerequisites, and handoffs are documented, lead times
+          improve and heroics stop being the default.
+
+      - id: segment-4-handoffs
+        title: "Queue time and handoff delay dominate total lead time"
+        description: >-
+          The Phoenix environment task looks like an hour of effort until Patty decomposes it into
+          many cross-team steps. The real delay is not touch time, but waiting in queues and losing
+          days at handoffs.
+
+      - id: segment-4-business-context
+        title: "IT risk must be defined in business terms"
+        description: >-
+          Ron and Maggie force Bill to see that outages, bad data, and slow delivery are not just
+          IT defects. They directly damage revenue, stockouts, customer retention, time to market,
+          and return on capital.
+
+      - id: segment-4-scope-controls
+        title: "Controls matter only when they protect a real business outcome"
+        description: >-
+          John's breakthrough is not 'more security' but better scoping. Controls matter only when
+          they protect a business outcome the company actually relies on, instead of satisfying
+          abstract audit fear after the fact.
+
+  - segmentId: segment-5
+    items:
+      - id: segment-5-improvement-habit
+        title: "Improvement must become part of daily work"
+        description: >-
+          By the end of the story, the team is no longer waiting for disaster to justify change.
+          Improvement cycles, drills, and chaos experiments become part of daily work instead of a
+          side initiative.
+
+      - id: segment-5-pipeline
+        title: "Fast flow requires environments and deployments to be automated"
+        description: >-
+          Unicorn works because environments, tests, and deployments stop being artisanal handoffs.
+          Once they are treated like code, the team can rebuild, verify, secure, and release them
+          on demand.
+
+      - id: segment-5-small-batches
+        title: "Smaller batches create safer releases and faster business learning"
+        description: >-
+          Unicorn's short cycles, frequent releases, and A/B testing generate revenue because they
+          let the business learn quickly. Phoenix struggled because it carried too much WIP for too
+          long before feedback arrived.
+
+      - id: segment-5-own-constraint
+        title: "If a capability sets business pace, the company must own it"
+        description: >-
+          The outsourced MRP system becomes a strategic constraint the moment it blocks a key
+          business capability. Outsourced control over a core competency is still loss of control,
+          even if the contract says otherwise.
+
+      - id: segment-5-super-tribe
+        title: "High performance comes from a shared business-and-technology tribe"
+        description: >-
+          The final shift is cultural as much as technical. Development, Operations, Security,
+          product, and executives start acting like one system with one outcome, instead of
+          protecting separate silos.

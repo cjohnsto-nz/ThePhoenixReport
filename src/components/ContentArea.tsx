@@ -7,6 +7,7 @@ import {
   conceptsData,
   charactersData,
   epicsData,
+  lessonsData,
   lookupItem,
 } from '../data';
 import { ChallengeCard } from './ChallengeCard';
@@ -24,7 +25,7 @@ import { Modal } from './Modal';
 import { SegmentHeader } from './SegmentHeader';
 import { TakeawayBanner } from './TakeawayBanner';
 import { useControls } from '../ControlsContext';
-import type { ConceptItem, WayItem, Challenge, Character, Epic, QuoteItem } from '../types';
+import type { ConceptItem, WayItem, Challenge, Character, Epic, Lesson, QuoteItem } from '../types';
 
 export function ContentArea() {
   const { state, dispatch, currentSegment, segments } = usePresentation();
@@ -124,6 +125,11 @@ export function ContentArea() {
     () => challengesData.challenges.filter((challenge) => currentSegmentRevealIds.has(challenge.id)),
     [currentSegmentRevealIds],
   );
+  const sectionSummaryLessons = useMemo(
+    () => (lessonsData.segments.find((segmentLessons) => segmentLessons.segmentId === currentSegment?.id)?.items ?? []).slice(0, 6),
+    [currentSegment],
+  );
+  const hasSummaryLessons = sectionSummaryLessons.length > 0;
   const hasSummaryLeftColumn =
     sectionSummaryEpics.length > 0 ||
     sectionSummaryFourTypes.length > 0 ||
@@ -265,22 +271,30 @@ export function ContentArea() {
             className="flex-1 min-h-0"
           >
             <div className="h-full flex flex-col gap-4 min-h-0">
-              <div className="rounded-3xl border border-phoenix-500/15 bg-phoenix-500/[0.04] backdrop-blur-xl px-8 py-8 text-center shadow-2xl flex-shrink-0">
+              <div className="rounded-3xl border border-phoenix-500/15 bg-phoenix-500/[0.04] backdrop-blur-xl px-8 md:px-12 py-5 md:py-6 text-center shadow-2xl flex-shrink-0">
                 <div className="text-[11px] uppercase tracking-[0.28em] text-phoenix-400/60 font-semibold mb-4">
                   {sectionLabel} Summary
                 </div>
-                <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-5">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight max-w-6xl mx-auto leading-tight">
                   {currentSegment.title}
                 </h2>
-                <p className="text-lg md:text-2xl text-white/70 max-w-4xl mx-auto leading-relaxed">
-                  {currentSegment.summary ?? currentSegment.takeaway ?? currentSegment.subtitle}
-                </p>
-                {currentSegment.takeaway && currentSegment.summary && (
-                  <p className="mt-6 text-sm md:text-base text-phoenix-300/65 max-w-3xl mx-auto leading-relaxed">
-                    {currentSegment.takeaway}
-                  </p>
-                )}
               </div>
+
+              {hasSummaryLessons && (
+                <DashboardPanel
+                  title="Lessons"
+                  accent="#f59e0b"
+                  count={sectionSummaryLessons.length}
+                  total={sectionSummaryLessons.length}
+                  className="flex-shrink-0 max-h-[40vh]"
+                >
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-2">
+                    {sectionSummaryLessons.map((lesson, index) => (
+                      <LessonCard key={lesson.id} lesson={lesson} index={index} />
+                    ))}
+                  </div>
+                </DashboardPanel>
+              )}
 
               {(hasSummaryLeftColumn || hasSummaryRightColumn) && (
                 <div className="flex-1 grid grid-cols-5 gap-3 min-h-0">
@@ -751,7 +765,45 @@ function DashboardPanel({
   );
 }
 
-// ---- Org Chart — proper top-down tree layout ----
+function LessonCard({ lesson, index }: { lesson: Lesson; index: number }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      <motion.button
+        type="button"
+        layout
+        onClick={() => setIsOpen(true)}
+        className="w-full text-left rounded-lg border border-white/[0.06] bg-white/[0.02] px-3 py-2 overflow-hidden"
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.25, delay: index * 0.03 }}
+        style={{
+          boxShadow: '0 0 20px -8px rgba(245, 158, 11, 0.18), inset 0 1px 0 0 rgba(255,255,255,0.06)',
+        }}
+      >
+        <h3 className="text-sm font-medium text-white/85 mb-1 leading-snug">
+          {lesson.title}
+        </h3>
+        <p className="text-xs text-white/55 leading-relaxed line-clamp-2">
+          {lesson.description}
+        </p>
+      </motion.button>
+
+      <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} accentColor="#f59e0b">
+        <div className="space-y-4">
+          <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+            {lesson.title}
+          </h3>
+          <p className="text-base md:text-lg text-white/70 leading-relaxed">
+            {lesson.description}
+          </p>
+        </div>
+      </Modal>
+    </>
+  );
+}
+
 
 // Fixed grid coordinates [col, row] for each character id (1-based for CSS grid).
 // Grid: 5 columns × 4 rows.

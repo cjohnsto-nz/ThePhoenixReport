@@ -15,6 +15,8 @@ characters:
     quotes:
       - id: steve-outsourcing-ultimatum
         text: "The business depends on IT more than ever. If IT can't deliver, we'll outsource."
+      - id: steve-cut-heads
+        text: "Any budget increases are out of the question. If anything, we may have to cut some heads in your area."
       - id: steve-flow-forward
         text: "The flow of work should ideally go in one direction only: forward."
     avatar: "👔"
@@ -49,23 +51,32 @@ characters:
         text: "Any improvement made anywhere besides the bottleneck is an illusion."
       - id: erik-what-is-work
         text: "What then, exactly, is your definition of 'work?'"
+      - id: erik-three-ways
+        text: "Once you figure this out, young Bill, you will be well on your way toward understanding the Three Ways."
+      - id: erik-end-to-end-business-process
+        text: "You never see the end-to-end business process, so I guarantee you that many of the controls you want to put in aren't even necessary."
     avatar: "🎩"
     color: "#10b981"
 
   - id: bill-palmer
     name: "Bill Palmer"
     role: "VP of IT Operations"
-    archetype: "The Reluctant Hero"
+    archetype: "The Reluctant Leader"
     traits: "Analytical · growth-oriented · systems thinker"
     segment: segment-1
     reportsTo: steve-masters
-    description: "The reluctant hero. Bill is thrust into the role of VP of IT Operations and must navigate the chaos of a failing IT organization. He evolves from a firefighting manager to a systems thinker who transforms how IT delivers value."
+    description: "The reluctant leader. Bill is thrust into the role of VP of IT Operations and must navigate the chaos of a failing IT organization. He evolves from a firefighting manager to a systems thinker who transforms how IT delivers value."
     arc: "From firefighter to systems thinker"
     quotes:
       - id: bill-talked-into-job
         text: "I can't believe it. He just talked me into taking a new job I don't want. How did that happen?"
       - id: bill-manage-flow
         text: "Until you've figured out how to manage the flow of work, you'll never be able to deliver on time."
+      - id: bill-wait-time-busy-idle
+        text: "The wait time is the percentage of time busy divided by the percentage of time idle."
+        imagePath: "/utilization-vs-wait-time.png"
+        imageAlt: "Chart showing wait time rising sharply as resource utilization approaches one hundred percent"
+        imageCaption: "This is the queueing curve Bill uses to explain why seemingly short tasks stall for days once every handoff depends on people who are already near full utilization."
     avatar: "👨‍💼"
     color: "#3668fc"
 

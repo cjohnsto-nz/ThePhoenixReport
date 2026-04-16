@@ -113,6 +113,23 @@ export function QuoteDetailContent({ quote }: { quote: QuoteItem }) {
       >
         &ldquo;{quote.text}&rdquo;
       </blockquote>
+
+      {quote.imagePath && (
+        <figure className="space-y-3">
+          <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03]">
+            <img
+              src={quote.imagePath}
+              alt={quote.imageAlt ?? `${quote.characterName} supporting image`}
+              className="w-full h-auto object-contain"
+            />
+          </div>
+          {quote.imageCaption && (
+            <figcaption className="text-sm md:text-base text-white/58 leading-relaxed">
+              {quote.imageCaption}
+            </figcaption>
+          )}
+        </figure>
+      )}
     </div>
   );
 }

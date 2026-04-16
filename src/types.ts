@@ -37,6 +37,21 @@ export interface TimelineData {
   };
 }
 
+export interface Lesson {
+  id: string;
+  title: string;
+  description: string;
+}
+
+export interface SegmentLessons {
+  segmentId: string;
+  items: Lesson[];
+}
+
+export interface LessonsData {
+  segments: SegmentLessons[];
+}
+
 export interface ConceptItem {
   id: string;
   title: string;
@@ -91,6 +106,9 @@ export interface QuoteItem {
   characterRole: string;
   avatar: string;
   color: string;
+  imagePath?: string;
+  imageAlt?: string;
+  imageCaption?: string;
   revealId?: string;
   segment?: string;
 }

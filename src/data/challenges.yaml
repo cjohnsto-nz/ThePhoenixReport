@@ -114,6 +114,16 @@ challenges:
     severity: high
     color: "#f43f5e"
 
+  - id: value-blind-staffing
+    title: "Staffing Looks Like Cost"
+    subtitle: "IT is judged by expense before value"
+    segment: segment-2
+    description: "When Bill finally brings Steve real demand-and-capacity data, he expects the understaffing problem to become obvious. Instead, Steve responds that IT is already one of the company's most expensive functions, Phoenix is over budget, new headcount is out of the question, and layoffs may be more likely than growth. The immediate staffing shortage is real, but the larger problem is that the company does not yet see IT's work as value-creating enough to justify the capacity it needs."
+    impact: "Even accurate operational diagnosis cannot win support when leadership experiences IT primarily as cost and broken promises. That drives layoffs, outsourcing threats, and pressure to do more work with less capacity than the system actually requires."
+    icon: "badge-dollar-sign"
+    severity: high
+    color: "#6366f1"
+
   # Segment 3: Bottlenecks and Flow
   - id: work-piles-up
     title: "Work Piles Up at Bottlenecks"
@@ -154,6 +164,36 @@ challenges:
     icon: "git-branch"
     severity: high
     color: "#6366f1"
+
+  - id: business-pressure
+    title: "Business Pressure Overrides Readiness"
+    subtitle: "Market promises turn Phoenix into a forced launch"
+    segment: segment-3
+    description: "Competition, slipping market share, board scrutiny, analyst expectations, and Sarah's constant escalation turn Phoenix into more than a project. By the time Bill and Wes warn that the launch is reckless, the date has become a public promise the company feels it cannot delay."
+    impact: "Operational warnings are treated as hesitation, risky shortcuts multiply, and after go-live the same pressure keeps demanding answers, fixes, and public reassurance while the system is still on fire."
+    icon: "megaphone"
+    severity: critical
+    color: "#f43f5e"
+
+  - id: ground-floor-disconnect
+    title: "Ground-Floor Reality Gets Ignored"
+    subtitle: "Store operations absorb the cost of a bad launch"
+    segment: segment-3
+    description: "Phoenix goes live at 5 p.m. on Friday, but by Saturday morning the consequences are landing on store staff and customers. With POS systems down, stores fall back to manual tills, manual card swipes, shoeboxes full of carbon-copy receipts, emergency trips for change supplies, and frantic calls into IT from around 120 stores. The launch decision was made far above the ground floor, but the damage is felt immediately by the people trying to serve customers."
+    impact: "The book's core operational lesson becomes visible: IT systems are not back-office abstractions. When they fail, frontline work breaks, customers wait, and the business literally cannot transact normally."
+    icon: "store"
+    severity: critical
+    color: "#f97316"
+
+  - id: order-integrity-collapse
+    title: "Order Integrity Collapses In Public"
+    subtitle: "Missing orders, duplicate charges, and a security breach"
+    segment: segment-3
+    description: "The Phoenix failure is not just slowness. Orders go missing, some customers are double- or triple-charged, Finance has to open another war room to process faxed problem orders, and the website eventually leaks customer credit card numbers when sessions crash. What began as a go-live turns into a public fiasco with security, finance, operations, and customer trust all breaking at once."
+    impact: "Customer trust is damaged, reconciliation work explodes, journalists and social media amplify the failure, and the company is forced into costly remediation while normal business operations remain unstable."
+    icon: "receipt"
+    severity: critical
+    color: "#ef4444"
 
   # Segment 4: Quality, Feedback, and Risk Reduction
   - id: deployment-failures

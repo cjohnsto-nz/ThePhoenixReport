@@ -1,6 +1,7 @@
 import yaml from 'js-yaml';
 import type {
   TimelineData,
+  LessonsData,
   ConceptsData,
   CharactersData,
   ChallengesData,
@@ -10,6 +11,7 @@ import type {
 
 // Import raw YAML files
 import timelineYaml from './data/timeline.yaml?raw';
+import lessonsYaml from './data/lessons.yaml?raw';
 import conceptsYaml from './data/concepts.yaml?raw';
 import charactersYaml from './data/characters.yaml?raw';
 import challengesYaml from './data/challenges.yaml?raw';
@@ -20,6 +22,7 @@ function parse<T>(raw: string): T {
 }
 
 export const timelineData = parse<TimelineData>(timelineYaml);
+export const lessonsData = parse<LessonsData>(lessonsYaml);
 export const conceptsData = parse<ConceptsData>(conceptsYaml);
 export const charactersData = parse<CharactersData>(charactersYaml);
 export const challengesData = parse<ChallengesData>(challengesYaml);
@@ -45,6 +48,9 @@ export function lookupItem(type: string, id: string) {
           characterRole: character.role,
           avatar: character.avatar,
           color: character.color,
+          imagePath: quote.imagePath,
+          imageAlt: quote.imageAlt,
+          imageCaption: quote.imageCaption,
         };
         return item;
       }

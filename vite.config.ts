@@ -348,7 +348,6 @@ function localTimelineEditorPlugin(): Plugin {
             : updateSegmentFieldText(raw, payload.target, script, clear);
 
           await fs.writeFile(timelinePath, nextRaw, 'utf8');
-          server.ws.send({ type: 'full-reload', path: '*' });
 
           sendJson(response, 200, {
             ok: true,

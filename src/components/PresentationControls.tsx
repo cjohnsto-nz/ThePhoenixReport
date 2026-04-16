@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { usePresentation } from '../PresentationContext';
 import { useControls } from '../ControlsContext';
 import { WindowPortal } from './WindowPortal';
+import { lookupItem } from '../data';
+import type { TimelineReveal } from '../types';
 
 const LOCAL_TELEPROMPTER_SAVE_ENDPOINT = '/__local/timeline-script';
 const TELEPROMPTER_EMPTY_HINT = 'Add modalStep/globalStep script in timeline.yaml to drive the teleprompter.';
@@ -35,6 +37,20 @@ type TeleprompterSaveState =
   | { status: 'saving'; message: string }
   | { status: 'saved'; message: string }
   | { status: 'error'; message: string };
+
+type RevealScriptBundle = {
+  reveal: TimelineReveal;
+  modal: {
+    name: string;
+    script: string;
+    target: TeleprompterEditTarget;
+  };
+  global: {
+    name: string;
+    script: string;
+    target: TeleprompterEditTarget;
+  };
+};
 
 function getTeleprompterEditTarget({
   currentSegment,
@@ -126,6 +142,69 @@ function stepViewTone(view?: 'page' | 'modal' | 'global' | null) {
   if (view === 'modal') return 'bg-phoenix-500/15 text-phoenix-100 border-phoenix-400/20';
   if (view === 'global') return 'bg-sky-500/15 text-sky-100 border-sky-400/20';
   return 'bg-white/[0.05] text-white/70 border-white/[0.08]';
+}
+
+function getRevealTitle(reveal: TimelineReveal) {
+  const item = lookupItem(reveal.type, reveal.id) as { title?: string; name?: string; characterName?: string } | undefined;
+  if (typeof item?.characterName === 'string') {
+    return `${item.characterName} quote`;
+  }
+  return item?.title ?? item?.name ?? reveal.id;
+}
+
+function getRevealPrimaryScript(reveal: TimelineReveal) {
+  const item = lookupItem(reveal.type, reveal.id) as Record<string, unknown> | undefined;
+  const text = typeof item?.text === 'string' ? item.text : undefined;
+  const description = typeof item?.description === 'string' ? item.description : undefined;
+  const impact = typeof item?.impact === 'string' ? item.impact : undefined;
+  const arc = typeof item?.arc === 'string' ? item.arc : undefined;
+  const subtitle = typeof item?.subtitle === 'string' ? item.subtitle : undefined;
+  return text ?? description ?? impact ?? arc ?? subtitle;
+}
+
+function getRevealSecondaryScript(reveal: TimelineReveal) {
+  const item = lookupItem(reveal.type, reveal.id) as Record<string, unknown> | undefined;
+  const text = typeof item?.text === 'string' ? item.text : undefined;
+  const impact = typeof item?.impact === 'string' ? item.impact : undefined;
+  const arc = typeof item?.arc === 'string' ? item.arc : undefined;
+  const subtitle = typeof item?.subtitle === 'string' ? item.subtitle : undefined;
+  const description = typeof item?.description === 'string' ? item.description : undefined;
+  return impact ?? arc ?? subtitle ?? text ?? description;
+}
+
+function getRevealScriptBundle(
+  currentSegment: { id: string; reveals: TimelineReveal[] } | undefined,
+  currentContentStepIndex: number | null,
+) {
+  if (!currentSegment || currentContentStepIndex === null) return null;
+
+  const reveal = currentSegment.reveals[Math.floor(currentContentStepIndex / 2)];
+  if (!reveal) return null;
+
+  const title = getRevealTitle(reveal);
+  return {
+    reveal,
+    modal: {
+      name: reveal.modalStep?.name ?? title,
+      script: reveal.modalStep?.script ?? getRevealPrimaryScript(reveal) ?? '',
+      target: {
+        kind: 'reveal-step',
+        segmentId: currentSegment.id,
+        revealId: reveal.id,
+        step: 'modal',
+      },
+    },
+    global: {
+      name: reveal.globalStep?.name ?? `${title} in context`,
+      script: reveal.globalStep?.script ?? getRevealSecondaryScript(reveal) ?? getRevealPrimaryScript(reveal) ?? '',
+      target: {
+        kind: 'reveal-step',
+        segmentId: currentSegment.id,
+        revealId: reveal.id,
+        step: 'global',
+      },
+    },
+  } satisfies RevealScriptBundle;
 }
 
 function ModeToggle({ isRemote = false }: { isRemote?: boolean }) {
@@ -390,6 +469,8 @@ function RemoteControlsView() {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const isLocalTeleprompterEditor = import.meta.env.DEV;
   const [draftScript, setDraftScript] = useState('');
+  const [modalDraft, setModalDraft] = useState('');
+  const [globalDraft, setGlobalDraft] = useState('');
   const [saveState, setSaveState] = useState<TeleprompterSaveState>({ status: 'idle' });
 
   const totalDurationSec = split.overallTarget;
@@ -421,11 +502,19 @@ function RemoteControlsView() {
     currentContentStepIndex: state.currentContentStepIndex,
   });
   const canEditCurrentStep = isLocalTeleprompterEditor && Boolean(currentStep && currentEditTarget);
+  const currentRevealBundle =
+    !isStandaloneSegment && state.segmentScreen === 'content'
+      ? getRevealScriptBundle(currentSegment, state.currentContentStepIndex)
+      : null;
+  const canEditRevealBundle = isLocalTeleprompterEditor && Boolean(currentRevealBundle);
+  const activeBundleView = currentStep?.view === 'modal' || currentStep?.view === 'global' ? currentStep.view : null;
 
   useEffect(() => {
     setDraftScript(currentStep?.script ?? '');
+    setModalDraft(currentRevealBundle?.modal.script ?? '');
+    setGlobalDraft(currentRevealBundle?.global.script ?? '');
     setSaveState({ status: 'idle' });
-  }, [currentStep?.id, currentStep?.script]);
+  }, [currentStep?.id, currentStep?.script, currentRevealBundle?.reveal.id, currentRevealBundle?.modal.script, currentRevealBundle?.global.script]);
 
   useEffect(() => {
     if (saveState.status !== 'saved') return;
@@ -478,8 +567,12 @@ function RemoteControlsView() {
     };
   }, [dispatch, state.mode, state.stagedId]);
 
-  const saveTeleprompterScript = async (clear = false) => {
-    if (!currentEditTarget) return;
+  const saveTeleprompterScript = async (
+    target: TeleprompterEditTarget | null,
+    script: string,
+    clear = false,
+  ) => {
+    if (!target) return;
 
     setSaveState({
       status: 'saving',
@@ -493,8 +586,8 @@ function RemoteControlsView() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          target: currentEditTarget,
-          script: draftScript,
+          target,
+          script,
           clear,
         }),
       });
@@ -574,66 +667,142 @@ function RemoteControlsView() {
                     {stepViewLabel(currentStep?.view ?? null)}
                   </div>
                 </div>
-                {isLocalTeleprompterEditor ? (
-                  <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-white/40">
-                    <span className="rounded-full border border-phoenix-400/20 bg-phoenix-500/10 px-3 py-1 text-phoenix-100/85">
-                      Local editor
-                    </span>
-                    <span>Edits write directly to src/data/timeline.yaml while the dev server is running.</span>
-                    <span className="text-white/28">{describeTeleprompterEditTarget(currentEditTarget)}</span>
-                    <button
-                      onClick={() => void saveTeleprompterScript(true)}
-                      disabled={!canEditCurrentStep || saveState.status === 'saving'}
-                      className="rounded-full border border-white/[0.08] px-3 py-1 text-white/65 transition-colors hover:border-white/[0.14] hover:text-white disabled:cursor-default disabled:text-white/20 disabled:hover:border-white/[0.08] disabled:hover:text-white/20"
-                    >
-                      Clear YAML field
-                    </button>
-                    <button
-                      onClick={() => void saveTeleprompterScript(false)}
-                      disabled={!canEditCurrentStep || saveState.status === 'saving'}
-                      className="rounded-full border border-phoenix-400/20 bg-phoenix-500/10 px-3 py-1 text-phoenix-100/85 transition-colors hover:border-phoenix-300/30 hover:bg-phoenix-500/16 disabled:cursor-default disabled:border-white/[0.08] disabled:bg-white/[0.04] disabled:text-white/20"
-                    >
-                      {saveState.status === 'saving' ? 'Saving...' : 'Save to YAML'}
-                    </button>
-                    {saveState.status !== 'idle' ? (
-                      <span className={saveState.status === 'error' ? 'text-red-200/80' : 'text-emerald-200/80'}>
-                        {saveState.message}
-                      </span>
-                    ) : null}
-                  </div>
-                ) : null}
               </div>
 
               <div className="flex-1 min-h-0 overflow-auto px-7 py-7 xl:px-8 xl:py-8">
                 <AnimatePresence mode="wait">
                   <motion.div
-                    key={currentStep?.id ?? 'teleprompter-empty'}
+                    key={currentRevealBundle ? currentRevealBundle.reveal.id : currentStep?.id ?? 'teleprompter-empty'}
                     initial={{ opacity: 0, y: 14 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -14 }}
                     transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                   >
-                    <div className="max-w-[62rem]">
-                      {canEditCurrentStep ? (
-                        <textarea
-                          value={draftScript}
-                          onChange={(event) => setDraftScript(event.target.value)}
-                          onKeyDown={(event) => {
-                            if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 's') {
-                              event.preventDefault();
-                              void saveTeleprompterScript(false);
-                            }
-                          }}
-                          placeholder={TELEPROMPTER_EMPTY_HINT}
-                          spellCheck={false}
-                          className="min-h-[24rem] w-full resize-none border-0 bg-transparent p-0 text-[clamp(1.45rem,2.25vw,2.55rem)] leading-[1.38] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
-                        />
-                      ) : (
-                        <p className="text-[clamp(1.45rem,2.25vw,2.55rem)] leading-[1.38] text-white/92 whitespace-pre-line tracking-[-0.01em]">
-                          {currentStep?.script || TELEPROMPTER_EMPTY_HINT}
-                        </p>
-                      )}
-                    </div>
+                    {currentRevealBundle ? (
+                      <div className="grid gap-6 xl:grid-cols-2">
+                        <div className={`rounded-2xl border px-5 py-5 transition-colors ${activeBundleView === 'modal' ? 'border-phoenix-400/30 bg-phoenix-500/[0.07]' : 'border-white/[0.08] bg-white/[0.02]'}`}>
+                          <div className="flex items-center justify-between gap-3 mb-4">
+                            <div>
+                              <div className="text-[11px] uppercase tracking-[0.26em] text-phoenix-300/60 font-semibold">Modal Script</div>
+                              <div className="text-lg font-semibold text-white/88 mt-2">{currentRevealBundle.modal.name}</div>
+                            </div>
+                            <span className={`px-3 py-1 rounded-full text-[11px] font-semibold border ${stepViewTone('modal')}`}>
+                              On-screen
+                            </span>
+                          </div>
+                          {canEditRevealBundle ? (
+                            <div>
+                              <textarea
+                                value={modalDraft}
+                                onChange={(event) => setModalDraft(event.target.value)}
+                                onKeyDown={(event) => {
+                                  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 's') {
+                                    event.preventDefault();
+                                    void saveTeleprompterScript(currentRevealBundle.modal.target, modalDraft, false);
+                                  }
+                                }}
+                                placeholder={TELEPROMPTER_EMPTY_HINT}
+                                spellCheck={false}
+                                className="min-h-[18rem] w-full resize-none border-0 bg-transparent p-0 text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
+                              />
+                              <div className="mt-4 flex items-center gap-3 text-xs text-white/40">
+                                <button
+                                  onClick={() => void saveTeleprompterScript(currentRevealBundle.modal.target, modalDraft, true)}
+                                  disabled={saveState.status === 'saving'}
+                                  className="rounded-full border border-white/[0.08] px-3 py-1 text-white/65 transition-colors hover:border-white/[0.14] hover:text-white disabled:cursor-default disabled:text-white/20"
+                                >
+                                  Clear
+                                </button>
+                                <button
+                                  onClick={() => void saveTeleprompterScript(currentRevealBundle.modal.target, modalDraft, false)}
+                                  disabled={saveState.status === 'saving'}
+                                  className="rounded-full border border-phoenix-400/20 bg-phoenix-500/10 px-3 py-1 text-phoenix-100/85 transition-colors hover:border-phoenix-300/30 hover:bg-phoenix-500/16 disabled:cursor-default disabled:border-white/[0.08] disabled:bg-white/[0.04] disabled:text-white/20"
+                                >
+                                  Save modal
+                                </button>
+                                {activeBundleView === 'modal' ? <span className="text-phoenix-200/70">Active</span> : null}
+                              </div>
+                            </div>
+                          ) : (
+                            <p className="whitespace-pre-line text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 tracking-[-0.01em]">
+                              {currentRevealBundle.modal.script || TELEPROMPTER_EMPTY_HINT}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className={`rounded-2xl border px-5 py-5 transition-colors ${activeBundleView === 'global' ? 'border-sky-400/30 bg-sky-500/[0.06]' : 'border-white/[0.08] bg-white/[0.02]'}`}>
+                          <div className="flex items-center justify-between gap-3 mb-4">
+                            <div>
+                              <div className="text-[11px] uppercase tracking-[0.26em] text-sky-300/60 font-semibold">Global Script</div>
+                              <div className="text-lg font-semibold text-white/88 mt-2">{currentRevealBundle.global.name}</div>
+                            </div>
+                            <span className={`px-3 py-1 rounded-full text-[11px] font-semibold border ${stepViewTone('global')}`}>
+                              After placement
+                            </span>
+                          </div>
+                          {canEditRevealBundle ? (
+                            <div>
+                              <textarea
+                                value={globalDraft}
+                                onChange={(event) => setGlobalDraft(event.target.value)}
+                                onKeyDown={(event) => {
+                                  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 's') {
+                                    event.preventDefault();
+                                    void saveTeleprompterScript(currentRevealBundle.global.target, globalDraft, false);
+                                  }
+                                }}
+                                placeholder={TELEPROMPTER_EMPTY_HINT}
+                                spellCheck={false}
+                                className="min-h-[18rem] w-full resize-none border-0 bg-transparent p-0 text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
+                              />
+                              <div className="mt-4 flex items-center gap-3 text-xs text-white/40">
+                                <button
+                                  onClick={() => void saveTeleprompterScript(currentRevealBundle.global.target, globalDraft, true)}
+                                  disabled={saveState.status === 'saving'}
+                                  className="rounded-full border border-white/[0.08] px-3 py-1 text-white/65 transition-colors hover:border-white/[0.14] hover:text-white disabled:cursor-default disabled:text-white/20"
+                                >
+                                  Clear
+                                </button>
+                                <button
+                                  onClick={() => void saveTeleprompterScript(currentRevealBundle.global.target, globalDraft, false)}
+                                  disabled={saveState.status === 'saving'}
+                                  className="rounded-full border border-sky-400/20 bg-sky-500/10 px-3 py-1 text-sky-100/85 transition-colors hover:border-sky-300/30 hover:bg-sky-500/16 disabled:cursor-default disabled:border-white/[0.08] disabled:bg-white/[0.04] disabled:text-white/20"
+                                >
+                                  Save global
+                                </button>
+                                {activeBundleView === 'global' ? <span className="text-sky-200/70">Active</span> : null}
+                              </div>
+                            </div>
+                          ) : (
+                            <p className="whitespace-pre-line text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 tracking-[-0.01em]">
+                              {currentRevealBundle.global.script || TELEPROMPTER_EMPTY_HINT}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    ) : (
+                      <div className="max-w-[62rem]">
+                        {canEditCurrentStep ? (
+                          <textarea
+                            value={draftScript}
+                            onChange={(event) => setDraftScript(event.target.value)}
+                            onKeyDown={(event) => {
+                              if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 's') {
+                                event.preventDefault();
+                                void saveTeleprompterScript(currentEditTarget, draftScript, false);
+                              }
+                            }}
+                            placeholder={TELEPROMPTER_EMPTY_HINT}
+                            spellCheck={false}
+                            className="min-h-[24rem] w-full resize-none border-0 bg-transparent p-0 text-[clamp(1.16rem,1.7vw,1.75rem)] leading-[1.46] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
+                          />
+                        ) : (
+                          <p className="text-[clamp(1.16rem,1.7vw,1.75rem)] leading-[1.46] text-white/92 whitespace-pre-line tracking-[-0.01em]">
+                            {currentStep?.script || TELEPROMPTER_EMPTY_HINT}
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </motion.div>
                 </AnimatePresence>
               </div>
