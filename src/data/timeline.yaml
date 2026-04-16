@@ -20,9 +20,9 @@ presentation:
         bleeding confidence on Wall Street, and running out of time. The board has
         forced leadership changes. The competition keeps shipping capabilities that Parts
         Unlimited cannot match. And the company has staked its survival on one giant
-        transformation program called Phoenix, which is already years late. This is the
-        story of how that pressure collides with an IT organisation that cannot yet see
-        the system it is trying to run.
+        transformation program called Phoenix, which is already years late. All of that
+        pressure is about to collide with an IT organisation that cannot yet see the
+        system it is trying to run.
       narrativeArc: >-
         A struggling retailer bets its future on one giant program while the systems
         underneath it are already straining.
@@ -49,12 +49,12 @@ presentation:
         with no visibility, brittle knowledge silos, and promises being made long before
         capacity and readiness are understood.
       summary: >-
-        Bill's first days teach those opening lessons the hard way. Reliability failures
-        become business crises immediately. Changes nobody can see cannot be governed.
-        Knowledge trapped in Brent makes every emergency more dangerous, business leaders keep
-        committing to Phoenix without understanding operational reality, and trust in IT keeps
-        eroding with every miss. Phoenix plus the audit show that the company is suffering from
-        systemic governance debt, not one isolated mistake.
+        In Bill's first days, reliability failures become business crises immediately.
+        Changes nobody can see cannot be governed. Knowledge trapped in Brent makes every
+        emergency more dangerous, business leaders keep committing to Phoenix without
+        understanding operational reality, and trust in IT keeps eroding with every miss.
+        Phoenix plus the audit reveal a company suffering from systemic governance debt,
+        not one isolated mistake.
       reveals:
         - type: "character"
           id: "bill-palmer"
@@ -95,7 +95,7 @@ presentation:
           globalStep:
             name: "Phoenix becomes the lens"
             script: |-
-              From this point forward, every outage, shortcut, and delay becomes more dangerous, because the business believes Phoenix is the program that will save everything else.
+              Now every outage, shortcut, and delay becomes more dangerous, because the business believes Phoenix is the program that will save everything else.
         - type: "epic"
           id: "payroll-failure"
           modalStep:
@@ -111,11 +111,11 @@ presentation:
           modalStep:
             name: "Meet Patty McKee"
             script: |-
-              In the payroll war room, Bill meets Patty McKee. Patty is quiet, precise, and methodical. She runs IT Service Support and becomes the person who can turn a room full of anxiety into something that looks like a process. She is not introduced as an abstract champion of discipline. She first appears in the middle of a live business crisis, trying to bring order to chaos.
+              In the payroll war room, Bill meets Patty McKee. Patty is quiet, precise, and methodical. She runs IT Service Support and can turn a room full of anxiety into something that looks like a process. She arrives in the middle of a live business crisis, trying to bring order to chaos.
           globalStep:
             name: "Patty starts to make chaos legible"
             script: |-
-              Patty's first impression matters. She is not there to add more bureaucracy. She is there to give Bill a way to see the work clearly enough to manage it.
+              She is not there to add more bureaucracy. She is there to give Bill a way to see the work clearly enough to manage it.
         - type: character
           id: wes-davis
           modalStep:
@@ -170,14 +170,14 @@ presentation:
           modalStep:
             name: "Meet Sarah Moulton"
             script: >-
-              Once payroll is barely under control, Sarah Moulton enters the story. Sarah is
+              Once payroll is barely under control, Sarah Moulton arrives. Sarah is
               the Senior Vice President of Retail Operations, and she speaks for a business
               that has been promised Phoenix for years. She does not arrive asking for nuance.
               She arrives demanding a date.
           globalStep:
             name: "Business pressure gets a voice"
             script: >-
-              Sarah matters because Bill is no longer explaining technical risk into an open
+              Bill is no longer explaining technical risk into an open
               conversation. He is speaking into a room that has already decided speed is
               survival.
 
@@ -194,9 +194,9 @@ presentation:
           globalStep:
             name: "Promises are outrunning capacity"
             script: >-
-              What makes these commitments blind is that the business is not choosing between two
-              fully understood options. It is promising an outcome before the operational work has
-              been honestly sized, sequenced, or resourced.
+              The business is not choosing between two fully understood options. It is
+              promising an outcome before the operational work has been honestly sized,
+              sequenced, or resourced.
 
         - type: quote
           id: sarah-touching-story
@@ -210,8 +210,8 @@ presentation:
           globalStep:
             name: "Risk gets reframed as hesitation"
             script: >-
-              Sarah's quote lands because it shows how quickly genuine technical risk gets
-              dismissed once a deadline has become a business promise.
+              Genuine technical risk gets dismissed the moment a deadline hardens into a
+              business promise.
 
         - type: challenge
           id: it-unreliable
@@ -219,8 +219,8 @@ presentation:
             name: "The business no longer believes IT can deliver"
             script: >-
               Sarah says it outright: because IT caused the payroll failure and Phoenix is already
-              late, she does not think the business can depend on Bill and his team. By this point,
-              every miss is no longer being read as a system problem. It is being read as evidence
+              late, she does not think the business can depend on Bill and his team. Now every
+              miss is no longer being read as a system problem. It is being read as evidence
               that IT is slow, broken, and untrustworthy.
           globalStep:
             name: "Credibility is collapsing along with the schedule"
@@ -255,8 +255,9 @@ presentation:
           globalStep:
             name: "Invisible work drives every bad decision"
             script: >-
-              The deepest problem in the opening is visibility. A system you cannot see is a system
-              you can only react to, and reaction is all this organisation has left.
+              Nobody can see the full system, so everyone is reduced to reacting. A system you
+              cannot see is a system you can only react to, and reaction is all this
+              organisation has left.
 
         - type: "epic"
           id: "audit-compliance"
@@ -279,8 +280,9 @@ presentation:
         for the deeper cause. He expected to find a few broken processes. What he actually
         finds is a system drowning in work it has already accepted.
       contentSetupScript: >-
-        Here the story changes from incident response to diagnosis. Patty gives
-        Bill numbers. Erik gives him language. And together they make the chaos measurable.
+        The first wave of crises settles just enough for Bill to stop reacting and start
+        diagnosing. Patty gives him numbers. Erik gives him language. Together they make the
+        chaos measurable.
       narrativeArc: >-
         Once the smoke clears enough to see the board, Bill discovers the real enemy is
         overload.
@@ -289,26 +291,24 @@ presentation:
         and even obvious staffing problems will be dismissed if the business sees IT as
         cost instead of value.
       summary: >-
-        Here the system becomes measurable. Bill learns that demand is far
-        larger than anyone has admitted, that Brent is functioning as the constraint for both
-        project work and operational work, and that the change board has exposed a whole class
-        of work the company was barely counting. He also sees how overload turns into daily
-        context switching, stalled critical-path work, and public deadline slippage. And he
-        learns something wider than staffing: when executives experience IT mainly as high cost
-        and weak delivery, even a correct capacity diagnosis will not automatically earn more
-        support. By this point, the team can see the overload clearly, but the business
-        still drives Phoenix toward launch anyway.
+        Demand turns out to be far larger than anyone has admitted. Brent is functioning as
+        the constraint for both project work and operational work, and the change board
+        exposes a whole class of work the company was barely counting. Overload turns into
+        daily context switching, stalled critical-path work, and public deadline slippage.
+        And even a correct capacity diagnosis does not automatically win support when
+        executives still experience IT mainly as high cost and weak delivery. The overload
+        is clear, but the business still drives Phoenix toward launch anyway.
       reveals:
         - type: "character"
           id: "erik-reid"
           modalStep:
             name: "Meet Erik Reid"
             script: |-
-              Bill goes to a meeting and mistakes Erik Reid for the doughnut delivery man. Erik is kneeling on the floor unpacking Vandal Doughnuts, wearing wrinkled khakis and an untucked denim shirt. Then he stands up, introduces himself, and Bill realises he is talking to the board candidate who is about to become his mentor. Erik's role in the story is not to hand Bill a quick fix. He gives Bill an assignment: learn to see the different kinds of work entering IT, and then learn the principles that govern how that work must flow.
+              Bill goes to a meeting and mistakes Erik Reid for the doughnut delivery man. Erik is kneeling on the floor unpacking Vandal Doughnuts, wearing wrinkled khakis and an untucked denim shirt. Then he stands up, introduces himself, and Bill realises he is talking to the board candidate who is about to become his mentor. Erik does not hand Bill a quick fix. He gives him an assignment: learn to see the different kinds of work entering IT, and then learn the principles that govern how that work must flow.
           globalStep:
             name: "Erik changes the conversation"
             script: |-
-              Erik does not start by telling Bill how to fix payroll or Phoenix. He takes him to the MRP-8 plant, shows him piles of work in front of the heat-treat oven, and teaches him to see IT as a flow system with constraints. From then on, Erik keeps giving Bill two linked lessons: first, name the work correctly; then learn the ways a healthy system manages that work.
+              Erik does not start by telling Bill how to fix payroll or Phoenix. He takes him to the MRP-8 plant, shows him piles of work in front of the heat-treat oven, and teaches him to see IT as a flow system with constraints. From then on, he keeps forcing Bill to do two things: name the work correctly, then learn the ways a healthy system manages that work.
         - type: "quote"
           id: "erik-what-is-work"
           modalStep:
@@ -316,9 +316,9 @@ presentation:
             script: |-
               Erik ends the plant visit with a deceptively simple question: what then, exactly, is your definition of work? Bill has been managing tasks, outages, and promises without a clear model of what kind of demand is entering the system.
           globalStep:
-            name: "The question behind the framework"
+            name: "Bill still cannot name the other work"
             script: |-
-              Erik leaves Bill with a slip of paper and a challenge: you have already named one type of work, now go find the other three. What Erik means is business project work like Phoenix, the visible work everyone talks about. Bill can recognize that category, but he still cannot name the internal work, the changes, or the last and most destructive category.
+              Erik leaves Bill with a slip of paper and a challenge: you have already named one type of work, now go find the other three. Bill can recognize business project work like Phoenix, the visible work everyone talks about. But he still cannot name the internal work, the changes, or the last and most destructive category.
         - type: challenge
           id: high-wip
           modalStep:
@@ -331,7 +331,7 @@ presentation:
           globalStep:
             name: "Overload becomes visible"
             script: >-
-              Overload becomes visible here, and intuition finally gives way to evidence. The organisation is not
+              The overload is finally visible, and intuition gives way to evidence. The organisation is not
               failing because people do not care. It is failing because it has said yes to far
               more work than it can physically carry.
 
@@ -364,8 +364,7 @@ presentation:
           globalStep:
             name: "The value problem becomes unmistakable"
             script: >-
-              The staffing conversation matters so much because Bill is no longer arguing
-              only about capacity. He is colliding with an executive worldview that sees IT as
+              Bill is no longer arguing only about capacity. He is colliding with an executive worldview that sees IT as
               cost before value. If leadership sees the function that way, every request for
               headcount sounds like overhead instead of protection for the business.
 
@@ -388,14 +387,14 @@ presentation:
         - type: quote
           id: bill-system-gets-dumber
           modalStep:
-            name: "Bill turns the bottleneck into a management lesson"
+            name: "Bill reframes Brent as a system problem"
             script: >-
               Bill does not frame Brent as the problem. He frames the surrounding system as
               the problem. The danger is not just that Brent is overloaded. It is that every
               rescue leaves more knowledge trapped in Brent's head, so the next crisis is
               even more dependent on him than the last one.
           globalStep:
-            name: "The response is protection and knowledge transfer"
+            name: "Brent gets protected and his knowledge starts spreading"
             script: >-
               Bill creates the level-three escalation pool, gates access to
               Brent, and insists that other engineers document what they learn. He is trying
@@ -470,14 +469,13 @@ presentation:
           modalStep:
             name: "The first type of work"
             script: >-
-              Erik meant this category when he said Bill had already named one type without realizing it.
               The first type is business project work: the visible initiatives executives care
               about, like Phoenix. These are the projects everyone talks about, funds, tracks,
               and escalates.
           globalStep:
             name: "Not all demand is the same"
             script: >-
-              It sounds obvious, but it matters because until now the organisation has mostly
+              Until now the organisation has mostly
               treated visible business projects as if they were the whole queue. The rest of the
               demand has been mixed in underneath them and managed far less explicitly.
 
@@ -490,7 +488,7 @@ presentation:
               infrastructure changes. This work is often invisible to the business, which
               makes it easy to defer, even though it is what keeps the first type possible.
           globalStep:
-            name: "Invisible support work matters"
+            name: "Invisible support work keeps delivery possible"
             script: >-
               Once Bill sees internal projects as a distinct class of work, he can explain why
               starving them eventually makes every business promise harder to keep.
@@ -506,10 +504,9 @@ presentation:
           globalStep:
             name: "Routine work can still destabilise the system"
             script: >-
-              Patty's boards matter so much because change work is not background noise.
-              It is a major source of both risk and load. But even here, Bill still has not
-              solved Erik's puzzle. He can feel there is one more destructive category he has
-              not yet learned to name.
+              Change work is not background noise. It is a major source of both risk and
+              load. But Bill still has not solved Erik's puzzle. He can feel there is one
+              more destructive category he has not yet learned to name.
 
     - id: segment-3
       title: "Unplanned Work, Flow, and the Freeze"
@@ -528,7 +525,7 @@ presentation:
         Bill is trying to hold Phoenix work together while everything else keeps intruding on
         it. The arguments over readiness are still live, the handoffs between Development and
         Operations are still messy, and Friday night is arriving faster than the system is
-        stabilizing. What matters here is whether anyone will listen before the rollout goes
+        stabilizing. The question is whether anyone will listen before the rollout goes
         past the point where it can still be stopped.
       narrativeArc: >-
         Bill watches competing priorities and bad handoffs starve the launch, loses the
@@ -675,13 +672,13 @@ presentation:
             script: >-
               In the middle of the Phoenix cleanup, Chris Allers, the head of development,
               does something new. He apologises to Bill and agrees to meet with him regularly.
-              On paper that sounds small, but here it is huge. For the first time, Development
+              For the first time, Development
               and Operations start talking about the same system instead of defending their
               own silos.
           globalStep:
             name: "Blame gives way to coordination"
             script: >-
-              Chris matters here because no amount of operational excellence can save a value
+              No amount of operational excellence can save a value
               stream that is still organised around rivalry and blame.
 
         - type: challenge
@@ -700,8 +697,8 @@ presentation:
           globalStep:
             name: "Bill is finally managing the system, not feeding the reflex"
             script: >-
-              The key point is not that Bill has become passive. It is the opposite. He is
-              finally leading the way he thinks the system must be led: gather evidence,
+              Bill has not become passive. He is finally leading the way he thinks the system
+              must be led: gather evidence,
               control the blast radius, and stop making Brent the answer to every fire.
 
         - type: quote
@@ -743,9 +740,8 @@ presentation:
               Steve does not bully Bill back. He apologises, admits he delegated IT away,
               says Erik and the audit committee forced him to face how badly he has handled
               the relationship, and offers Bill ninety days to try again with real backing.
-              That is the beginning of Steve's character change. He stops demanding rescue
-              and starts asking Bill to help him understand the system he has been making
-              worse.
+              He stops demanding rescue and starts asking Bill to help him understand the
+              system he has been making worse.
 
         - type: quote
           id: steve-say-no-with-data
@@ -764,8 +760,7 @@ presentation:
           globalStep:
             name: "Capacity planning becomes the basis for commitment"
             script: >-
-              Erik's plant lesson finally lands in executive language here. In the
-              plant, they check bills of material, routings, work centers, and existing load
+              In the plant, they check bills of material, routings, work centers, and existing load
               before accepting an order. Bill now sees that IT needs the same discipline before
               it accepts another project, and that projects should be screened against three
               questions: do they improve flow, do they strengthen operational stability, and do
@@ -808,26 +803,26 @@ presentation:
           globalStep:
             name: "The blockage becomes visible"
             script: >-
-              The conversation changes at this point from why are smart people behind
-              to where, exactly, is flow being blocked.
+              Everyone can now see the real question: not why smart people are behind, but
+              where flow is actually being blocked.
 
         - type: concept
           id: four-types-unplanned
           modalStep:
             name: "Bill finally names the fourth type"
             script: >-
-              The realization finally lands here. After Phoenix blows up and Patty's
-              board shows that planned changes did not get finished because recovery work took
-              over, Bill finally sees what Erik meant. The fourth type is unplanned work:
+              After Phoenix blows up and Patty's board shows that planned changes did not get
+              finished because recovery work took over, Bill finally sees what Erik meant.
+              The fourth type is unplanned work:
               incidents, outages, recovery, escalations. It is the most destructive because it
               does not merely compete with planned work. It prevents planned work from being
               done at all.
           globalStep:
             name: "The puzzle Erik gave him clicks into place"
             script: >-
-              Bill did not understand this back at the plant. He had to live through the
+              Back at the plant, Bill could not answer Erik. He has to live through the
               Phoenix fiasco, watch unplanned work clear the board, and then call Erik with
-              the answer. Only here does the framework become fully real to him.
+              the answer before the framework becomes fully real to him.
 
         - type: challenge
           id: local-optimization
@@ -840,9 +835,8 @@ presentation:
           globalStep:
             name: "Local wins create global losses"
             script: >-
-              Erik's first big lesson lands at this point. Bill has now seen the
-              constraint, the queue, the damage from unplanned work, and the failure of each
-              silo to optimise the whole. 
+              Bill has now seen the constraint, the queue, the damage from unplanned work,
+              and the failure of each silo to optimise the whole.
 
         - type: challenge
           id: tech-debt-vs-features
@@ -906,26 +900,25 @@ presentation:
         dies in queues, handoffs, and undocumented dependencies. At the same time, Bill and John
         learn that many supposedly new problems are actually repeat findings and repeat patterns.
         Queue math makes long lead times visible, and audit scoping plus the Ron-and-Maggie sponsor
-        interviews make business risk visible in lost orders, stockouts, and bad demand signals. By
-        this point, quality stops meaning 'inspect harder later' and starts meaning
-        shorter feedback loops, clearer release control, and business-aligned countermeasures.
+        interviews make business risk visible in lost orders, stockouts, and bad demand signals.
+        Quality now depends on shorter feedback loops, clearer release control, and
+        business-aligned countermeasures.
       reveals:
         - type: character
           id: john-pesche
           modalStep:
             name: "John arrives carrying the compliance worldview"
             script: >-
-              John Pesche enters the story as the person nobody in Operations wants in the
-              room. He carries the binder, talks in audit language, fast-tracks urgent control
-              work, and genuinely believes he is protecting the company from catastrophe. The
-              important thing is that John is not a caricature. He is directionally right that
-              the company has real control problems. What he cannot yet see is where the most
-              important risk is actually being created and caught.
+              In that room, John Pesche is the person nobody in Operations wants to see. He
+              carries the binder, talks in audit language, fast-tracks urgent control work,
+              and genuinely believes he is protecting the company from catastrophe. He is
+              directionally right that the company has real control problems. What he cannot
+              yet see is where the most important risk is actually being created and caught.
           globalStep:
             name: "The audit makes John's motive impossible to ignore"
             script: >-
-              The SOX findings make John matter, because they prove the control failures are
-              not imaginary. But at this point he is still fighting the problem in the only
+              The SOX findings prove the control failures are not imaginary. But at this
+              point he is still fighting the problem in the only
               way he knows how: push harder, add controls, and demand urgency from inside the
               security silo.
 
@@ -940,44 +933,42 @@ presentation:
           globalStep:
             name: "A repeat finding is proof the system did not learn"
             script: >-
-              The phrase matters because it changes the meaning of the audit. The issue is no
-              longer just control weakness. It is organisational memory failure.
+              The issue is no longer just control weakness. It is organisational memory
+              failure.
 
         - type: quote
           id: john-orange-jumpsuits
           modalStep:
             name: "John explains the fear underneath the posture"
             script: >-
-              John's abrasive style makes more sense once you hear the motive behind it. He
-              is trying to keep executives out of orange jumpsuits. The problem was never that
-              he cared too much about risk. The problem was that he had no way to connect risk
-              to the actual business system.
+              Underneath the abrasive posture is fear. John thinks he is keeping executives
+              out of orange jumpsuits. He is not wrong that the company has real risk.
+              What he still cannot do is connect that risk to the actual business system.
           globalStep:
             name: "The tokenization disaster shows the limit of John's model"
             script: >-
-              John's arc becomes painful instead of cartoonish here. He bypasses the
-              normal system to rush tokenization into production, helps trigger a payroll
-              disaster, and then learns in the audit meeting that the work was not even in
-              scope for SOX. He is chasing risk, but he is not yet tracing where the business
-              is actually relying on a control.
+              He bypasses the normal system to rush tokenization into production, helps
+              trigger a payroll disaster, and then learns in the audit meeting that the work
+              was not even in scope for SOX. He is chasing risk, but he is not yet tracing
+              where the business is actually relying on a control.
 
         - type: quote
           id: erik-end-to-end-business-process
           modalStep:
             name: "Erik names John's blind spot"
             script: >-
-              Erik's line reframes the whole audit story. He does not tell John
-              that controls are useless. He tells him that without seeing the end-to-end
-              business process, John cannot tell which controls are essential, which are
-              redundant, and which are solving the wrong problem entirely.
+              Erik does not tell John that controls are useless. He tells him that without
+              seeing the end-to-end business process, he cannot tell which controls are
+              essential, which are redundant, and which are solving the wrong problem
+              entirely.
           globalStep:
-            name: "The audit lesson becomes visible"
+            name: "Finance traces the real control path"
             script: >-
-              Later, Finance walks the auditors through the real flow of money and shows that
+              Finance then walks the auditors through the real flow of money and shows that
               even if upstream applications and infrastructure were compromised, material
-              errors would still be caught by manual reconciliation controls downstream. That
-              is the breakthrough: the company gets the auditors off its back not by claiming
-              perfect IT controls, but by proving where the relied-upon controls actually sit.
+              errors would still be caught by manual reconciliation controls downstream. The
+              company gets the auditors off its back not by claiming perfect IT controls, but
+              by proving where the relied-upon controls actually sit.
 
         - type: challenge
           id: failed-handoffs
@@ -991,29 +982,28 @@ presentation:
           globalStep:
             name: "Waiting becomes the real cost"
             script: >-
-              Patty's work matters here for the same reason Faye's audit walkthrough matters.
-              Both force the company to trace the real path instead of the org chart fantasy.
-              In an overloaded system, queue time matters more than touch time, and handoffs
-              hide the risk until somebody makes the flow visible.
+              Patty traces the work. Faye traces the controls. Both expose the same problem:
+              the real path looks nothing like the org chart. In an overloaded system, queue
+              time dominates touch time, and handoffs hide the risk until somebody makes the
+              flow visible.
 
         - type: quote
           id: bill-wait-time-busy-idle
           modalStep:
             name: "Bill makes the queue math visible"
             script: >-
-              Bill's chart is the cleanest visual summary of what he and Patty have just learned.
-              Once a person in the chain is near full utilization, work does not slow down a
-              little. It waits exponentially longer. So a task that looks like thirty minutes
-              of touch time turns into days of lead time because it keeps landing in somebody
-              else's queue.
+              Bill puts the queue math on the board. Once a person in the chain is near full
+              utilization, work does not slow down a little. It waits exponentially longer.
+              So a task that looks like thirty minutes of touch time turns into days of lead
+              time because it keeps landing in somebody else's queue.
           globalStep:
             name: "Overutilization is why the chain seizes up"
             script: >-
-              The late-mid lesson the team needed is that the problem is not merely that too
-              many people are busy. It is that every overloaded handoff magnifies the wait for
-              the next one. That is why Brent's quick tasks get stuck, why the whole task
-              chain becomes unpredictable, and why protecting capacity matters more than
-              keeping every person maximally utilized.
+              The problem is not merely that too many people are busy. It is that every
+              overloaded handoff magnifies the wait for the next one. That is why Brent's
+              quick tasks get stuck, why the whole task chain becomes unpredictable, and why
+              protecting capacity is more important than keeping every person maximally
+              utilized.
 
         - type: challenge
           id: long-lead-times
@@ -1035,15 +1025,15 @@ presentation:
           modalStep:
             name: "Releases still feel like a gamble"
             script: >-
-              The team attempts another major Phoenix deployment and once again runs into a
-              critical failure late in the game. This time the culprit is an undocumented
-              production database change. The lesson is painful: even after all the progress,
-              the organisation is still learning too late and in batches that are far too big.
+              Another major Phoenix deployment runs into a critical failure late in the game.
+              This time the culprit is an undocumented production database change. Even after
+              all the progress, the organisation is still learning too late and in batches
+              that are far too big.
           globalStep:
             name: "Release risk is designed in"
             script: >-
-              The important point is not that releases are risky. It is that the system was
-              still structured to discover risk at the most expensive possible moment.
+              The system is still structured to discover risk at the most expensive possible
+              moment.
 
         - type: challenge
           id: late-detection
@@ -1056,11 +1046,9 @@ presentation:
           globalStep:
             name: "Quality depends on timing"
             script: >-
-              Bill learns this lesson the expensive way: through payroll failures, broken
-              releases, audit findings, and defects discovered only when the blast radius is
-              already huge. That accumulation of pain is what leads him to the next idea:
-              quality improves only when feedback loops get shorter, earlier, and harder to
-              ignore.
+              Payroll failures, broken releases, audit findings, and defects discovered only
+              after the blast radius has spread all teach the same thing. Quality improves
+              only when feedback loops get shorter, earlier, and harder to ignore.
 
         - type: quote
           id: erik-three-ways
@@ -1068,10 +1056,10 @@ presentation:
             name: "Erik gives Bill the frame for what comes next"
             script: >-
               Erik had already told Bill that once he learned to control work at the system
-              level, he would be on his way toward understanding the Three Ways. By this point
-              in the story, Bill has lived enough failures to hear that lesson properly.
+              level, he would be on his way toward understanding the Three Ways. By now Bill
+              can finally hear him properly.
           globalStep:
-            name: "The audit story feeds directly into the Second Way"
+            name: "The same insight points to the Second Way"
             script: >-
               John learns to ask where the business truly relies on a control. Bill learns to
               ask how to surface problems sooner and closer to the source. Those are two sides
@@ -1091,20 +1079,20 @@ presentation:
           globalStep:
             name: "The business risk gets priced in orders and contracts"
             script: >-
-              Ron matters because he converts a technical outage into commercial loss. He also
-              reinforces the stockout problem: the company cannot forecast well because it still
-              does not know what customers actually want. That makes him the revenue-side half
-              of the sponsor interview sequence that Maggie completes from the retail side.
+              A technical outage is now visible as commercial loss. Ron also reinforces the
+              stockout problem: the company cannot forecast well because it still does not
+              know what customers actually want. He carries the revenue side of the sponsor
+              interviews that Maggie completes from the retail side.
 
         - type: quote
           id: ron-clueless-what-customers-want
           modalStep:
             name: "Ron names the demand-signal failure outright"
             script: >-
-              Ron's line connects him directly to Maggie. He says the company is
-              clueless about what customers want: too much product that will never sell and not
-              enough of the items that do. That ties sales forecast accuracy back to the same bad
-              order, inventory, and stockout data Maggie later attacks from the retail side.
+              Ron says the company is clueless about what customers want: too much product
+              that will never sell and not enough of the items that do. That ties sales
+              forecast accuracy back to the same bad order, inventory, and stockout data
+              Maggie later attacks from the retail side.
           globalStep:
             name: "Sales and retail are describing the same blindness"
             script: >-
@@ -1117,16 +1105,15 @@ presentation:
           modalStep:
             name: "Maggie names the reporting failure behind the business frustration"
             script: >-
-              Maggie is where the story stops talking about Phoenix as an abstract strategy and
-              starts talking about what the business still cannot see. She tells Bill and Patty
-              that most of the time Retail is flying blind. The order entry and inventory data
-              are often wrong, the monthly reports from Finance are full of errors, and the
+              Maggie pulls the conversation down to what Retail still cannot see. Most of the
+              time, she says, they are flying blind. The order entry and inventory data are
+              often wrong, the monthly reports from Finance are full of errors, and the
               company cannot trust its own reporting enough to forecast demand or steer the
               business quickly.
           globalStep:
             name: "Her complaint is not cosmetic reporting"
             script: >-
-              Maggie's complaint matters because she is not asking for prettier dashboards. She
+              She is not asking for prettier dashboards. She
               is saying the company cannot tell what customers want, cannot reliably see
               stockouts and sales patterns, and therefore cannot make fast commercial bets with
               confidence. This is business blindness, not reporting polish.
@@ -1136,14 +1123,13 @@ presentation:
           modalStep:
             name: "Maggie reduces the whole problem to one line"
             script: >-
-              Maggie's line makes her memorable. She is not complaining that the
-              reports are inconvenient. She is saying the business lacks trustworthy, timely
-              information about demand, inventory, and customer behaviour. For her, that makes
-              Phoenix unfinished no matter how much code has shipped.
+              When Maggie says they are flying blind, she is not complaining that the reports
+              are inconvenient. She is saying the business lacks trustworthy, timely
+              information about demand, inventory, and customer behaviour. For her, that
+              makes Phoenix unfinished no matter how much code has shipped.
           globalStep:
             name: "The data complaint becomes a strategy complaint"
             script: >-
-              Once Maggie says they are flying blind, the rest of her critique lands harder.
               Phoenix was supposed to improve reporting, but those features keep getting
               dropped. So the company keeps shipping effort without delivering the visibility
               that would actually let Retail forecast, experiment, and respond to the market.
@@ -1178,7 +1164,7 @@ presentation:
         The answer comes through automation, safe experimentation, and one final insight:
         if a capability sets the pace of the business, you eventually have to own it.
       narrativeArc: >-
-        The ending matters because the team stops treating IT as a cost centre and starts
+        The team stops treating IT as a cost centre and starts
         treating it as strategic capability.
       takeaway: >-
         High performance comes from automation, safe experimentation, and owning the
@@ -1187,42 +1173,39 @@ presentation:
         Unicorn proves the new model in production: smaller batches, automated environments,
         rapid security fixes, and constant experimentation start generating real revenue. The team
         then pushes further by hardening systems through deliberate fault injection and by pulling
-        strategic capabilities back in-house when outsourcing becomes the constraint. The MRP story
-        makes the final lesson concrete: even after fixing internal flow, the company still cannot
+        strategic capabilities back in-house when outsourcing becomes the constraint. The MRP
+        conflict makes the final problem concrete: even after fixing internal flow, the company still cannot
         compete if a vendor controls a core manufacturing capability, its delivery schedule, and the
-        price of change. The ending's final point is organizational: IT is not a side function to
-        delegate away when it sets the pace of the business.
+        price of change. IT is not a side function to delegate away when it sets the pace of the
+        business.
       reveals:
         - type: epic
           id: unicorn-project
           modalStep:
             name: "Unicorn proves the model"
             script: >-
-              Project Unicorn is where the team's hard-won lessons become a repeatable
-              delivery capability. Smaller batches, automated environments, and a real
-              deployment pipeline finally make it possible to move quickly without gambling the
-              company every time code ships.
+              On Unicorn, the team's hard-won practices finally become a repeatable delivery
+              capability. Smaller batches, automated environments, and a real deployment
+              pipeline make it possible to move quickly without gambling the company every
+              time code ships.
           globalStep:
             name: "The transformation becomes visible"
             script: >-
-              Unicorn matters because it shows the change is not theoretical. The very same
-              organisation that used to melt down over releases can now create value with
-              speed and confidence.
+              The same organisation that used to melt down over releases can now create value
+              with speed and confidence.
 
         - type: quote
           id: steve-flow-forward
           modalStep:
             name: "Steve starts speaking the language of flow"
             script: >-
-              One of the clearest signals that the company has changed is that Steve's own
-              language changes. He is no longer asking only for speed and deadlines. He is
-              starting to recognise waste, rework, and the need for work to move in one
-              direction: forward.
+              Steve's language changes now. He is no longer asking only for speed and
+              deadlines. He is starting to recognise waste, rework, and the need for work to
+              move in one direction: forward.
           globalStep:
             name: "Leadership has matured"
             script: >-
-              Leadership's change matters because executive behaviour helped create the old system. By the
-              end, the CEO sounds like someone who has internalised systems thinking instead
+              The CEO now sounds like someone who has internalised systems thinking instead
               of just applying pressure.
 
         - type: challenge
@@ -1230,10 +1213,10 @@ presentation:
           modalStep:
             name: "The team learns to fail safely"
             script: >-
-              Near the end, the team starts deliberately breaking things in
-              controlled ways to make the platform more resilient. The point is no longer to
-              avoid every failure at all costs. The point is to practice, learn, and harden
-              the system before reality does it for you.
+              The team starts deliberately breaking things in controlled ways to make the
+              platform more resilient. The goal is no longer to avoid every failure at all
+              costs. The goal is to practice, learn, and harden the system before reality
+              does it for you.
           globalStep:
             name: "Failure becomes a teacher"
             script: >-
@@ -1249,16 +1232,16 @@ presentation:
           globalStep:
             name: "Strategic capabilities must be owned"
             script: |-
-              One of the sharpest late lessons emerges here. The company outsourced MRP because it looked non-strategic and expensive. Now that same system determines whether Parts Unlimited can respond to the market. The vendor is not just slow. It is charging for access to its own queue while the business falls behind. At that point, bringing the capability back in-house is not an ideological move. It is a competitive necessity.
+              The company outsourced MRP because it looked non-strategic and expensive. Now that same system determines whether Parts Unlimited can respond to the market. The vendor is not just slow. It is charging for access to its own queue while the business falls behind. Bringing the capability back in-house is no longer an ideological move. It is a competitive necessity.
         - type: quote
           id: wes-eighteen-months
           modalStep:
             name: "Wes brings back the vendor's answer"
             script: >-
-              Wes makes the pain undeniable here. He is not complaining about a bad
-              meeting or a difficult partner. He is reporting the vendor's actual operating model:
-              long requirement lead times, long development lead times, delayed staffing, and an
-              upfront fee before meaningful work even starts.
+              Wes is not complaining about a bad meeting or a difficult partner. He is
+              reporting the vendor's actual operating model: long requirement lead times,
+              long development lead times, delayed staffing, and an upfront fee before
+              meaningful work even starts.
           globalStep:
             name: "The vendor controls pace and price"
             script: >-
@@ -1271,10 +1254,10 @@ presentation:
           modalStep:
             name: "Steve names the strategic danger directly"
             script: >-
-              Steve's language matters here because it shows how far the executive understanding
-              has evolved. Earlier he treated IT largely as cost and broken promises.
-              Here he sees the outsourced MRP platform for what it has become: a core capability
-              whose owner is now constraining the future of the company.
+              Steve now sees the outsourced MRP platform for what it has become: a core
+              capability whose owner is constraining the future of the company. Earlier he
+              treated IT largely as cost and broken promises. Now he can see the constraint
+              clearly.
           globalStep:
             name: "In-house becomes the only credible path"
             script: >-
@@ -1295,10 +1278,10 @@ presentation:
           globalStep:
             name: "Less heroism, more capability"
             script: >-
-              By the end, Bill has seen that flow and feedback are still not enough if the
-              organisation only improves when disaster forces it to. Unicorn, deliberate
-              experiments, and the move away from heroics teach the final lesson: a healthy
-              system has to practice learning on purpose, not just survive the next fire.
+              Flow and feedback are still not enough if the organisation only improves when
+              disaster forces it to. Unicorn, deliberate experiments, and the move away from
+              heroics show what has to happen next: a healthy system has to practice learning
+              on purpose, not just survive the next fire.
 
         - type: concept
           id: third-way
@@ -1311,8 +1294,8 @@ presentation:
           globalStep:
             name: "Learning becomes a business capability"
             script: >-
-              The story reaches its destination here. IT stops being a cost centre that the
-              business tolerates and becomes a capability the business depends on to win.
+              IT stops being a cost centre that the business tolerates and becomes a
+              capability the business depends on to win.
 
     - id: outro
       title: "The Transformation"
@@ -1321,9 +1304,9 @@ presentation:
       end: "60:00"
       phase: outro
       pageScript: >-
-        At its core, this story is not really about servers, tickets, or org charts. It
-        is about learning to see the system: the flow of work, the constraint, the
-        feedback loops, and the culture that determines whether people can improve it. Bill
-        Palmer enters the story as a reluctant manager trying to survive the week. He leaves
-        it as someone who understands how the business actually runs.
+        By the end, the problem is no longer just servers, tickets, or org charts. It is
+        the system underneath them: the flow of work, the constraint, the feedback loops,
+        and the culture that determines whether people can improve it. Bill Palmer begins as
+        a reluctant manager trying to survive the week. He ends understanding how the
+        business actually runs.
       reveals: []

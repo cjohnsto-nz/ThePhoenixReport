@@ -15,7 +15,7 @@ challenges:
 
   - id: blind-commitments
     title: "Blind Commitments"
-    subtitle: "Promises made without understanding capacity"
+    subtitle: "Promises made without knowing capacity"
     segment: segment-1
     description: "Business leaders commit to timelines and deliverables without consulting IT about capacity or feasibility. Projects are promised to customers before anyone understands the work required."
     impact: "Unrealistic expectations, constant deadline pressure, and broken trust between IT and the business."
@@ -230,7 +230,7 @@ challenges:
     title: "Handoffs Turn Minutes Into Weeks"
     subtitle: "Queue time overwhelms task time"
     segment: segment-4
-    description: "Simple work takes far too long because it waits between teams, approvals, and environments. The handoff problem matters more than the task itself: once work crosses too many boundaries, queues dominate delivery."
+    description: "Simple work takes far too long because it waits between teams, approvals, and environments. Once work crosses too many boundaries, queues dominate delivery more than the task itself."
     impact: "Lead times explode, feedback arrives too late, and quality problems surface after the cost of change has already risen."
     icon: "move-right"
     severity: high
