@@ -1065,17 +1065,34 @@ presentation:
               ask how to surface problems sooner and closer to the source. Those are two sides
               of the same insight, and they lead directly into the Second Way.
 
+        - type: concept
+          id: second-way
+          modalStep:
+            name: "The Second Way"
+            script: >-
+              The Second Way is feedback. Build loops that expose problems early, share
+              responsibility across teams, and make quality everybody's job. Do not wait for
+              production night, audit season, or public embarrassment to learn what the system
+              could have told you much earlier.
+          globalStep:
+            name: "Feedback turns discipline into learning"
+            script: >-
+              Bill comes back from Erik, shares what he has learned, and the group makes a
+              different decision. Patty and Bill will go talk to the business process
+              owners directly, while John traces the SOX-404 control environment. That is
+              the Second Way in practice: stop guessing from inside IT and go learn from
+              the people living with the business consequences.
+
         - type: character
           id: ron-johnson
           modalStep:
             name: "Ron turns IT failure into lost revenue"
             script: >-
-              Ron Johnson is the first business process owner Bill and Patty interview, and he
-              gives them the sales version of Maggie's frustration. He owns sales pipeline and
-              forecast accuracy, and he ties those measures directly to IT reliability. When MRP
-              and the phones fail, orders do not merely get delayed inside IT. Customers cancel,
-              contracts go up for rebid, and sales people miss quota because the company could
-              not transact when demand was there.
+              So Bill and Patty go to Ron Johnson first. Ron owns sales pipeline and sales
+              forecast accuracy, and he immediately drags the conversation out of IT language
+              and into revenue. When MRP and the phones fail, orders do not merely get delayed
+              inside IT. Customers cancel, contracts go up for rebid, and sales people miss
+              quota because the company could not transact when demand was there.
           globalStep:
             name: "The business risk gets priced in orders and contracts"
             script: >-
@@ -1133,21 +1150,6 @@ presentation:
               Phoenix was supposed to improve reporting, but those features keep getting
               dropped. So the company keeps shipping effort without delivering the visibility
               that would actually let Retail forecast, experiment, and respond to the market.
-
-        - type: concept
-          id: second-way
-          modalStep:
-            name: "The Second Way"
-            script: >-
-              The Second Way is feedback. Build loops that expose problems early, share
-              responsibility across teams, and make quality everybody's job. Do not wait for
-              production night, audit season, or public embarrassment to learn what the system
-              could have told you much earlier.
-          globalStep:
-            name: "Feedback turns discipline into learning"
-            script: >-
-              With feedback in place, the organisation can finally improve on purpose instead
-              of only learning through outages.
 
     - id: segment-5
       title: "Automation, Experimentation, and Strategic Ownership"
