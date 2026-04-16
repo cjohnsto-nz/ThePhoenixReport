@@ -116,8 +116,8 @@ function fmt(seconds: number) {
 }
 
 function splitSeverity(overBy: number) {
-  if (overBy <= 0) return { text: 'text-phoenix-400', glow: 'rgba(255,133,17,0.3)' };
-  if (overBy < 30) return { text: 'text-yellow-400', glow: 'rgba(250,204,21,0.35)' };
+  if (overBy <= 0) return { text: 'text-emerald-400', glow: 'rgba(52,211,153,0.32)' };
+  if (overBy < 30) return { text: 'text-amber-400', glow: 'rgba(251,191,36,0.35)' };
   if (overBy < 90) return { text: 'text-orange-400', glow: 'rgba(251,146,60,0.4)' };
   return { text: 'text-red-400', glow: 'rgba(248,113,113,0.5)' };
 }
@@ -352,7 +352,7 @@ function FooterControlsBar() {
           className={`h-full transition-colors duration-700 ${
             isOverTime
               ? 'bg-gradient-to-r from-orange-500 to-red-500'
-              : 'bg-gradient-to-r from-phoenix-600 to-phoenix-400'
+              : 'bg-gradient-to-r from-emerald-600 to-emerald-400'
           }`}
           style={{ width: `${globalProgress}%` }}
           transition={{ duration: 0.5 }}
@@ -619,7 +619,7 @@ function RemoteControlsView() {
     >
       <div className="h-[4px] bg-white/[0.05]">
         <motion.div
-          className={`h-full ${isOverTime ? 'bg-gradient-to-r from-orange-500 via-orange-400 to-red-500' : 'bg-gradient-to-r from-phoenix-500 via-phoenix-400 to-phoenix-300'}`}
+          className={`h-full ${isOverTime ? 'bg-gradient-to-r from-orange-500 via-orange-400 to-red-500' : 'bg-gradient-to-r from-emerald-500 via-emerald-400 to-emerald-300'}`}
           style={{ width: `${globalProgress}%` }}
           transition={{ duration: 0.5 }}
         />
