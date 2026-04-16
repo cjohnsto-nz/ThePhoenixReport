@@ -1098,8 +1098,8 @@ presentation:
             script: >-
               A technical outage is now visible as commercial loss. Ron also reinforces the
               stockout problem: the company cannot forecast well because it still does not
-              know what customers actually want. He carries the revenue side of the sponsor
-              interviews that Maggie completes from the retail side.
+              know what customers actually want. In Ron's telling, the fastest revenue gains
+              are being lost because customers walk in ready to buy and leave empty-handed.
 
         - type: quote
           id: ron-clueless-what-customers-want
@@ -1107,9 +1107,8 @@ presentation:
             name: "Ron names the demand-signal failure outright"
             script: >-
               Ron says the company is clueless about what customers want: too much product
-              that will never sell and not enough of the items that do. That ties sales
-              forecast accuracy back to the same bad order, inventory, and stockout data
-              Maggie later attacks from the retail side.
+              that will never sell and not enough of the items that do. He ties sales
+              forecast accuracy directly to bad order, inventory, and stockout data.
           globalStep:
             name: "Sales and retail are describing the same blindness"
             script: >-
@@ -1122,18 +1121,19 @@ presentation:
           modalStep:
             name: "Maggie names the reporting failure behind the business frustration"
             script: >-
-              Maggie pulls the conversation down to what Retail still cannot see. Most of the
-              time, she says, they are flying blind. The order entry and inventory data are
-              often wrong, the monthly reports from Finance are full of errors, and the
-              company cannot trust its own reporting enough to forecast demand or steer the
-              business quickly.
+              Maggie picks up the same problem Ron just described and shows it from the retail
+              side. Most of the time, she says, they are flying blind. The order entry and
+              inventory data are often wrong, the monthly reports from Finance are full of
+              errors, and the company cannot trust its own reporting enough to forecast demand
+              or steer the business quickly.
           globalStep:
             name: "Her complaint is not cosmetic reporting"
             script: >-
               She is not asking for prettier dashboards. She
               is saying the company cannot tell what customers want, cannot reliably see
               stockouts and sales patterns, and therefore cannot make fast commercial bets with
-              confidence. This is business blindness, not reporting polish.
+              confidence. Ron showed the lost sales. Maggie shows the missing visibility
+              underneath them.
 
         - type: quote
           id: maggie-flying-blind
@@ -1142,8 +1142,9 @@ presentation:
             script: >-
               When Maggie says they are flying blind, she is not complaining that the reports
               are inconvenient. She is saying the business lacks trustworthy, timely
-              information about demand, inventory, and customer behaviour. For her, that
-              makes Phoenix unfinished no matter how much code has shipped.
+              information about demand, inventory, and customer behaviour. That is the retail
+              version of the same problem Ron described in sales, and for her it makes Phoenix
+              unfinished no matter how much code has shipped.
           globalStep:
             name: "The data complaint becomes a strategy complaint"
             script: >-
