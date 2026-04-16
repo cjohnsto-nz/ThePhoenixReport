@@ -17,6 +17,10 @@ const severityBadge = {
   medium: 'bg-yellow-500/20 text-yellow-100 border-yellow-500/35',
 };
 
+function toProperCase(value: string) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
 function isWayItem(concept: ConceptItem | WayItem): concept is WayItem {
   return 'principles' in concept;
 }
@@ -36,7 +40,7 @@ export function ChallengeDetailContent({ challenge }: { challenge: Challenge }) 
         <span
           className={`inline-flex items-center px-3 py-1.5 rounded-full text-xs md:text-sm font-medium border mb-5 ${severityBadge[challenge.severity]}`}
         >
-          {challenge.severity} severity
+          {toProperCase(challenge.severity)} Severity
         </span>
         <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight pr-12">
           {challenge.title}

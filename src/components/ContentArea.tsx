@@ -611,17 +611,6 @@ function FullScreenStage({
           style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }}
         />
 
-        {/* Close button */}
-        <button
-          onClick={() => handlePlaceRef.current()}
-          className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full border border-white/[0.08] bg-white/[0.04] hover:bg-white/[0.08] text-white/45 hover:text-white transition-all z-10"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-
         {/* Content */}
         <div className="p-7 md:p-8 lg:p-10 text-base md:text-lg [&_p]:leading-relaxed [&_li]:leading-relaxed">
           {item.type === 'challenge' && <ChallengeDetailContent challenge={item.data as Challenge} />}

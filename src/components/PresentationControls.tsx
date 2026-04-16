@@ -132,18 +132,6 @@ function compactScript(script?: string, limit = 160) {
   return `${script.slice(0, limit - 3)}...`;
 }
 
-function stepViewLabel(view?: 'page' | 'modal' | 'global' | null) {
-  if (view === 'modal') return 'Modal On Screen';
-  if (view === 'global') return 'Global View';
-  return 'Section Page';
-}
-
-function stepViewTone(view?: 'page' | 'modal' | 'global' | null) {
-  if (view === 'modal') return 'bg-phoenix-500/15 text-phoenix-100 border-phoenix-400/20';
-  if (view === 'global') return 'bg-sky-500/15 text-sky-100 border-sky-400/20';
-  return 'bg-white/[0.05] text-white/70 border-white/[0.08]';
-}
-
 function getRevealTitle(reveal: TimelineReveal) {
   const item = lookupItem(reveal.type, reveal.id) as { title?: string; name?: string; characterName?: string } | undefined;
   if (typeof item?.characterName === 'string') {
@@ -211,10 +199,12 @@ function ModeToggle({ isRemote = false }: { isRemote?: boolean }) {
   const { state, dispatch } = usePresentation();
 
   return (
-    <div className="flex items-center rounded-full p-1 flex-shrink-0 border border-white/[0.07] bg-[#141826]/88 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_14px_32px_-24px_rgba(255,133,17,0.75)]">
+    <div
+      className={`${isRemote ? 'grid w-full grid-cols-2' : 'flex items-center'} rounded-full p-1 flex-shrink-0 border border-white/[0.07] bg-[#141826]/88 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_14px_32px_-24px_rgba(255,133,17,0.75)]`}
+    >
       <button
         onClick={() => dispatch({ type: 'SET_MODE', mode: 'presentation' })}
-        className={`${isRemote ? 'px-5 py-2.5 text-sm' : 'px-3 py-1.5 text-xs'} rounded-full font-medium transition-all duration-300 ${
+        className={`${isRemote ? 'w-full px-5 py-2.5 text-sm text-center' : 'px-3 py-1.5 text-xs'} rounded-full font-medium transition-all duration-300 ${
           state.mode === 'presentation'
             ? 'bg-phoenix-500 text-white shadow-lg shadow-phoenix-500/30'
             : 'text-white/55 hover:text-white/85 hover:bg-white/[0.05]'
@@ -224,7 +214,7 @@ function ModeToggle({ isRemote = false }: { isRemote?: boolean }) {
       </button>
       <button
         onClick={() => dispatch({ type: 'SET_MODE', mode: 'explore' })}
-        className={`${isRemote ? 'px-5 py-2.5 text-sm' : 'px-3 py-1.5 text-xs'} rounded-full font-medium transition-all duration-300 ${
+        className={`${isRemote ? 'w-full px-5 py-2.5 text-sm text-center' : 'px-3 py-1.5 text-xs'} rounded-full font-medium transition-all duration-300 ${
           state.mode === 'explore'
             ? 'bg-phoenix-500 text-white shadow-lg shadow-phoenix-500/30'
             : 'text-white/55 hover:text-white/85 hover:bg-white/[0.05]'
@@ -627,26 +617,10 @@ function RemoteControlsView() {
 
       <div className="h-[calc(100vh-4px)] overflow-y-auto overflow-x-hidden">
         <div className="mx-auto flex h-full w-full max-w-[1380px] flex-col gap-5 px-5 py-5 lg:px-6 lg:py-6">
-          <div className="grid grid-cols-1 gap-4 xl:grid-cols-[auto_minmax(0,1fr)] xl:items-center">
-            <div className="flex items-center gap-3">
-              <ModeToggle isRemote />
-              <button
-                onClick={() => setIsPopped(false)}
-                className="h-11 px-4 rounded-2xl border border-white/[0.08] bg-white/[0.04] text-white/70 hover:text-white hover:bg-white/[0.08] transition-all"
-                title="Return controls to the main window"
-              >
-                Dock Controls
-              </button>
-            </div>
-
-            <div className="min-w-0">
-              <div className="text-[11px] uppercase tracking-[0.28em] text-white/25 font-semibold mb-1">Remote Presenter</div>
-              <div className="flex items-center gap-3 min-w-0">
-                <h1 className="text-2xl xl:text-[1.85rem] font-semibold text-white truncate">{currentSegment?.title ?? 'Phoenix Report'}</h1>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold border ${stepViewTone(currentStep?.view ?? null)}`}>
-                  {stepViewLabel(currentStep?.view ?? null)}
-                </span>
-              </div>
+          <div className="min-w-0">
+            <div className="text-[11px] uppercase tracking-[0.28em] text-white/25 font-semibold mb-1">Remote Presenter</div>
+            <div className="flex items-center gap-3 min-w-0">
+              <h1 className="text-2xl xl:text-[1.85rem] font-semibold text-white truncate">{currentSegment?.title ?? 'Phoenix Report'}</h1>
             </div>
           </div>
 
@@ -654,17 +628,12 @@ function RemoteControlsView() {
             <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl shadow-[0_30px_80px_-40px_rgba(0,0,0,0.8)] overflow-hidden min-h-0 flex flex-col">
               <div className="px-7 pt-6 pb-5 border-b border-white/[0.06]">
                 <div className="text-[11px] uppercase tracking-[0.28em] text-phoenix-300/55 font-semibold mb-2">Teleprompter</div>
-                <div className="flex items-start justify-between gap-4">
-                  <div className="min-w-0">
-                    <h2 className="text-[1.85rem] xl:text-[2.15rem] font-semibold tracking-tight text-white leading-tight">
-                      {currentStep?.name ?? 'No active step'}
-                    </h2>
-                    <div className="text-[0.95rem] text-white/40 mt-2">
-                      {currentSegment?.title ?? 'Presentation'}
-                    </div>
-                  </div>
-                  <div className={`flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold border ${stepViewTone(currentStep?.view ?? null)}`}>
-                    {stepViewLabel(currentStep?.view ?? null)}
+                <div className="min-w-0">
+                  <h2 className="text-[1.85rem] xl:text-[2.15rem] font-semibold tracking-tight text-white leading-tight">
+                    {currentStep?.name ?? 'No active step'}
+                  </h2>
+                  <div className="text-[0.95rem] text-white/40 mt-2">
+                    {currentSegment?.title ?? 'Presentation'}
                   </div>
                 </div>
               </div>
@@ -677,21 +646,17 @@ function RemoteControlsView() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -14 }}
                     transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                    className="h-full min-h-0"
                   >
                     {currentRevealBundle ? (
-                      <div className="grid gap-6 xl:grid-cols-2">
-                        <div className={`rounded-2xl border px-5 py-5 transition-colors ${activeBundleView === 'modal' ? 'border-phoenix-400/30 bg-phoenix-500/[0.07]' : 'border-white/[0.08] bg-white/[0.02]'}`}>
-                          <div className="flex items-center justify-between gap-3 mb-4">
-                            <div>
-                              <div className="text-[11px] uppercase tracking-[0.26em] text-phoenix-300/60 font-semibold">Modal Script</div>
-                              <div className="text-lg font-semibold text-white/88 mt-2">{currentRevealBundle.modal.name}</div>
-                            </div>
-                            <span className={`px-3 py-1 rounded-full text-[11px] font-semibold border ${stepViewTone('modal')}`}>
-                              On-screen
-                            </span>
+                      <div className="grid h-full min-h-0 gap-6 xl:grid-cols-2">
+                        <div className={`flex h-full min-h-0 flex-col rounded-2xl border px-5 py-5 transition-colors ${activeBundleView === 'modal' ? 'border-phoenix-400/30 bg-phoenix-500/[0.07]' : 'border-white/[0.08] bg-white/[0.02]'}`}>
+                          <div className="mb-4">
+                            <div className="text-[11px] uppercase tracking-[0.26em] text-phoenix-300/60 font-semibold">Modal Script</div>
+                            <div className="text-lg font-semibold text-white/88 mt-2">{currentRevealBundle.modal.name}</div>
                           </div>
                           {canEditRevealBundle ? (
-                            <div>
+                            <div className="flex min-h-0 flex-1 flex-col">
                               <textarea
                                 value={modalDraft}
                                 onChange={(event) => setModalDraft(event.target.value)}
@@ -703,7 +668,7 @@ function RemoteControlsView() {
                                 }}
                                 placeholder={TELEPROMPTER_EMPTY_HINT}
                                 spellCheck={false}
-                                className="min-h-[18rem] w-full resize-none border-0 bg-transparent p-0 text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
+                                className="min-h-0 flex-1 w-full resize-none overflow-auto border-0 bg-transparent p-0 text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
                               />
                               <div className="mt-4 flex items-center gap-3 text-xs text-white/40">
                                 <button
@@ -724,24 +689,19 @@ function RemoteControlsView() {
                               </div>
                             </div>
                           ) : (
-                            <p className="whitespace-pre-line text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 tracking-[-0.01em]">
+                            <p className="min-h-0 flex-1 overflow-auto whitespace-pre-line text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 tracking-[-0.01em]">
                               {currentRevealBundle.modal.script || TELEPROMPTER_EMPTY_HINT}
                             </p>
                           )}
                         </div>
 
-                        <div className={`rounded-2xl border px-5 py-5 transition-colors ${activeBundleView === 'global' ? 'border-sky-400/30 bg-sky-500/[0.06]' : 'border-white/[0.08] bg-white/[0.02]'}`}>
-                          <div className="flex items-center justify-between gap-3 mb-4">
-                            <div>
-                              <div className="text-[11px] uppercase tracking-[0.26em] text-sky-300/60 font-semibold">Global Script</div>
-                              <div className="text-lg font-semibold text-white/88 mt-2">{currentRevealBundle.global.name}</div>
-                            </div>
-                            <span className={`px-3 py-1 rounded-full text-[11px] font-semibold border ${stepViewTone('global')}`}>
-                              After placement
-                            </span>
+                        <div className={`flex h-full min-h-0 flex-col rounded-2xl border px-5 py-5 transition-colors ${activeBundleView === 'global' ? 'border-sky-400/30 bg-sky-500/[0.06]' : 'border-white/[0.08] bg-white/[0.02]'}`}>
+                          <div className="mb-4">
+                            <div className="text-[11px] uppercase tracking-[0.26em] text-sky-300/60 font-semibold">Global Script</div>
+                            <div className="text-lg font-semibold text-white/88 mt-2">{currentRevealBundle.global.name}</div>
                           </div>
                           {canEditRevealBundle ? (
-                            <div>
+                            <div className="flex min-h-0 flex-1 flex-col">
                               <textarea
                                 value={globalDraft}
                                 onChange={(event) => setGlobalDraft(event.target.value)}
@@ -753,7 +713,7 @@ function RemoteControlsView() {
                                 }}
                                 placeholder={TELEPROMPTER_EMPTY_HINT}
                                 spellCheck={false}
-                                className="min-h-[18rem] w-full resize-none border-0 bg-transparent p-0 text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
+                                className="min-h-0 flex-1 w-full resize-none overflow-auto border-0 bg-transparent p-0 text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
                               />
                               <div className="mt-4 flex items-center gap-3 text-xs text-white/40">
                                 <button
@@ -774,14 +734,14 @@ function RemoteControlsView() {
                               </div>
                             </div>
                           ) : (
-                            <p className="whitespace-pre-line text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 tracking-[-0.01em]">
+                            <p className="min-h-0 flex-1 overflow-auto whitespace-pre-line text-[clamp(1.02rem,1.3vw,1.42rem)] leading-[1.5] text-white/92 tracking-[-0.01em]">
                               {currentRevealBundle.global.script || TELEPROMPTER_EMPTY_HINT}
                             </p>
                           )}
                         </div>
                       </div>
                     ) : (
-                      <div className="max-w-[62rem]">
+                      <div className="flex h-full min-h-0 max-w-[62rem] flex-col">
                         {canEditCurrentStep ? (
                           <textarea
                             value={draftScript}
@@ -794,10 +754,10 @@ function RemoteControlsView() {
                             }}
                             placeholder={TELEPROMPTER_EMPTY_HINT}
                             spellCheck={false}
-                            className="min-h-[24rem] w-full resize-none border-0 bg-transparent p-0 text-[clamp(1.16rem,1.7vw,1.75rem)] leading-[1.46] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
+                            className="min-h-0 flex-1 w-full resize-none overflow-auto border-0 bg-transparent p-0 text-[clamp(1.16rem,1.7vw,1.75rem)] leading-[1.46] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
                           />
                         ) : (
-                          <p className="text-[clamp(1.16rem,1.7vw,1.75rem)] leading-[1.46] text-white/92 whitespace-pre-line tracking-[-0.01em]">
+                          <p className="min-h-0 flex-1 overflow-auto text-[clamp(1.16rem,1.7vw,1.75rem)] leading-[1.46] text-white/92 whitespace-pre-line tracking-[-0.01em]">
                             {currentStep?.script || TELEPROMPTER_EMPTY_HINT}
                           </p>
                         )}
@@ -809,6 +769,20 @@ function RemoteControlsView() {
             </div>
 
             <div className="grid content-start gap-4 min-h-0 auto-rows-max">
+              <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] backdrop-blur-2xl p-5">
+                <div className="text-[11px] uppercase tracking-[0.28em] text-white/28 font-semibold mb-4">Controls</div>
+                <div className="grid gap-3">
+                  <ModeToggle isRemote />
+                  <button
+                    onClick={() => setIsPopped(false)}
+                    className="h-11 px-4 rounded-2xl border border-white/[0.08] bg-white/[0.04] text-white/70 hover:text-white hover:bg-white/[0.08] transition-all"
+                    title="Return controls to the main window"
+                  >
+                    Dock Controls
+                  </button>
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-2xl border border-white/[0.08] bg-white/[0.04] px-4 py-3 min-w-0">
                   <div className="text-[10px] uppercase tracking-[0.22em] text-white/30 font-semibold">Pace</div>

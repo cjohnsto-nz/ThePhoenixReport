@@ -7,7 +7,7 @@ characters:
     name: "Steve Masters"
     role: "CEO"
     archetype: "The Demanding Sponsor"
-    traits: "Results-focused · ultimatum-driven · business-first"
+    traits: "Results Focused · Ultimatum Driven · Business First"
     segment: segment-1
     reportsTo: null
     description: "The demanding CEO who sees IT as a black hole of money and broken promises. He gives Bill an ultimatum — fix IT or lose the department. Represents the business pressure that drives urgency."
@@ -34,7 +34,7 @@ characters:
     name: "Dick Landry"
     role: "CFO"
     archetype: "The Financial Realist"
-    traits: "Blunt · numbers-driven · crisis-focused"
+    traits: "Blunt · Numbers Driven · Crisis Focused"
     segment: segment-1
     reportsTo: null
     description: "The CFO who makes the payroll failure impossible to minimize. Dick turns operational mistakes into immediate business stakes by forcing Bill to confront cash exposure, employee trust, and executive accountability."
@@ -49,7 +49,7 @@ characters:
     name: "Erik Reid"
     role: "Board Member & Mentor"
     archetype: "The Wise Mentor"
-    traits: "Philosophical · Socratic · constraints-focused"
+    traits: "Philosophical · Socratic · Constraints Focused"
     segment: segment-2
     reportsTo: null
     description: "The enigmatic mentor who guides Bill through the principles of flow, constraints, and the Three Ways. Erik draws parallels between IT and manufacturing, introducing the Theory of Constraints thinking that transforms Bill's approach."
@@ -72,7 +72,7 @@ characters:
     name: "Bill Palmer"
     role: "VP of IT Operations"
     archetype: "The Reluctant Leader"
-    traits: "Analytical · growth-oriented · systems thinker"
+    traits: "Analytical · Growth Oriented · Systems Thinker"
     segment: segment-1
     reportsTo: steve-masters
     description: "The reluctant leader. Bill is thrust into the role of VP of IT Operations and must navigate the chaos of a failing IT organization. He evolves from a firefighting manager to a systems thinker who transforms how IT delivers value."
@@ -95,7 +95,7 @@ characters:
     name: "Nancy Mailer"
     role: "Chief Audit Executive"
     archetype: "The Risk Messenger"
-    traits: "Exacting · unsentimental · control-focused"
+    traits: "Exacting · Unsentimental · Control Focused"
     segment: segment-1
     reportsTo: null
     description: "Nancy brings the SOX findings that prove the chaos is not limited to outages and missed deadlines. She represents the moment hidden control failures become executive and board-level risk."
@@ -110,7 +110,7 @@ characters:
     name: "Chris Allers"
     role: "VP of Application Development"
     archetype: "The Rival"
-    traits: "Defensive · siloed · eventually collaborative"
+    traits: "Defensive · Siloed · Eventually Collaborative"
     segment: segment-3
     reportsTo: steve-masters
     description: "Leads the development team and often clashes with Operations. Represents the classic Dev vs Ops divide that must be bridged for the organization to improve."
@@ -125,7 +125,7 @@ characters:
     name: "Sarah Moulton"
     role: "SVP of Retail Operations"
     archetype: "The Business Voice"
-    traits: "Revenue-focused · pragmatic · impatient for results"
+    traits: "Revenue Focused · Pragmatic · Impatient for Results"
     segment: segment-1
     reportsTo: steve-masters
     description: "Represents the business stakeholders who depend on IT. Sarah's frustration with broken deployments and missed deadlines provides the crucial business perspective on why feedback and quality matter."
@@ -144,7 +144,7 @@ characters:
     name: "Maggie Lee"
     role: "Senior Director of Retail Program Management"
     archetype: "The Business Sponsor"
-    traits: "Commercial · direct · outcome-focused"
+    traits: "Commercial · Direct · Outcome Focused"
     segment: segment-4
     reportsTo: sarah-moulton
     description: "Maggie translates Phoenix from an IT project into a business bet, but she also exposes a quieter failure: the company is flying blind because store, order, and inventory reporting are late, error-filled, and too weak to support forecasting or fast market response."
@@ -161,7 +161,7 @@ characters:
     name: "Ron Johnson"
     role: "VP of Manufacturing Sales"
     archetype: "The Sales Sponsor"
-    traits: "Boisterous · analytical · revenue-focused"
+    traits: "Boisterous · Analytical · Revenue Focused"
     segment: segment-4
     reportsTo: steve-masters
     description: "Ron gives Bill and Patty the sales-side version of Maggie's complaint. He owns sales pipeline and forecast accuracy, and he makes the cost of bad IT impossible to soften: outages and bad demand signals become lost orders, missed quota, stockouts, and contracts at risk."
@@ -176,7 +176,7 @@ characters:
     name: "Wes Davis"
     role: "Director of Distributed Technology Operations"
     archetype: "The Firefighter"
-    traits: "Loyal · overwhelmed · chronically reactive"
+    traits: "Loyal · Overwhelmed · Chronically Reactive"
     segment: segment-1
     reportsTo: bill-palmer
     description: "A loyal operations manager who works tirelessly but reactively. Wes embodies the well-meaning but overwhelmed IT worker, always firefighting but never getting ahead."
@@ -193,7 +193,7 @@ characters:
     name: "Patty McKee"
     role: "VP of IT Service Support"
     archetype: "The Process Champion"
-    traits: "Methodical · disciplined · change-focused"
+    traits: "Methodical · Disciplined · Change Focused"
     segment: segment-2
     reportsTo: bill-palmer
     description: "The champion of process and change management. Patty brings discipline to the chaos by implementing proper change controls and feedback mechanisms that help stabilize the environment."
@@ -208,7 +208,7 @@ characters:
     name: "Brent Geller"
     role: "Lead Engineer"
     archetype: "The Bottleneck"
-    traits: "Brilliant · overloaded · single point of failure"
+    traits: "Brilliant · Overloaded · Single Point of Failure"
     segment: segment-1
     reportsTo: wes-davis
     description: "The brilliant but dangerously overloaded engineer. Brent is the single point of failure — every critical task runs through him. His bottleneck status illustrates the fragility of knowledge concentration."
@@ -223,7 +223,7 @@ characters:
     name: "William Mason"
     role: "Director of QA"
     archetype: "The Quality Gate"
-    traits: "Methodical · skeptical · release-focused"
+    traits: "Methodical · Skeptical · Release Focused"
     segment: segment-2
     reportsTo: chris-allers
     description: "William gives the deployment story its quality lens. He sees broken releases, inconsistent test results, and the compounding cost of shipping faster than the organization can validate."
@@ -238,7 +238,7 @@ characters:
     name: "John Pesche"
     role: "Chief Information Security Officer"
     archetype: "The Gatekeeper"
-    traits: "Risk-averse · compliance-driven · security-minded"
+    traits: "Risk Averse · Compliance Driven · Security Minded"
     segment: segment-4
     reportsTo: bill-palmer
     description: "The CISO caught between compliance demands and operational reality. John must learn that security integrated into the flow is more effective than security as a gate."
