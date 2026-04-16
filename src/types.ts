@@ -1,16 +1,17 @@
 // Core type definitions for the Phoenix Report
 
+export interface TimelineRevealStep {
+  name?: string;
+  script?: string;
+}
+
 export interface TimelineReveal {
   type: 'challenge' | 'concept' | 'character' | 'epic' | 'quote';
   id: string;
-  modalStep?: {
-    name?: string;
-    script?: string;
-  };
-  globalStep?: {
-    name?: string;
-    script?: string;
-  };
+  delaySeconds?: number;
+  modalStep?: TimelineRevealStep;
+  globalStep?: TimelineRevealStep;
+  quoteReveal?: boolean;
 }
 
 export interface TimelineSegment {
@@ -19,12 +20,13 @@ export interface TimelineSegment {
   subtitle: string;
   start: string;
   end: string;
+  duration?: number;
   phase: string;
-  pageScript?: string;
-  contentSetupScript?: string;
   narrativeArc?: string;
   takeaway?: string;
   summary?: string;
+  pageScript?: string;
+  contentSetupScript?: string;
   reveals: TimelineReveal[];
 }
 
@@ -50,6 +52,8 @@ export interface ConceptPrinciple {
   title: string;
   description: string;
   icon: string;
+  color?: string;
+  parentWay?: string;
 }
 
 export interface WayItem {
@@ -79,6 +83,18 @@ export interface ConceptsData {
   };
 }
 
+export interface QuoteItem {
+  id: string;
+  text: string;
+  characterId?: string;
+  characterName: string;
+  characterRole: string;
+  avatar: string;
+  color: string;
+  revealId?: string;
+  segment?: string;
+}
+
 export interface Character {
   id: string;
   name: string;
@@ -89,24 +105,10 @@ export interface Character {
   reportsTo: string | null;
   description: string;
   arc: string;
-  quotes: CharacterQuote[];
+  quote: string;
   avatar: string;
   color: string;
-}
-
-export interface CharacterQuote {
-  id: string;
-  text: string;
-}
-
-export interface QuoteItem {
-  id: string;
-  text: string;
-  characterId: string;
-  characterName: string;
-  characterRole: string;
-  avatar: string;
-  color: string;
+  quotes?: QuoteItem[];
 }
 
 export interface CharactersData {
@@ -146,7 +148,7 @@ export interface EpicsData {
 export type RevealedItem = {
   type: 'challenge' | 'concept' | 'character' | 'epic' | 'quote';
   id: string;
-  revealedAt: number; // timestamp
+  revealedAt: number;
 };
 
 export type PresentationMode = 'presentation' | 'explore';
@@ -157,13 +159,11 @@ export type PresentationState = {
   mode: PresentationMode;
   currentSegmentIndex: number;
   segmentScreen: SegmentScreen;
-  /** Active step within a content segment. Null means before the first content step. */
   currentContentStepIndex: number | null;
   segmentElapsedSeconds: number;
   totalElapsedSeconds: number;
   isRunning: boolean;
   revealedIds: Set<string>;
-  /** Id of item currently shown center-stage (not yet placed in dashboard) */
   stagedId: string | null;
 };
 

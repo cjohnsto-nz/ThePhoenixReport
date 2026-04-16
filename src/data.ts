@@ -35,7 +35,7 @@ export function lookupItem(type: string, id: string) {
   }
   if (type === 'quote') {
     for (const character of charactersData.characters) {
-      const quote = character.quotes.find((entry) => entry.id === id);
+      const quote = character.quotes?.find((entry) => entry.id === id);
       if (quote) {
         const item: QuoteItem = {
           id: quote.id,

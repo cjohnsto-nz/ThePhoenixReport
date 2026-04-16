@@ -1,8 +1,96 @@
-import { useEffect, useRef, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { usePresentation } from '../PresentationContext';
 import { useControls } from '../ControlsContext';
 import { WindowPortal } from './WindowPortal';
+
+const LOCAL_TELEPROMPTER_SAVE_ENDPOINT = '/__local/timeline-script';
+const TELEPROMPTER_EMPTY_HINT = 'Add modalStep/globalStep script in timeline.yaml to drive the teleprompter.';
+
+type TeleprompterEditTarget =
+  | {
+      kind: 'segment-page';
+      segmentId: string;
+      field: 'pageScript';
+    }
+  | {
+      kind: 'content-setup';
+      segmentId: string;
+      field: 'contentSetupScript';
+    }
+  | {
+      kind: 'segment-summary';
+      segmentId: string;
+      field: 'summary';
+    }
+  | {
+      kind: 'reveal-step';
+      segmentId: string;
+      revealId: string;
+      step: 'modal' | 'global';
+    };
+
+type TeleprompterSaveState =
+  | { status: 'idle'; message?: undefined }
+  | { status: 'saving'; message: string }
+  | { status: 'saved'; message: string }
+  | { status: 'error'; message: string };
+
+function getTeleprompterEditTarget({
+  currentSegment,
+  isStandaloneSegment,
+  segmentScreen,
+  currentContentStepIndex,
+}: {
+  currentSegment?: { id: string; reveals: Array<{ id: string }> ; phase?: string };
+  isStandaloneSegment: boolean;
+  segmentScreen: 'intro' | 'content' | 'summary';
+  currentContentStepIndex: number | null;
+}): TeleprompterEditTarget | null {
+  if (!currentSegment) return null;
+
+  if (isStandaloneSegment || segmentScreen === 'intro') {
+    return {
+      kind: 'segment-page',
+      segmentId: currentSegment.id,
+      field: 'pageScript',
+    };
+  }
+
+  if (segmentScreen === 'summary') {
+    return {
+      kind: 'segment-summary',
+      segmentId: currentSegment.id,
+      field: 'summary',
+    };
+  }
+
+  if (currentContentStepIndex === null) {
+    return {
+      kind: 'content-setup',
+      segmentId: currentSegment.id,
+      field: 'contentSetupScript',
+    };
+  }
+
+  const reveal = currentSegment.reveals[Math.floor(currentContentStepIndex / 2)];
+  if (!reveal) return null;
+
+  return {
+    kind: 'reveal-step',
+    segmentId: currentSegment.id,
+    revealId: reveal.id,
+    step: currentContentStepIndex % 2 === 0 ? 'modal' : 'global',
+  };
+}
+
+function describeTeleprompterEditTarget(target: TeleprompterEditTarget | null) {
+  if (!target) return 'No editable YAML target for this step.';
+  if (target.kind === 'segment-page') return `timeline.yaml -> segment ${target.segmentId} -> ${target.field}`;
+  if (target.kind === 'content-setup') return `timeline.yaml -> segment ${target.segmentId} -> ${target.field}`;
+  if (target.kind === 'segment-summary') return `timeline.yaml -> segment ${target.segmentId} -> ${target.field}`;
+  return `timeline.yaml -> segment ${target.segmentId} -> reveal ${target.revealId} -> ${target.step}Step.script`;
+}
 
 function fmt(seconds: number) {
   const abs = Math.abs(seconds);
@@ -300,6 +388,9 @@ function RemoteControlsView() {
   const { state, dispatch, segments, currentSegment, split, currentStep, nextStep } = usePresentation();
   const { setIsPopped } = useControls();
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const isLocalTeleprompterEditor = import.meta.env.DEV;
+  const [draftScript, setDraftScript] = useState('');
+  const [saveState, setSaveState] = useState<TeleprompterSaveState>({ status: 'idle' });
 
   const totalDurationSec = split.overallTarget;
   const globalProgress = totalDurationSec > 0
@@ -323,6 +414,30 @@ function RemoteControlsView() {
     state.segmentScreen === 'content' && state.currentContentStepIndex !== null
       ? state.currentContentStepIndex + 1
       : null;
+  const currentEditTarget = getTeleprompterEditTarget({
+    currentSegment,
+    isStandaloneSegment,
+    segmentScreen: state.segmentScreen,
+    currentContentStepIndex: state.currentContentStepIndex,
+  });
+  const canEditCurrentStep = isLocalTeleprompterEditor && Boolean(currentStep && currentEditTarget);
+
+  useEffect(() => {
+    setDraftScript(currentStep?.script ?? '');
+    setSaveState({ status: 'idle' });
+  }, [currentStep?.id, currentStep?.script]);
+
+  useEffect(() => {
+    if (saveState.status !== 'saved') return;
+
+    const timeout = window.setTimeout(() => {
+      setSaveState({ status: 'idle' });
+    }, 1800);
+
+    return () => {
+      window.clearTimeout(timeout);
+    };
+  }, [saveState]);
 
   useEffect(() => {
     const popupWindow = rootRef.current?.ownerDocument.defaultView;
@@ -362,6 +477,44 @@ function RemoteControlsView() {
       popupWindow.removeEventListener('keydown', handleKeyDown);
     };
   }, [dispatch, state.mode, state.stagedId]);
+
+  const saveTeleprompterScript = async (clear = false) => {
+    if (!currentEditTarget) return;
+
+    setSaveState({
+      status: 'saving',
+      message: clear ? 'Clearing YAML field...' : 'Saving to timeline.yaml...',
+    });
+
+    try {
+      const response = await fetch(LOCAL_TELEPROMPTER_SAVE_ENDPOINT, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          target: currentEditTarget,
+          script: draftScript,
+          clear,
+        }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as { error?: string } | null;
+      if (!response.ok) {
+        throw new Error(payload?.error ?? `Unable to save YAML (${response.status})`);
+      }
+
+      setSaveState({
+        status: 'saved',
+        message: clear ? 'Cleared YAML field.' : 'Saved to src/data/timeline.yaml.',
+      });
+    } catch (error) {
+      setSaveState({
+        status: 'error',
+        message: error instanceof Error ? error.message : 'Unable to save YAML.',
+      });
+    }
+  };
 
   return (
     <div
@@ -421,6 +574,34 @@ function RemoteControlsView() {
                     {stepViewLabel(currentStep?.view ?? null)}
                   </div>
                 </div>
+                {isLocalTeleprompterEditor ? (
+                  <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-white/40">
+                    <span className="rounded-full border border-phoenix-400/20 bg-phoenix-500/10 px-3 py-1 text-phoenix-100/85">
+                      Local editor
+                    </span>
+                    <span>Edits write directly to src/data/timeline.yaml while the dev server is running.</span>
+                    <span className="text-white/28">{describeTeleprompterEditTarget(currentEditTarget)}</span>
+                    <button
+                      onClick={() => void saveTeleprompterScript(true)}
+                      disabled={!canEditCurrentStep || saveState.status === 'saving'}
+                      className="rounded-full border border-white/[0.08] px-3 py-1 text-white/65 transition-colors hover:border-white/[0.14] hover:text-white disabled:cursor-default disabled:text-white/20 disabled:hover:border-white/[0.08] disabled:hover:text-white/20"
+                    >
+                      Clear YAML field
+                    </button>
+                    <button
+                      onClick={() => void saveTeleprompterScript(false)}
+                      disabled={!canEditCurrentStep || saveState.status === 'saving'}
+                      className="rounded-full border border-phoenix-400/20 bg-phoenix-500/10 px-3 py-1 text-phoenix-100/85 transition-colors hover:border-phoenix-300/30 hover:bg-phoenix-500/16 disabled:cursor-default disabled:border-white/[0.08] disabled:bg-white/[0.04] disabled:text-white/20"
+                    >
+                      {saveState.status === 'saving' ? 'Saving...' : 'Save to YAML'}
+                    </button>
+                    {saveState.status !== 'idle' ? (
+                      <span className={saveState.status === 'error' ? 'text-red-200/80' : 'text-emerald-200/80'}>
+                        {saveState.message}
+                      </span>
+                    ) : null}
+                  </div>
+                ) : null}
               </div>
 
               <div className="flex-1 min-h-0 overflow-auto px-7 py-7 xl:px-8 xl:py-8">
@@ -433,9 +614,25 @@ function RemoteControlsView() {
                     transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                   >
                     <div className="max-w-[62rem]">
-                      <p className="text-[clamp(1.45rem,2.25vw,2.55rem)] leading-[1.38] text-white/92 whitespace-pre-line tracking-[-0.01em]">
-                        {currentStep?.script ?? 'Add modalStep/globalStep script in timeline.yaml to drive the teleprompter.'}
-                      </p>
+                      {canEditCurrentStep ? (
+                        <textarea
+                          value={draftScript}
+                          onChange={(event) => setDraftScript(event.target.value)}
+                          onKeyDown={(event) => {
+                            if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 's') {
+                              event.preventDefault();
+                              void saveTeleprompterScript(false);
+                            }
+                          }}
+                          placeholder={TELEPROMPTER_EMPTY_HINT}
+                          spellCheck={false}
+                          className="min-h-[24rem] w-full resize-none border-0 bg-transparent p-0 text-[clamp(1.45rem,2.25vw,2.55rem)] leading-[1.38] text-white/92 placeholder:text-white/24 tracking-[-0.01em] focus:outline-none"
+                        />
+                      ) : (
+                        <p className="text-[clamp(1.45rem,2.25vw,2.55rem)] leading-[1.38] text-white/92 whitespace-pre-line tracking-[-0.01em]">
+                          {currentStep?.script || TELEPROMPTER_EMPTY_HINT}
+                        </p>
+                      )}
                     </div>
                   </motion.div>
                 </AnimatePresence>
