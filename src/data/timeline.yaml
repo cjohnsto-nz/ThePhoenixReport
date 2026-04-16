@@ -1182,20 +1182,39 @@ presentation:
         price of change. IT is not a side function to delegate away when it sets the pace of the
         business.
       reveals:
+        - type: quote
+          id: erik-ten-deploys-day
+          modalStep:
+            name: "Erik throws down the next challenge"
+            script: >-
+              Erik does not let Bill admire the earlier progress for long. He tells him to
+              build a deployment pipeline, get humans out of the deployment business, and aim
+              for ten deploys a day. The point is not speed for its own sake. The point is to
+              make small, safe changes routine enough that the business can keep learning.
+          globalStep:
+            name: "The challenge becomes Unicorn"
+            script: >-
+              That challenge turns into a new cross-functional push. Steve authorizes a small
+              team to deliver the promotion and recommendation capability in time to matter for
+              the holiday season. To do it, they need a clean path from code commit to working
+              environments and production. That effort becomes Project Unicorn.
+
         - type: epic
           id: unicorn-project
           modalStep:
-            name: "Unicorn proves the model"
+            name: "Unicorn gets a clear mission"
             script: >-
-              On Unicorn, the team's hard-won practices finally become a repeatable delivery
-              capability. Smaller batches, automated environments, and a real deployment
-              pipeline make it possible to move quickly without gambling the company every
-              time code ships.
+              Unicorn starts as the team charged with delivering customer recommendations and
+              promotions fast enough to affect the holiday season. They do it with a clean,
+              decoupled code base, shared environments, and a real deployment pipeline. This is
+              where the team's hard-won practices stop being theory and become a product
+              delivery capability.
           globalStep:
-            name: "The transformation becomes visible"
+            name: "The new way of working has a vehicle"
             script: >-
-              The same organisation that used to melt down over releases can now create value
-              with speed and confidence.
+              Unicorn gives the organisation one place to prove that smaller batches,
+              automation, and close Dev-Ops-business collaboration can ship real value with
+              speed and confidence.
 
         - type: quote
           id: steve-flow-forward

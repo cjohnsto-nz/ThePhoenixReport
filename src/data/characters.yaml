@@ -63,6 +63,8 @@ characters:
         text: "Once you figure this out, young Bill, you will be well on your way toward understanding the Three Ways."
       - id: erik-end-to-end-business-process
         text: "You never see the end-to-end business process, so I guarantee you that many of the controls you want to put in aren't even necessary."
+      - id: erik-ten-deploys-day
+        text: "Get humans out of the deployment business. Figure out how to get to ten deploys a day."
     avatar: "🎩"
     color: "#10b981"
 
