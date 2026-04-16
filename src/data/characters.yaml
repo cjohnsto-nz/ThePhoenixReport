@@ -17,6 +17,10 @@ characters:
         text: "The business depends on IT more than ever. If IT can't deliver, we'll outsource."
       - id: steve-cut-heads
         text: "Any budget increases are out of the question. If anything, we may have to cut some heads in your area."
+      - id: steve-say-no-with-data
+        text: "If you, or for that matter, anyone knows that a project will fail, I need you to say so. And I need it backed up with data."
+      - id: steve-outsourcer-hostage
+        text: "That damned outsourcer is holding us hostage, preventing us from doing something that needs to be done. They're now jeopardizing our future."
       - id: steve-flow-forward
         text: "The flow of work should ideally go in one direction only: forward."
     avatar: "👔"
@@ -72,6 +76,8 @@ characters:
         text: "I can't believe it. He just talked me into taking a new job I don't want. How did that happen?"
       - id: bill-manage-flow
         text: "Until you've figured out how to manage the flow of work, you'll never be able to deliver on time."
+      - id: bill-system-gets-dumber
+        text: "Every time that we let Brent fix something that none of us can replicate, Brent gets a little smarter, and the entire system gets dumber."
       - id: bill-wait-time-busy-idle
         text: "The wait time is the percentage of time busy divided by the percentage of time idle."
         imagePath: "/utilization-vs-wait-time.png"
@@ -133,13 +139,30 @@ characters:
     traits: "Commercial · direct · outcome-focused"
     segment: segment-4
     reportsTo: sarah-moulton
-    description: "Maggie translates Phoenix from an IT project into a business bet. She presses for real time-to-market, exposes weak reporting and data quality, and keeps the discussion tied to customer value instead of internal activity."
+    description: "Maggie translates Phoenix from an IT project into a business bet, but she also exposes a quieter failure: the company is flying blind because store, order, and inventory reporting are late, error-filled, and too weak to support forecasting or fast market response."
     arc: "From sponsor pressure to business clarity"
     quotes:
       - id: maggie-market-moves-without-us
         text: "If this takes years, the market moves without us."
+      - id: maggie-flying-blind
+        text: "Most of the time, we're flying blind."
     avatar: "📈"
     color: "#14b8a6"
+
+  - id: ron-johnson
+    name: "Ron Johnson"
+    role: "VP of Manufacturing Sales"
+    archetype: "The Sales Sponsor"
+    traits: "Boisterous · analytical · revenue-focused"
+    segment: segment-4
+    reportsTo: steve-masters
+    description: "Ron gives Bill and Patty the sales-side version of Maggie's complaint. He owns sales pipeline and forecast accuracy, and he makes the cost of bad IT impossible to soften: outages and bad demand signals become lost orders, missed quota, stockouts, and contracts at risk."
+    arc: "From loud skeptic to business ally"
+    quotes:
+      - id: ron-clueless-what-customers-want
+        text: "We are clueless about what our customers want! We have too much product that will never sell and never enough of the ones that do."
+    avatar: "📞"
+    color: "#0ea5e9"
 
   - id: wes-davis
     name: "Wes Davis"
@@ -153,6 +176,8 @@ characters:
     quotes:
       - id: wes-keeping-lights-on
         text: "We're barely keeping the lights on as it is."
+      - id: wes-eighteen-months
+        text: "We're talking about eighteen months. Minimum. To even start the process, they would need $50K for the feasibility study and to secure a slot in their development schedule."
     avatar: "🔧"
     color: "#f97316"
 

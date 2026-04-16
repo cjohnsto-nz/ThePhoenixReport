@@ -46,13 +46,15 @@ presentation:
         and watches the first crises detonate.
       takeaway: >-
         The opening failures are not isolated mistakes. They are the symptoms of a system
-        with no visibility, no enforced flow, and no spare capacity.
+        with no visibility, brittle knowledge silos, and promises being made long before
+        capacity and readiness are understood.
       summary: >-
         Bill's first days teach the book's opening lessons the hard way. Reliability failures
         become business crises immediately. Changes nobody can see cannot be governed.
-        Urgency without discipline creates bigger outages, not faster delivery. And Phoenix
-        plus the audit show that the company is suffering from systemic governance debt, not
-        one isolated mistake.
+        Knowledge trapped in Brent makes every emergency more dangerous, business leaders keep
+        committing to Phoenix without understanding operational reality, and trust in IT keeps
+        eroding with every miss. Phoenix plus the audit show that the company is suffering from
+        systemic governance debt, not one isolated mistake.
       reveals:
         - type: "character"
           id: "bill-palmer"
@@ -147,6 +149,22 @@ presentation:
               Brent is not introduced as a hero to celebrate. He is introduced as evidence
               that the system is dangerously concentrated in one person's head.
 
+        - type: challenge
+          id: knowledge-silos
+          modalStep:
+            name: "Critical knowledge is trapped in too few people"
+            script: >-
+              Brent is not just busy. He is one of the few people who can diagnose the SAN,
+              understand the Phoenix virtualization work, and interpret the failures that are
+              stopping payroll. When the outage hits, Patty has to pull him off a promised Phoenix
+              job for Sarah, which means one emergency immediately starves the next commitment.
+          globalStep:
+            name: "The organisation is brittle, not just overloaded"
+            script: >-
+              This is the deeper danger of knowledge silos. Work does not merely wait in a queue.
+              It waits for a specific human being, and when that person is pulled into a crisis,
+              every other priority stalls with them.
+
         - type: character
           id: sarah-moulton
           modalStep:
@@ -177,6 +195,39 @@ presentation:
             script: >-
               That quote lands because it shows how quickly genuine technical risk gets
               dismissed once a deadline has become a business promise.
+
+        - type: challenge
+          id: blind-commitments
+          modalStep:
+            name: "The launch date is set before the work is understood"
+            script: >-
+              The book makes this painfully concrete in the Phoenix meeting. Bill points out that
+              the company gave new water fountains nine months of rollout planning, but Phoenix,
+              which touches thousands of point-of-sale and back-office systems, is being given one
+              week. The date is being committed before Operations even has complete specifications,
+              hardware lead times, or a real deployment plan.
+          globalStep:
+            name: "Promises are outrunning capacity"
+            script: >-
+              That is what makes these commitments blind. The business is not choosing between two
+              fully understood options. It is promising an outcome before the operational work has
+              been honestly sized, sequenced, or resourced.
+
+        - type: challenge
+          id: it-unreliable
+          modalStep:
+            name: "The business no longer believes IT can deliver"
+            script: >-
+              Sarah says it outright: because IT caused the payroll failure and Phoenix is already
+              late, she does not think the business can depend on Bill and his team. By this point,
+              every miss is no longer being read as a system problem. It is being read as evidence
+              that IT is slow, broken, and untrustworthy.
+          globalStep:
+            name: "Credibility is collapsing along with the schedule"
+            script: >-
+              Once that perception hardens, it changes every conversation. Warnings sound like
+              excuses, requests for time sound like delay tactics, and the threat of outsourcing
+              starts to feel plausible to the rest of the business.
 
         - type: challenge
           id: firefighting
@@ -241,11 +292,12 @@ presentation:
         This section is where the system becomes measurable. Bill learns that demand is far
         larger than anyone has admitted, that Brent is functioning as the constraint for both
         project work and operational work, and that the change board has exposed a whole class
-        of work the company was barely counting. He also learns something wider than staffing:
-        when executives experience IT mainly as high cost and weak delivery, even a correct
-        capacity diagnosis will not automatically earn more support. By the end of the block,
-        the team can see the overload clearly, but the business still drives Phoenix toward
-        launch anyway.
+        of work the company was barely counting. He also sees how overload turns into daily
+        context switching, stalled critical-path work, and public deadline slippage. And he
+        learns something wider than staffing: when executives experience IT mainly as high cost
+        and weak delivery, even a correct capacity diagnosis will not automatically earn more
+        support. By the end of the block, the team can see the overload clearly, but the business
+        still drives Phoenix toward launch anyway.
       reveals:
         - type: "character"
           id: "erik-reid"
@@ -317,6 +369,70 @@ presentation:
               This is where Bill's management problem changes shape. The question is no
               longer how to make Brent work harder. The question is how to stop wasting the
               one constraint everyone depends on.
+
+        - type: quote
+          id: bill-system-gets-dumber
+          modalStep:
+            name: "Bill turns the bottleneck into a management lesson"
+            script: >-
+              Bill does not frame Brent as the problem. He frames the surrounding system as
+              the problem. The danger is not just that Brent is overloaded. It is that every
+              rescue leaves more knowledge trapped in Brent's head, so the next crisis is
+              even more dependent on him than the last one.
+          globalStep:
+            name: "The response is protection and knowledge transfer"
+            script: >-
+              That is why Bill creates the level-three escalation pool, gates access to
+              Brent, and insists that other engineers document what they learn. He is trying
+              to protect the constraint while making the system smarter every time Brent is
+              needed.
+
+        - type: challenge
+          id: task-switching
+          modalStep:
+            name: "The same people keep getting yanked from one fire to the next"
+            script: >-
+              Bill insists that Brent must attend the Phoenix preparation work, and Wes admits he
+              cannot because he is already on a network outage. That is the real operating rhythm
+              here. Key people are pulled from incidents to projects to meetings to recovery work,
+              so nothing gets uninterrupted attention for long.
+          globalStep:
+            name: "Context switching burns capacity invisibly"
+            script: >-
+              This is why the team feels constantly busy without making proportional progress.
+              Every interruption destroys continuity, every emergency resets focus, and the
+              cumulative cost never appears on a project plan.
+
+        - type: challenge
+          id: stalled-projects
+          modalStep:
+            name: "Critical work is in flight but not actually moving"
+            script: >-
+              Kirsten reports that twelve tasks were in the Phoenix critical path last week and only
+              three were completed. That is the signature of a stalled project. Work has started,
+              executives believe it is underway, but dependencies, outages, and shared people keep
+              it from finishing.
+          globalStep:
+            name: "In progress does not mean advancing"
+            script: >-
+              This is how overloaded systems create the illusion of movement. Lots of commitments
+              stay active on paper while the real work waits on Brent, on infrastructure, or on the
+              next interruption.
+
+        - type: challenge
+          id: missed-deadlines
+          modalStep:
+            name: "The schedule starts failing in public"
+            script: >-
+              By now the slippage is no longer private. Steve gets escalation mail about the latest
+              Phoenix slip, the project is declared red, and Sarah frames the delays as unacceptable.
+              The team is already working under intense urgency, but heroic effort cannot close a gap
+              between commitments and actual capacity.
+          globalStep:
+            name: "More urgency does not create more throughput"
+            script: >-
+              That is why the deadline problem keeps recurring. The company keeps treating misses as
+              a motivation failure when the book keeps showing a system design failure.
 
         - type: challenge
           id: incomplete-changes
@@ -398,16 +514,19 @@ presentation:
         pushing for Phoenix fixes while recovery work swallows the team. Bill nearly quits.
         The team nearly collapses. And then, almost unexpectedly, the story turns.
       narrativeArc: >-
-        The breakthrough comes when Bill can finally name the system's real enemy.
+        The breakthrough comes when Bill can finally name the system's real enemy and
+        connect flow to the discipline of accepting work only with real capacity data.
       takeaway: >-
-        Unplanned work destroys planned work, so flow improves only when the constraint sets
-        the pace.
+        Unplanned work destroys planned work, and recovery only starts when leaders stop
+        accepting work blindly, say no with data, and let capacity set the pace.
       summary: >-
         Phoenix's fallout teaches Bill what unplanned work really is: anti-work that burns up
         everything the company meant to do. Erik then helps him connect Brent, technical debt,
-        and overloaded commitments into one system problem. The breakthrough is not another
-        heroic recovery. It is the leadership decision to freeze new work and finally manage
-        according to capacity and flow.
+        and overloaded commitments into one system problem. At the offsite, Bill finally states
+        the deeper leadership failure: IT has been accepting work without any real analysis of
+        demand, constrained resources, or the risk to existing commitments. The breakthrough is
+        not another heroic recovery. It is the decision to stop being compliant order takers,
+        freeze new work, and finally manage according to capacity and flow.
       reveals:
         - type: challenge
           id: business-pressure
@@ -500,6 +619,29 @@ presentation:
               executive pressure. Steve now understands that leadership behaviour is part of
               the system too.
 
+        - type: quote
+          id: steve-say-no-with-data
+          modalStep:
+            name: "The offsite turns no into a leadership duty"
+            script: >-
+              This is the line that converts the conversation from frustration into management
+              discipline. Bill explains that IT has been acting like compliant order takers,
+              accepting work without proving it can be delivered. Steve's answer is that leaders
+              are supposed to say no when the system cannot carry more load, but that no has to
+              be backed by real demand-and-capacity data. Erik then makes the test concrete:
+              before accepting work, ask whether it increases the flow of project work through
+              IT, whether it improves operational stability or recovery time, and whether it
+              increases capacity at the bottleneck.
+          globalStep:
+            name: "Capacity planning becomes the basis for commitment"
+            script: >-
+              This is where Erik's plant lesson finally lands in executive language. In the
+              plant, they check bills of material, routings, work centers, and existing load
+              before accepting an order. Bill now sees that IT needs the same discipline before
+              it accepts another project, and that projects should be screened against three
+              questions: do they improve flow, do they strengthen operational stability, and do
+              they give the constrained resource more usable capacity.
+
         - type: epic
           id: project-freeze
           modalStep:
@@ -511,11 +653,16 @@ presentation:
               becomes honest with one another in a way it never has before. Personal stories
               get told. Trust starts to form. And when they come out, they announce a project
               freeze: stop launching more work until the system can actually finish what it
-              has already started.
+              has already started and build the data needed to judge future commitments
+              rationally.
           globalStep:
             name: "Stopping becomes the first real systems decision"
             script: >-
               The freeze sounds backwards, but it is the first honest response to overload.
+              It creates the breathing room to stop being order takers, reduce WIP, and start
+              asking whether new work can be accepted without breaking existing commitments.
+              From here on, project acceptance is no longer just a budget or deadline question.
+              It becomes a flow, stability, and bottleneck-capacity question.
               In the first week after it begins, the team gets more done than it normally does
               in an entire month.
 
@@ -568,6 +715,23 @@ presentation:
               silo to optimise the whole. That is what teaches him the First Way: start with
               flow across the entire system, not local efficiency inside each team.
 
+        - type: challenge
+          id: tech-debt-vs-features
+          modalStep:
+            name: "Feature pressure keeps starving the system work underneath it"
+            script: >-
+              Erik finally names another pattern that has been hiding in plain sight. Development
+              has been spending its cycles on features instead of stability, security, scalability,
+              manageability, operability, and continuity. Phoenix is not just late because people are
+              overloaded. It is fragile because the company kept prioritizing visible features over
+              the engineering work that would have made those features safe to run.
+          globalStep:
+            name: "Neglected debt returns as unplanned work"
+            script: >-
+              This is why Erik links technical debt directly to Brent and to unplanned work. When
+              operability gets deferred, the future shows up as outages, rework, and even less
+              capacity for the next round of features.
+
         - type: concept
           id: first-way
           modalStep:
@@ -599,7 +763,9 @@ presentation:
         The first half of this section belongs to John. He begins as the man with the binder,
         convinced that more controls and more urgency must mean more safety. What changes him
         is learning to trace the full business process and seeing where the company is
-        actually relying on controls to catch material error.
+        actually relying on controls to catch material error. The back half belongs to Bill
+        and Patty's sponsor interviews, where Ron and Maggie translate IT defects into lost
+        orders, bad demand data, and delayed market response.
       narrativeArc: >-
         The organisation starts making better decisions when it can see both the work and
         the business impact, and when it learns which controls genuinely matter.
@@ -610,7 +776,9 @@ presentation:
       summary: >-
         The freeze proves that focus helps, but Patty's analysis shows the harder truth: work still
         dies in queues, handoffs, and undocumented dependencies. At the same time, Bill and John
-        learn to trace IT problems all the way to sales, stockouts, reporting, and audit scope. By
+        learn that many supposedly new problems are actually repeat findings and repeat patterns.
+        Queue math makes long lead times visible, and audit scoping plus the Ron-and-Maggie sponsor
+        interviews make business risk visible in lost orders, stockouts, and bad demand signals. By
         the end of this block, quality stops meaning 'inspect harder later' and starts meaning
         shorter feedback loops, clearer release control, and business-aligned countermeasures.
       reveals:
@@ -632,6 +800,20 @@ presentation:
               not imaginary. But at this point he is still fighting the problem in the only
               way he knows how: push harder, add controls, and demand urgency from inside the
               security silo.
+
+        - type: challenge
+          id: repeated-mistakes
+          modalStep:
+            name: "The company is paying for the same failures again"
+            script: >-
+              Nancy makes the problem explicit: many of the audit findings are repeat findings going
+              into the third year. That means the organisation is not merely making mistakes. It is
+              failing to convert known failures into durable changes in how the work is done.
+          globalStep:
+            name: "A repeat finding is proof the system did not learn"
+            script: >-
+              That phrase matters because it changes the meaning of the audit. The issue is no
+              longer just control weakness. It is organisational memory failure.
 
         - type: quote
           id: john-orange-jumpsuits
@@ -706,6 +888,21 @@ presentation:
               keeping every person maximally utilized.
 
         - type: challenge
+          id: long-lead-times
+          modalStep:
+            name: "Busy teams still deliver painfully slowly"
+            script: >-
+              Once Erik walks Bill through the utilization math, the paradox becomes obvious. A
+              system can look fully loaded and still deliver terribly slowly, because the touch time
+              is tiny compared to the waiting time. Work spends days sitting in queues while everyone
+              involved looks busy.
+          globalStep:
+            name: "Lead time is mostly waiting, not doing"
+            script: >-
+              This is why the company keeps being surprised by how long seemingly small tasks take.
+              The work is not intrinsically large. The queues are.
+
+        - type: challenge
           id: deployment-failures
           modalStep:
             name: "Releases still feel like a gamble"
@@ -753,19 +950,75 @@ presentation:
               of the same insight, and they lead directly into the Second Way.
 
         - type: character
+          id: ron-johnson
+          modalStep:
+            name: "Ron turns IT failure into lost revenue"
+            script: >-
+              Ron Johnson is the first business process owner Bill and Patty interview, and he
+              gives them the sales version of Maggie's frustration. He owns sales pipeline and
+              forecast accuracy, and he ties those measures directly to IT reliability. When MRP
+              and the phones fail, orders do not merely get delayed inside IT. Customers cancel,
+              contracts go up for rebid, and sales people miss quota because the company could
+              not transact when demand was there.
+          globalStep:
+            name: "The business risk gets priced in orders and contracts"
+            script: >-
+              Ron matters because he converts a technical outage into commercial loss. He also
+              reinforces the stockout problem: the company cannot forecast well because it still
+              does not know what customers actually want. That makes him the revenue-side half
+              of the sponsor interview sequence that Maggie completes from the retail side.
+
+        - type: quote
+          id: ron-clueless-what-customers-want
+          modalStep:
+            name: "Ron names the demand-signal failure outright"
+            script: >-
+              This is the line that makes Ron connect directly to Maggie. He says the company is
+              clueless about what customers want: too much product that will never sell and not
+              enough of the items that do. That ties sales forecast accuracy back to the same bad
+              order, inventory, and stockout data Maggie later attacks from the retail side.
+          globalStep:
+            name: "Sales and retail are describing the same blindness"
+            script: >-
+              Ron is not asking for prettier analytics either. He is saying bad demand data is
+              suppressing revenue right now, because the easiest sales are walking out the door
+              when stores are out of stock.
+
+        - type: character
           id: maggie-lee
           modalStep:
-            name: "Maggie brings the market back into the room"
+            name: "Maggie names the reporting failure behind the business frustration"
             script: >-
-              Maggie Lee represents the business test that keeps all of this honest. She does
-              not care how hard IT worked or how many tickets were closed. She cares whether
-              the company can reach customers faster than the competition. Her presence keeps
-              the conversation tied to outcomes, not effort.
+              Maggie is where the book stops talking about Phoenix as an abstract strategy and
+              starts talking about what the business still cannot see. She tells Bill and Patty
+              that most of the time Retail is flying blind. The order entry and inventory data
+              are often wrong, the monthly reports from Finance are full of errors, and the
+              company cannot trust its own reporting enough to forecast demand or steer the
+              business quickly.
           globalStep:
-            name: "Value becomes the scoreboard"
+            name: "Her complaint is not cosmetic reporting"
             script: >-
-              Maggie matters because she reminds the team that internal improvement only
-              counts if it changes what the business can do in the market.
+              That complaint matters because Maggie is not asking for prettier dashboards. She
+              is saying the company cannot tell what customers want, cannot reliably see
+              stockouts and sales patterns, and therefore cannot make fast commercial bets with
+              confidence. This is business blindness, not reporting polish.
+
+        - type: quote
+          id: maggie-flying-blind
+          modalStep:
+            name: "Maggie reduces the whole problem to one line"
+            script: >-
+              This is the line that makes Maggie memorable. She is not complaining that the
+              reports are inconvenient. She is saying the business lacks trustworthy, timely
+              information about demand, inventory, and customer behaviour. For her, that makes
+              Phoenix unfinished no matter how much code has shipped.
+          globalStep:
+            name: "The data complaint becomes a strategy complaint"
+            script: >-
+              Once Maggie says they are flying blind, the rest of her critique lands harder.
+              Phoenix was supposed to improve reporting, but those features keep getting
+              dropped. So the company keeps shipping effort without delivering the visibility
+              that would actually let Retail forecast, experiment, and respond to the market.
 
         - type: concept
           id: second-way
@@ -806,9 +1059,11 @@ presentation:
         Unicorn proves the new model in production: smaller batches, automated environments,
         rapid security fixes, and constant experimentation start generating real revenue. The team
         then pushes further by hardening systems through deliberate fault injection and by pulling
-        strategic capabilities back in-house when outsourcing becomes the constraint. The ending's
-        final point is organizational: IT is not a side function to delegate away when it sets the
-        pace of the business.
+        strategic capabilities back in-house when outsourcing becomes the constraint. The MRP story
+        makes the final lesson concrete: even after fixing internal flow, the company still cannot
+        compete if a vendor controls a core manufacturing capability, its delivery schedule, and the
+        price of change. The ending's final point is organizational: IT is not a side function to
+        delegate away when it sets the pace of the business.
       reveals:
         - type: epic
           id: unicorn-project
@@ -857,20 +1112,49 @@ presentation:
               This is a deep cultural shift. Failure stops being something to hide and starts
               becoming something the team studies and learns from.
 
-        - type: challenge
-          id: vendor-lock-in
+        - type: "challenge"
+          id: "vendor-lock-in"
           modalStep:
             name: "The constraint moves outside IT"
-            script: >-
-              By the end, the team discovers that one of its biggest strategic constraints is
-              not internal at all. It is an outsourced capability that the business now depends
-              on for speed. The vendor cannot move fast enough, which means the company cannot
-              move fast enough.
+            script: |-
+              Sarah brings a real competitive threat: a rival is already selling custom build-to-order kits, and Parts Unlimited is losing sales. Wes investigates what it would take to change the outsourced MRP system that runs the plants and comes back furious. The vendor wants six months for requirements, nine more for build and test, no real start until June, and fifty thousand dollars just for the feasibility study and a slot in the queue. That means a business-critical change cannot even begin on business time.
           globalStep:
             name: "Strategic capabilities must be owned"
+            script: |-
+              This is one of the book's sharpest late lessons. The company outsourced MRP because it looked non-strategic and expensive. Now that same system determines whether Parts Unlimited can respond to the market. The vendor is not just slow. It is charging for access to its own queue while the business falls behind. At that point, bringing the capability back in-house is not an ideological move. It is a competitive necessity.
+        - type: quote
+          id: wes-eighteen-months
+          modalStep:
+            name: "Wes brings back the vendor's answer"
             script: >-
-              This is one of the most mature insights in the book. If a capability sets the
-              pace of the business, owning it eventually matters.
+              This quote is where the pain becomes undeniable. Wes is not complaining about a bad
+              meeting or a difficult partner. He is reporting the vendor's actual operating model:
+              long requirement lead times, long development lead times, delayed staffing, and an
+              upfront fee before meaningful work even starts.
+          globalStep:
+            name: "The vendor controls pace and price"
+            script: >-
+              Once Bill hears this, the problem becomes structural. Parts Unlimited is no longer
+              just waiting on another internal team. It is stuck behind a vendor queue whose goals,
+              contract incentives, and economics are misaligned with the business.
+
+        - type: quote
+          id: steve-outsourcer-hostage
+          modalStep:
+            name: "Steve names the strategic danger directly"
+            script: >-
+              Steve's language matters here because it shows how far the executive understanding
+              has evolved. Earlier in the book he treated IT largely as cost and broken promises.
+              Here he sees the outsourced MRP platform for what it has become: a core capability
+              whose owner is now constraining the future of the company.
+          globalStep:
+            name: "In-house becomes the only credible path"
+            script: >-
+              That is why the proposal changes from incremental vendor management to contract
+              buyout. Bill's team argues for spending nearly a million dollars to regain control of
+              the application, pull roughly six people back into the company, and integrate MRP
+              with Unicorn so build-to-order capability can be delivered in about ninety days
+              instead of eighteen months.
 
         - type: challenge
           id: heroics-over-systems

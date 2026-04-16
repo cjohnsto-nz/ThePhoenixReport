@@ -792,6 +792,9 @@ function LessonCard({ lesson, index }: { lesson: Lesson; index: number }) {
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} accentColor="#f59e0b">
         <div className="space-y-4">
+          <div className="text-[11px] uppercase tracking-[0.28em] text-phoenix-300/65 font-semibold">
+            Lesson {index + 1}
+          </div>
           <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
             {lesson.title}
           </h3>
@@ -803,7 +806,6 @@ function LessonCard({ lesson, index }: { lesson: Lesson; index: number }) {
     </>
   );
 }
-
 
 // Fixed grid coordinates [col, row] for each character id (1-based for CSS grid).
 // Grid: 5 columns × 4 rows.
@@ -817,11 +819,13 @@ const GRID_POS: Record<string, [number, number]> = {
   'erik-reid':    [1, 1],
   'steve-masters':[3, 1],
   'bill-palmer':  [2, 2],
-  'chris-allers': [4, 2],
+  'chris-allers': [3, 2],
   'sarah-moulton':[5, 2],
   'wes-davis':    [1, 3],
   'patty-mckee':  [2, 3],
   'john-pesche':  [3, 3],
+  'ron-johnson':  [4, 2],
+  'maggie-lee':   [5, 3],
   'brent-geller': [1, 4],
 };
 
