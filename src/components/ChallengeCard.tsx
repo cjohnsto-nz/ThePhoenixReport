@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { GlassCard } from './GlassCard';
+import { ChallengeDetailContent } from './DetailModalContent';
 import { Modal } from './Modal';
 import type { Challenge } from '../types';
 
@@ -43,39 +44,7 @@ export function ChallengeCard({ challenge, revealed, index }: ChallengeCardProps
       </GlassCard>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} accentColor={challenge.color}>
-        <div className="space-y-6">
-          <div>
-            <span
-              className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium border mb-4 ${severityBadge[challenge.severity]}`}
-            >
-              {challenge.severity} severity
-            </span>
-            <h2 className="text-2xl font-bold text-white">{challenge.title}</h2>
-            <p className="text-white/50 mt-1">{challenge.subtitle}</p>
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <h3 className="text-xs uppercase tracking-wider text-white/30 font-semibold mb-2">
-                Description
-              </h3>
-              <p className="text-white/70 leading-relaxed">{challenge.description}</p>
-            </div>
-
-            <div
-              className="p-4 rounded-xl border"
-              style={{
-                backgroundColor: `${challenge.color}08`,
-                borderColor: `${challenge.color}20`,
-              }}
-            >
-              <h3 className="text-xs uppercase tracking-wider font-semibold mb-2" style={{ color: challenge.color }}>
-                Impact
-              </h3>
-              <p className="text-white/70 leading-relaxed">{challenge.impact}</p>
-            </div>
-          </div>
-        </div>
+        <ChallengeDetailContent challenge={challenge} />
       </Modal>
     </>
   );

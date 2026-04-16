@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { Epic } from '../types';
+import { EpicDetailContent } from './DetailModalContent';
 import { GlassCard } from './GlassCard';
 import { Modal } from './Modal';
 
@@ -31,22 +32,7 @@ export function EpicCard({ epic, revealed = true, index = 0 }: EpicCardProps) {
         </div>
       </GlassCard>
       <Modal isOpen={showModal} onClose={() => setShowModal(false)} accentColor={epic.color}>
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <span className="text-3xl">{epic.icon}</span>
-            <div>
-              <h3 className="text-xl font-bold text-white">{epic.title}</h3>
-              <p className="text-sm text-white/60">{epic.subtitle}</p>
-            </div>
-          </div>
-          <span
-            className="inline-block px-2 py-0.5 rounded text-xs font-medium"
-            style={{ backgroundColor: epic.color + '22', color: epic.color }}
-          >
-            {epic.status}
-          </span>
-          <p className="text-white/80 text-sm leading-relaxed">{epic.description}</p>
-        </div>
+        <EpicDetailContent epic={epic} />
       </Modal>
     </>
   );

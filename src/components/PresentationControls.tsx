@@ -17,19 +17,31 @@ function splitSeverity(overBy: number) {
   return             { text: 'text-red-400',    glow: 'rgba(248,113,113,0.5)' };
 }
 
+function sectionWindow(start: number, end: number) {
+  return `${fmt(start)}-${fmt(end)}`;
+}
+
 // Inner controls UI — shared between main window and portal window
 function ControlsInner({ isRemote = false }: { isRemote?: boolean }) {
   const { state, dispatch, segments, currentSegment, split } = usePresentation();
 
-  const totalDurationSec = segments.reduce((a, s) => a + s.duration * 60, 0);
+  const totalDurationSec = split.overallTarget;
   const globalProgress = totalDurationSec > 0
     ? Math.min((state.totalElapsedSeconds / totalDurationSec) * 100, 100)
     : 0;
 
   const isOverTime = split.overBySeconds > 0;
   const severity = splitSeverity(split.overBySeconds);
-  const remaining = split.revealTotal - split.revealDone;
-  const isIntroOutro = currentSegment?.phase === 'intro' || currentSegment?.phase === 'outro';
+  const isStandaloneSegment = currentSegment?.phase === 'intro' || currentSegment?.phase === 'outro';
+  const disablePrevStep =
+    state.currentSegmentIndex === 0 &&
+    isStandaloneSegment &&
+    state.stagedId === null;
+  const disableNextStep =
+    state.currentSegmentIndex === segments.length - 1 &&
+    isStandaloneSegment &&
+    state.stagedId === null;
+  const paceDisplay = isOverTime ? split.overBySeconds : split.remainingSeconds;
 
   return (
     <div className={`w-full ${isRemote ? 'scale-110 origin-top-left' : ''}`}>
@@ -53,6 +65,26 @@ function ControlsInner({ isRemote = false }: { isRemote?: boolean }) {
                   <button onClick={() => dispatch({ type: 'PREV_SEGMENT' })} className="w-7 h-7 flex items-center justify-center rounded-lg text-white/35 hover:text-white hover:bg-white/10 transition-all" title="Previous segment">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="19 20 9 12 19 4 19 20"/><line x1="5" y1="19" x2="5" y2="5"/></svg>
                   </button>
+                  {!isStandaloneSegment ? (
+                    <>
+                      <button
+                        onClick={() => dispatch({ type: 'REVEAL_PREV' })}
+                        disabled={disablePrevStep}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg text-white/35 hover:text-white hover:bg-white/10 transition-all disabled:text-white/15 disabled:hover:text-white/15 disabled:hover:bg-transparent"
+                        title="Previous step"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                      </button>
+                      <button
+                        onClick={() => dispatch({ type: 'REVEAL_NEXT' })}
+                        disabled={disableNextStep}
+                        className="w-7 h-7 flex items-center justify-center rounded-lg text-white/35 hover:text-white hover:bg-white/10 transition-all disabled:text-white/15 disabled:hover:text-white/15 disabled:hover:bg-transparent"
+                        title="Next step"
+                      >
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+                      </button>
+                    </>
+                  ) : null}
                   <button onClick={() => dispatch({ type: 'NEXT_SEGMENT' })} className="w-7 h-7 flex items-center justify-center rounded-lg text-white/35 hover:text-white hover:bg-white/10 transition-all" title="Next segment">
                     <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 4 15 12 5 20 5 4"/><line x1="19" y1="5" x2="19" y2="19"/></svg>
                   </button>
@@ -63,30 +95,22 @@ function ControlsInner({ isRemote = false }: { isRemote?: boolean }) {
                     <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
                   </button>
                 </div>
-                <div className="w-px h-5 bg-white/[0.07] flex-shrink-0"/>
-                {!isIntroOutro && split.revealTotal > 0 ? (
-                  <motion.button onClick={() => dispatch({ type: 'REVEAL_NEXT' })} disabled={split.allRevealed} whileHover={!split.allRevealed ? { scale: 1.04 } : undefined} whileTap={!split.allRevealed ? { scale: 0.97 } : undefined} className={`flex items-center gap-2 ${isRemote ? 'px-6 py-3 rounded-2xl text-base' : 'px-4 py-2 rounded-xl text-sm'} font-semibold transition-all duration-300 flex-shrink-0 ${split.allRevealed ? 'bg-white/[0.04] text-white/20 cursor-not-allowed' : 'bg-phoenix-500 hover:bg-phoenix-400 text-white shadow-lg shadow-phoenix-500/20'}`}>
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                    {split.allRevealed ? 'All Revealed' : 'Reveal Next'}
-                    {!split.allRevealed && <span className="inline-flex items-center justify-center min-w-[20px] h-5 px-1 rounded-full bg-black/20 text-[11px] font-bold">{remaining}</span>}
-                  </motion.button>
-                ) : null}
                 <AnimatePresence mode="wait">
-                  <motion.div key={currentSegment?.id} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.2 }} className="flex-1 min-w-0">
+                  <motion.div key={`${currentSegment?.id}-${state.segmentScreen}`} initial={{ opacity: 0, y: 5 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -5 }} transition={{ duration: 0.2 }} className="flex-1 min-w-0">
                     <div className="text-[10px] text-white/20 uppercase tracking-widest font-medium leading-none mb-0.5">{state.currentSegmentIndex + 1} / {segments.length}</div>
-                    <div className="text-sm text-white/55 font-medium truncate leading-tight">{currentSegment?.title}</div>
+                    <div className="text-sm text-white/55 font-medium truncate leading-tight">{currentSegment?.title}{!isStandaloneSegment && state.segmentScreen !== 'content' ? ` · ${state.segmentScreen}` : ''}</div>
                   </motion.div>
                 </AnimatePresence>
                 <div className="w-px h-5 bg-white/[0.07] flex-shrink-0"/>
                 <div className="flex-shrink-0 text-right">
                   <motion.div animate={split.overBySeconds >= 90 ? { opacity: [1, 0.55, 1] } : { opacity: 1 }} transition={{ duration: 0.75, repeat: Infinity, ease: 'easeInOut' }} className={`text-base font-mono tabular-nums font-semibold leading-none transition-colors duration-700 ${severity.text}`} style={{ textShadow: isOverTime ? `0 0 14px ${severity.glow}` : undefined }}>
-                    {isOverTime ? `+${fmt(split.overBySeconds)}` : fmt(split.segmentElapsed)}
+                    {isOverTime ? `+${fmt(paceDisplay)}` : `-${fmt(paceDisplay)}`}
                   </motion.div>
-                  <div className="text-[10px] text-white/30 font-mono tabular-nums leading-none mt-0.5">{isOverTime ? `${fmt(split.segmentElapsed)} / ${fmt(split.segmentTarget)}` : `/ ${fmt(split.segmentTarget)}`}</div>
+                  <div className="text-[10px] text-white/30 font-mono tabular-nums leading-none mt-0.5">{sectionWindow(split.sectionStart, split.sectionEnd)}</div>
                 </div>
                 <div className="flex-shrink-0 pl-3 border-l border-white/[0.06]">
                   <div className="text-sm font-mono tabular-nums text-white/25 leading-none">{fmt(state.totalElapsedSeconds)}</div>
-                  <div className="text-[10px] text-white/25 font-mono tabular-nums leading-none mt-0.5">total</div>
+                  <div className="text-[10px] text-white/25 font-mono tabular-nums leading-none mt-0.5">run time</div>
                 </div>
                 <div className="flex gap-1.5 flex-shrink-0 pl-1">
                   {segments.map((seg, i) => {

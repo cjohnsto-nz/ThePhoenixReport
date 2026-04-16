@@ -6,12 +6,15 @@ export function SegmentHeader() {
 
   if (!currentSegment) return null;
 
-  const isIntroOutro =
+  const isStandaloneHero =
     state.mode === 'presentation' &&
     (currentSegment.phase === 'intro' || currentSegment.phase === 'outro');
+  const isSegmentPage =
+    state.mode === 'presentation' &&
+    !isStandaloneHero &&
+    state.segmentScreen !== 'content';
 
-  // Intro/outro get a centered hero treatment (presentation mode only)
-  if (isIntroOutro) {
+  if (isStandaloneHero) {
     return (
       <AnimatePresence mode="wait">
         <motion.div
@@ -64,6 +67,8 @@ export function SegmentHeader() {
       </AnimatePresence>
     );
   }
+
+  if (isSegmentPage) return null;
 
   // Content segments — compact top bar
   return (

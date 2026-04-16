@@ -1,7 +1,7 @@
 # Timeline Configuration
 # Controls the presentation flow - 60 minutes total
 # Reveals are in narrative order — characters & epics first to set the scene,
-# then challenges & concepts build on them. delaySeconds is only used for ordering.
+# then challenges & concepts build on them. Order in the array = reveal order.
 
 presentation:
   totalDuration: 60 # minutes
@@ -9,132 +9,144 @@ presentation:
     - id: intro
       title: "The Phoenix Project"
       subtitle: "A Novel About IT, DevOps, and Helping Your Business Win"
-      duration: 5
+      start: "00:00"
+      end: "05:00"
       phase: intro
       reveals: []
 
     - id: segment-1
       title: "Chaos and Invisible Work"
       subtitle: "Early — The organization is overwhelmed, reactive, and lacks visibility"
-      duration: 10
+      start: "05:00"
+      end: "15:00"
       phase: early
       narrativeArc: "We are overwhelmed and don't understand why"
       takeaway: "Organizations fail not because of lack of effort, but because they cannot see or control their work system."
+      summary: "Bill inherits a crisis-ridden organization where work is invisible, commitments are disconnected from capacity, and operational chaos dominates daily life. The first section establishes the human cost of unplanned work and frames Phoenix as the forcing function that exposes deeper systemic problems."
       reveals:
         # Story setup: meet the people, then the crisis
-        - { type: character, id: steve-masters, delaySeconds: 0 }
-        - { type: character, id: bill-palmer, delaySeconds: 1 }
-        - { type: character, id: wes-davis, delaySeconds: 2 }
-        - { type: epic, id: phoenix-project, delaySeconds: 3 }
-        - { type: epic, id: payroll-failure, delaySeconds: 4 }
+        - { type: character, id: bill-palmer }
+        - { type: character, id: steve-masters }
+        - { type: character, id: wes-davis }
+        - { type: epic, id: phoenix-project }
+        - { type: epic, id: payroll-failure }
         # Now the challenges emerge
-        - { type: challenge, id: firefighting, delaySeconds: 5 }
-        - { type: challenge, id: no-visibility, delaySeconds: 6 }
-        - { type: challenge, id: knowledge-silos, delaySeconds: 7 }
-        - { type: challenge, id: blind-commitments, delaySeconds: 8 }
-        - { type: challenge, id: it-unreliable, delaySeconds: 9 }
+        - { type: challenge, id: firefighting }
+        - { type: challenge, id: no-visibility }
+        - { type: challenge, id: knowledge-silos }
+        - { type: challenge, id: blind-commitments }
+        - { type: challenge, id: it-unreliable }
         # Early concept hints
-        - { type: concept, id: four-types-unplanned, delaySeconds: 10 }
-        - { type: concept, id: first-way, delaySeconds: 11 }
+        - { type: concept, id: four-types-unplanned }
+        - { type: concept, id: first-way }
 
     - id: segment-2
       title: "Overload and the Cost of Multitasking"
       subtitle: "Early Mid — The system is overloaded; doing everything makes everything slower"
-      duration: 10
+      start: "15:00"
+      end: "25:00"
       phase: early-mid
       narrativeArc: "We are doing too much and it's breaking us"
       takeaway: "Not all work is equal — unplanned work silently consumes capacity and destabilizes everything else."
+      summary: "As more obligations pile up, the team learns that overload is not just a morale problem but a structural one. This section connects multitasking, bottlenecks, and stalled delivery, showing how too much parallel work turns every priority into a delay."
       reveals:
         # New characters
-        - { type: character, id: chris-allers, delaySeconds: 0 }
-        - { type: character, id: brent-geller, delaySeconds: 1 }
+        - { type: character, id: chris-allers }
+        - { type: character, id: brent-geller }
         # Audit epic
-        - { type: epic, id: audit-compliance, delaySeconds: 2 }
+        - { type: epic, id: audit-compliance }
         # Challenges
-        - { type: challenge, id: high-wip, delaySeconds: 3 }
-        - { type: challenge, id: task-switching, delaySeconds: 4 }
-        - { type: challenge, id: stalled-projects, delaySeconds: 5 }
-        - { type: challenge, id: bottleneck-people, delaySeconds: 6 }
-        - { type: challenge, id: missed-deadlines, delaySeconds: 7 }
+        - { type: challenge, id: high-wip }
+        - { type: challenge, id: task-switching }
+        - { type: challenge, id: stalled-projects }
+        - { type: challenge, id: bottleneck-people }
+        - { type: challenge, id: missed-deadlines }
         # The Four Types of Work
-        - { type: concept, id: four-types-business, delaySeconds: 8 }
-        - { type: concept, id: four-types-internal, delaySeconds: 9 }
-        - { type: concept, id: four-types-changes, delaySeconds: 10 }
-        - { type: concept, id: four-types-unplanned, delaySeconds: 11 }
+        - { type: concept, id: four-types-business }
+        - { type: concept, id: four-types-internal }
+        - { type: concept, id: four-types-changes }
+        - { type: concept, id: four-types-unplanned }
 
     - id: segment-3
       title: "Bottlenecks and Flow"
       subtitle: "Mid — Performance is limited by constraints, not effort"
-      duration: 10
+      start: "25:00"
+      end: "35:00"
       phase: mid
       narrativeArc: "The system — not the people — is the problem"
       takeaway: "Improvement comes from managing constraints and enabling smooth flow, not pushing individuals harder."
+      summary: "Erik reframes the crisis by shifting attention away from heroic effort and toward system constraints. This section introduces flow thinking: work must be managed through bottlenecks deliberately, or local optimization will keep producing global failure."
       reveals:
         # Erik enters as the mentor
-        - { type: character, id: erik-reid, delaySeconds: 0 }
-        - { type: character, id: john-pesche, delaySeconds: 1 }
+        - { type: character, id: erik-reid }
+        - { type: character, id: john-pesche }
         # Change freeze epic
-        - { type: epic, id: project-freeze, delaySeconds: 2 }
+        - { type: epic, id: project-freeze }
         # Challenges
-        - { type: challenge, id: work-piles-up, delaySeconds: 3 }
-        - { type: challenge, id: long-lead-times, delaySeconds: 4 }
-        - { type: challenge, id: local-optimization, delaySeconds: 5 }
-        - { type: challenge, id: no-ownership, delaySeconds: 6 }
+        - { type: challenge, id: work-piles-up }
+        - { type: challenge, id: long-lead-times }
+        - { type: challenge, id: local-optimization }
+        - { type: challenge, id: no-ownership }
         # The First Way
-        - { type: concept, id: first-way, delaySeconds: 7 }
-        - { type: concept, id: first-way-manage-system, delaySeconds: 8 }
-        - { type: concept, id: first-way-protect-bottlenecks, delaySeconds: 9 }
-        - { type: concept, id: first-way-reduce-wip, delaySeconds: 10 }
-        - { type: concept, id: first-way-optimize-flow, delaySeconds: 11 }
+        - { type: concept, id: first-way }
+        - { type: concept, id: first-way-manage-system }
+        - { type: concept, id: first-way-protect-bottlenecks }
+        - { type: concept, id: first-way-reduce-wip }
+        - { type: concept, id: first-way-optimize-flow }
 
     - id: segment-4
       title: "Quality, Feedback, and Risk Reduction"
       subtitle: "Late Mid — Speed without feedback creates instability"
-      duration: 10
+      start: "35:00"
+      end: "45:00"
       phase: late-mid
       narrativeArc: "We need feedback to prevent failure"
       takeaway: "You can't scale delivery without tight feedback loops and built-in quality."
+      summary: "The narrative shifts from raw throughput to stability. Faster delivery only matters if teams can detect issues early, share responsibility across development and operations, and reduce the cost of failure through feedback and quality discipline."
       reveals:
-        - { type: character, id: patty-mckee, delaySeconds: 0 }
-        - { type: character, id: sarah-moulton, delaySeconds: 1 }
+        - { type: character, id: patty-mckee }
+        - { type: character, id: sarah-moulton }
         # Unicorn / deployment pipeline epic
-        - { type: epic, id: unicorn-project, delaySeconds: 2 }
+        - { type: epic, id: unicorn-project }
         # Challenges
-        - { type: challenge, id: deployment-failures, delaySeconds: 3 }
-        - { type: challenge, id: late-detection, delaySeconds: 4 }
-        - { type: challenge, id: long-recovery, delaySeconds: 5 }
-        - { type: challenge, id: dev-ops-tension, delaySeconds: 6 }
+        - { type: challenge, id: deployment-failures }
+        - { type: challenge, id: late-detection }
+        - { type: challenge, id: long-recovery }
+        - { type: challenge, id: dev-ops-tension }
         # The Second Way
-        - { type: concept, id: second-way, delaySeconds: 7 }
-        - { type: concept, id: second-way-feedback-loops, delaySeconds: 8 }
-        - { type: concept, id: second-way-early-detection, delaySeconds: 9 }
-        - { type: concept, id: second-way-shared-responsibility, delaySeconds: 10 }
+        - { type: concept, id: second-way }
+        - { type: concept, id: second-way-feedback-loops }
+        - { type: concept, id: second-way-early-detection }
+        - { type: concept, id: second-way-shared-responsibility }
 
     - id: segment-5
       title: "Learning Organization and Sustainable Performance"
       subtitle: "Late — Long-term success depends on culture, learning, and continuous improvement"
-      duration: 10
+      start: "45:00"
+      end: "55:00"
       phase: late
       narrativeArc: "We improve by learning continuously"
       takeaway: "High-performing organizations win by becoming learning systems, not just efficient ones."
+      summary: "The final section turns improvement into a repeatable organizational habit. Sustainable performance comes from experimentation, blameless learning, and resilience practices that reduce dependence on heroics and make improvement part of the system itself."
       reveals:
         # Change freeze — disciplined process as the foundation for learning
-        - { type: epic, id: project-freeze, delaySeconds: 0 }
+        - { type: epic, id: project-freeze }
         # Challenges
-        - { type: challenge, id: fear-of-failure, delaySeconds: 1 }
-        - { type: challenge, id: repeated-mistakes, delaySeconds: 2 }
-        - { type: challenge, id: heroics-over-systems, delaySeconds: 3 }
-        - { type: challenge, id: tech-debt-vs-features, delaySeconds: 4 }
+        - { type: challenge, id: fear-of-failure }
+        - { type: challenge, id: repeated-mistakes }
+        - { type: challenge, id: heroics-over-systems }
+        - { type: challenge, id: tech-debt-vs-features }
         # The Third Way
-        - { type: concept, id: third-way, delaySeconds: 5 }
-        - { type: concept, id: third-way-experimentation, delaySeconds: 6 }
-        - { type: concept, id: third-way-blameless, delaySeconds: 7 }
-        - { type: concept, id: third-way-resilience, delaySeconds: 8 }
-        - { type: concept, id: four-types-business, delaySeconds: 9 }
+        - { type: concept, id: third-way }
+        - { type: concept, id: third-way-experimentation }
+        - { type: concept, id: third-way-blameless }
+        - { type: concept, id: third-way-resilience }
+        - { type: concept, id: four-types-business }
 
     - id: outro
       title: "The Transformation"
       subtitle: "From chaos to high performance"
-      duration: 5
+      start: "55:00"
+      end: "60:00"
       phase: outro
       reveals: []

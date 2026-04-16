@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import React, { useEffect } from 'react';
+import { createPortal } from 'react-dom';
 
 interface ModalProps {
   isOpen: boolean;
@@ -25,10 +26,14 @@ export function Modal({ isOpen, onClose, children, accentColor = '#ff8511' }: Mo
     }
   }, [isOpen, onClose]);
 
-  return (
+  if (typeof document === 'undefined') {
+    return null;
+  }
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 lg:p-8">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -45,7 +50,7 @@ export function Modal({ isOpen, onClose, children, accentColor = '#ff8511' }: Mo
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 10 }}
             transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            className="relative w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-3xl bg-navy-950/95 backdrop-blur-2xl border border-white/[0.08] shadow-2xl"
+            className="relative w-full max-w-5xl max-h-[94vh] overflow-y-auto rounded-3xl bg-navy-950/95 backdrop-blur-2xl border border-white/[0.08] shadow-2xl"
             style={{
               boxShadow: `0 0 80px -20px ${accentColor}40, 0 25px 50px -12px rgba(0,0,0,0.5)`,
             }}
@@ -61,7 +66,7 @@ export function Modal({ isOpen, onClose, children, accentColor = '#ff8511' }: Mo
             {/* Close button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all z-10"
+              className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all z-10"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -69,10 +74,13 @@ export function Modal({ isOpen, onClose, children, accentColor = '#ff8511' }: Mo
               </svg>
             </button>
 
-            <div className="p-8">{children}</div>
+            <div className="p-7 md:p-8 lg:p-10 text-base md:text-lg [&_p]:leading-relaxed [&_li]:leading-relaxed">
+              {children}
+            </div>
           </motion.div>
         </div>
       )}
     </AnimatePresence>
+    , document.body
   );
 }

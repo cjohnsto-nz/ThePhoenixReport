@@ -3,17 +3,18 @@
 export interface TimelineReveal {
   type: 'challenge' | 'concept' | 'character' | 'epic';
   id: string;
-  delaySeconds: number;
 }
 
 export interface TimelineSegment {
   id: string;
   title: string;
   subtitle: string;
-  duration: number;
+  start: string;
+  end: string;
   phase: string;
   narrativeArc?: string;
   takeaway?: string;
+  summary?: string;
   reveals: TimelineReveal[];
 }
 
@@ -125,11 +126,16 @@ export type RevealedItem = {
 
 export type PresentationMode = 'presentation' | 'explore';
 
+export type SegmentScreen = 'intro' | 'content' | 'summary';
+
 export type PresentationState = {
   mode: PresentationMode;
   currentSegmentIndex: number;
+  segmentScreen: SegmentScreen;
   segmentElapsedSeconds: number;
   totalElapsedSeconds: number;
   isRunning: boolean;
   revealedIds: Set<string>;
+  /** Id of item currently shown center-stage (not yet placed in dashboard) */
+  stagedId: string | null;
 };

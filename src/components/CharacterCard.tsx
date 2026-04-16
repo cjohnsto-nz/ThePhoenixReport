@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { CharacterDetailContent } from './DetailModalContent';
 import { GlassCard } from './GlassCard';
 import { Modal } from './Modal';
 import type { Character } from '../types';
@@ -19,7 +20,7 @@ export function CharacterCard({ character, revealed, index }: CharacterCardProps
         onClick={() => setIsOpen(true)}
         glowColor={`${character.color}30`}
         delay={index * 0.04}
-        className="px-3 py-2 h-full flex items-center"
+        className="px-2.5 py-1.5 flex-1 flex items-center"
       >
         <div className="flex items-center gap-2 w-full">
           <span className="text-sm flex-shrink-0">{character.avatar}</span>
@@ -32,38 +33,7 @@ export function CharacterCard({ character, revealed, index }: CharacterCardProps
       </GlassCard>
 
       <Modal isOpen={isOpen} onClose={() => setIsOpen(false)} accentColor={character.color}>
-        <div className="space-y-6">
-          <div className="flex items-center gap-5">
-            <div
-              className="w-20 h-20 rounded-3xl flex items-center justify-center text-5xl flex-shrink-0"
-              style={{ backgroundColor: `${character.color}15` }}
-            >
-              {character.avatar}
-            </div>
-            <div>
-              <h2 className="text-2xl font-bold text-white">{character.name}</h2>
-              <p className="text-white/50">{character.role}</p>
-              <p className="text-sm font-medium mt-1" style={{ color: character.color }}>
-                {character.archetype}
-              </p>
-              <p className="text-xs text-white/35 mt-0.5">{character.traits}</p>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-xs uppercase tracking-wider text-white/30 font-semibold mb-2">
-              About
-            </h3>
-            <p className="text-white/70 leading-relaxed">{character.description}</p>
-          </div>
-
-          <blockquote
-            className="pl-4 py-3 border-l-2 italic text-white/60"
-            style={{ borderColor: character.color }}
-          >
-            &ldquo;{character.quote}&rdquo;
-          </blockquote>
-        </div>
+        <CharacterDetailContent character={character} />
       </Modal>
     </>
   );

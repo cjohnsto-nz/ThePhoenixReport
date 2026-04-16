@@ -1,5 +1,6 @@
-import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
+import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { createPortal } from 'react-dom';
 import { usePresentation } from '../PresentationContext';
 import {
   challengesData,
@@ -11,50 +12,56 @@ import {
 import { ChallengeCard } from './ChallengeCard';
 import { CharacterCard } from './CharacterCard';
 import { ConceptCard } from './ConceptCard';
+import {
+  ChallengeDetailContent,
+  CharacterDetailContent,
+  ConceptDetailContent,
+  EpicDetailContent,
+} from './DetailModalContent';
 import { EpicCard } from './EpicCard';
+import { Modal } from './Modal';
 import { SegmentHeader } from './SegmentHeader';
 import { TakeawayBanner } from './TakeawayBanner';
-import { CenterStage } from './CenterStage';
 import { useControls } from '../ControlsContext';
 import type { ConceptItem, WayItem, Challenge, Character, Epic } from '../types';
 
-type StageItem = {
-  type: 'challenge' | 'concept' | 'character' | 'epic';
-  data: Challenge | Character | ConceptItem | WayItem | Epic;
-} | null;
-
 export function ContentArea() {
-  const { state, currentSegment } = usePresentation();
-  const { revealedIds, mode } = state;
+  const { state, dispatch, currentSegment, segments } = usePresentation();
+  const { revealedIds, mode, stagedId, segmentScreen } = state;
+  const epicsPanelRef = useRef<HTMLDivElement | null>(null);
+  const fourTypesPanelRef = useRef<HTMLDivElement | null>(null);
+  const threeWaysPanelRef = useRef<HTMLDivElement | null>(null);
+  const charactersPanelRef = useRef<HTMLDivElement | null>(null);
+  const challengesPanelRef = useRef<HTMLDivElement | null>(null);
 
-  const prevCountRef = useRef(revealedIds.size);
-  const [stageItem, setStageItem] = useState<StageItem>(null);
+  const fourTypeIds = useMemo(
+    () => new Set(conceptsData.fourTypesOfWork.items.map((item) => item.id)),
+    [],
+  );
+  const threeWayIds = useMemo(
+    () => new Set([
+      ...conceptsData.threeWays.items.map((item) => item.id),
+      ...conceptsData.threeWays.items.flatMap((item) => item.principles.map((principle) => principle.id)),
+    ]),
+    [],
+  );
 
-  useEffect(() => {
-    if (mode !== 'presentation') {
-      setStageItem(null);
-      return;
-    }
-    const prevCount = prevCountRef.current;
-    prevCountRef.current = revealedIds.size;
-    if (revealedIds.size > prevCount) {
-      const seg = currentSegment;
-      if (!seg) return;
-      const sorted = [...seg.reveals].sort((a, b) => a.delaySeconds - b.delaySeconds);
-      let newest: { type: string; id: string } | null = null;
-      for (const r of sorted) {
-        if (revealedIds.has(r.id)) newest = r;
+  // Look up the staged item's data for the center-stage overlay
+  const stagedData = useMemo(() => {
+    if (!stagedId) return null;
+    for (const seg of segments) {
+      const reveal = seg.reveals.find((r) => r.id === stagedId);
+      if (reveal) {
+        const data = lookupItem(reveal.type, reveal.id);
+        if (data)
+          return {
+            type: reveal.type as 'challenge' | 'concept' | 'character' | 'epic',
+            data: data as Challenge | Character | ConceptItem | WayItem | Epic,
+          };
       }
-      if (newest) {
-        const data = lookupItem(newest.type, newest.id);
-        if (data) {
-          setStageItem({ type: newest.type as NonNullable<StageItem>['type'], data } as NonNullable<StageItem>);
-        }
-      }
     }
-  }, [revealedIds, mode, currentSegment]);
-
-  const dismissStage = useCallback(() => setStageItem(null), []);
+    return null;
+  }, [stagedId, segments]);
 
   const visibleCharacters = useMemo(
     () => charactersData.characters.filter((c) => revealedIds.has(c.id)),
@@ -77,9 +84,45 @@ export function ContentArea() {
     [revealedIds],
   );
 
-  const isIntroOutro =
+  const isStandaloneHero =
     mode === 'presentation' &&
     (currentSegment?.phase === 'intro' || currentSegment?.phase === 'outro');
+  const isSegmentIntroPage = mode === 'presentation' && !isStandaloneHero && segmentScreen === 'intro';
+  const isSegmentSummaryPage = mode === 'presentation' && !isStandaloneHero && segmentScreen === 'summary';
+  const sectionLabel = useMemo(() => {
+    if (!currentSegment) return 'Section';
+    const contentSegments = segments.filter(
+      (segment) => segment.phase !== 'intro' && segment.phase !== 'outro',
+    );
+    const sectionIndex = contentSegments.findIndex((segment) => segment.id === currentSegment.id);
+    const words = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten'];
+    const ordinal = words[sectionIndex] ?? String(sectionIndex + 1);
+    return `Section ${ordinal}`;
+  }, [currentSegment, segments]);
+  const currentSegmentRevealIds = useMemo(
+    () => new Set(currentSegment?.reveals.map((reveal) => reveal.id) ?? []),
+    [currentSegment],
+  );
+  const sectionSummaryCharacters = useMemo(
+    () => charactersData.characters.filter((character) => currentSegmentRevealIds.has(character.id)),
+    [currentSegmentRevealIds],
+  );
+  const sectionSummaryEpics = useMemo(
+    () => epicsData.epics.filter((epic) => currentSegmentRevealIds.has(epic.id)),
+    [currentSegmentRevealIds],
+  );
+  const sectionSummaryFourTypes = useMemo(
+    () => conceptsData.fourTypesOfWork.items.filter((concept) => currentSegmentRevealIds.has(concept.id)),
+    [currentSegmentRevealIds],
+  );
+  const sectionSummaryThreeWays = useMemo(
+    () => conceptsData.threeWays.items.filter((way) => currentSegmentRevealIds.has(way.id)),
+    [currentSegmentRevealIds],
+  );
+  const sectionSummaryChallenges = useMemo(
+    () => challengesData.challenges.filter((challenge) => currentSegmentRevealIds.has(challenge.id)),
+    [currentSegmentRevealIds],
+  );
 
   const allFourTypesTotal = conceptsData.fourTypesOfWork.items.length;
   const allThreeWaysTotal = conceptsData.threeWays.items.length;
@@ -94,29 +137,224 @@ export function ContentArea() {
 
   const { isPopped } = useControls();
 
+  // Determine which panel the staged item belongs to
+  const stagedPanel = useMemo((): string | null => {
+    if (!stagedData) return null;
+    const itemData = stagedData.data as { id?: string; parentWay?: string };
+    if (stagedData.type === 'character') return 'characters';
+    if (stagedData.type === 'challenge') return 'challenges';
+    if (stagedData.type === 'epic') return 'epics';
+    if (stagedData.type === 'concept') {
+      if ('parentWay' in itemData || threeWayIds.has(itemData.id ?? '')) return 'threeWays';
+      if (fourTypeIds.has(itemData.id ?? '')) return 'fourTypes';
+    }
+    return null;
+  }, [stagedData, fourTypeIds, threeWayIds]);
+
+  // Measure the invisible marker at the exact position where the next card will appear
+  const [targetMarkerRect, setTargetMarkerRect] = useState<DOMRect | null>(null);
+  const targetMarkerRef = useCallback((node: HTMLDivElement | null) => {
+    setTargetMarkerRect(node ? node.getBoundingClientRect() : null);
+  }, []);
+
+  // For characters: compute exact grid cell position within the characters panel
+  const characterCellRect = useMemo((): DOMRect | null => {
+    if (stagedPanel !== 'characters' || !stagedData) return null;
+    const charId = (stagedData.data as { id?: string }).id ?? '';
+    const pos = GRID_POS[charId];
+    const panel = charactersPanelRef.current;
+    if (!pos || !panel) return null;
+
+    // The inner content area has p-3 padding, and the header takes some space
+    const panelRect = panel.getBoundingClientRect();
+    const headerEl = panel.querySelector('[class*="border-b"]') as HTMLElement | null;
+    const headerH = headerEl ? headerEl.offsetHeight : 32;
+    const pad = 12; // p-3
+    const contentLeft = panelRect.left + pad;
+    const contentTop = panelRect.top + headerH + pad;
+    const contentW = panelRect.width - pad * 2;
+    const contentH = panelRect.height - headerH - pad * 2;
+
+    const [col, row] = pos;
+    const cellW = (contentW - GRID_GAP * (GRID_COLS - 1)) / GRID_COLS;
+    const cellH = (contentH - GRID_GAP * (GRID_ROWS - 1)) / GRID_ROWS;
+    const cellLeft = contentLeft + (col - 1) * (cellW + GRID_GAP);
+    const cellTop = contentTop + (row - 1) * (cellH + GRID_GAP);
+
+    return new DOMRect(cellLeft, cellTop, cellW, cellH);
+  }, [stagedPanel, stagedData]);
+
+  // Use precise marker position for list panels, computed cell for characters, panel fallback
+  const stagedTargetRect = useMemo(() => {
+    if (characterCellRect) return characterCellRect;
+    if (targetMarkerRect) return targetMarkerRect;
+    if (!stagedPanel) return null;
+    const panelRefMap: Record<string, React.RefObject<HTMLDivElement | null>> = {
+      characters: charactersPanelRef,
+      challenges: challengesPanelRef,
+      epics: epicsPanelRef,
+      threeWays: threeWaysPanelRef,
+      fourTypes: fourTypesPanelRef,
+    };
+    return panelRefMap[stagedPanel]?.current?.getBoundingClientRect() ?? null;
+  }, [characterCellRect, targetMarkerRect, stagedPanel]);
+
   // ===== UNIFIED LAYOUT — same grid for both modes =====
   return (
-    <div className={`h-screen flex flex-col p-4 overflow-hidden relative ${isPopped ? 'pb-4' : 'pb-16'}`}>
+    <div className={`h-screen flex flex-col px-8 pt-6 overflow-hidden relative ${isPopped ? 'pb-6' : 'pb-20'}`}>
       <SegmentHeader />
 
-      {!isIntroOutro && (
+      {isSegmentIntroPage && currentSegment && (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${currentSegment.id}-intro`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="flex-1 flex items-center justify-center min-h-0"
+          >
+            <div className="max-w-4xl w-full rounded-3xl border border-white/[0.08] bg-white/[0.03] backdrop-blur-xl px-10 py-12 text-center shadow-2xl">
+              <div className="text-[11px] uppercase tracking-[0.28em] text-phoenix-400/60 font-semibold mb-4">
+                {sectionLabel}
+              </div>
+              <h2 className="text-4xl md:text-6xl font-bold text-white tracking-tight mb-4">
+                {currentSegment.title}
+              </h2>
+              <p className="text-lg md:text-2xl text-white/55 max-w-3xl mx-auto leading-relaxed">
+                {currentSegment.subtitle}
+              </p>
+              {currentSegment.narrativeArc && (
+                <p className="mt-8 text-base md:text-lg text-phoenix-300/70 italic max-w-2xl mx-auto leading-relaxed">
+                  {currentSegment.narrativeArc}
+                </p>
+              )}
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      )}
+
+      {isSegmentSummaryPage && currentSegment && (
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${currentSegment.id}-summary`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="flex-1 min-h-0"
+          >
+            <div className="h-full flex flex-col gap-4 min-h-0">
+              <div className="rounded-3xl border border-phoenix-500/15 bg-phoenix-500/[0.04] backdrop-blur-xl px-8 py-8 text-center shadow-2xl flex-shrink-0">
+                <div className="text-[11px] uppercase tracking-[0.28em] text-phoenix-400/60 font-semibold mb-4">
+                  {sectionLabel} Summary
+                </div>
+                <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight mb-5">
+                  {currentSegment.title}
+                </h2>
+                <p className="text-lg md:text-2xl text-white/70 max-w-4xl mx-auto leading-relaxed">
+                  {currentSegment.summary ?? currentSegment.takeaway ?? currentSegment.subtitle}
+                </p>
+                {currentSegment.takeaway && currentSegment.summary && (
+                  <p className="mt-6 text-sm md:text-base text-phoenix-300/65 max-w-3xl mx-auto leading-relaxed">
+                    {currentSegment.takeaway}
+                  </p>
+                )}
+              </div>
+
+              <div className="flex-1 grid grid-cols-5 grid-rows-[1fr_auto] gap-3 min-h-0">
+                <div className="col-span-1 row-span-1 flex flex-col gap-3 min-h-0">
+                  <DashboardPanel
+                    title="Epics"
+                    accent="#f97316"
+                    count={sectionSummaryEpics.length}
+                    total={sectionSummaryEpics.length}
+                    className="min-h-0 flex-[6]"
+                  >
+                    <div className="flex flex-col gap-1.5">
+                      {sectionSummaryEpics.map((epic, index) => (
+                        <EpicCard key={epic.id} epic={epic} revealed={true} index={index} />
+                      ))}
+                    </div>
+                  </DashboardPanel>
+                  <DashboardPanel
+                    title="Four Types of Work"
+                    accent="#ff8511"
+                    count={sectionSummaryFourTypes.length}
+                    total={sectionSummaryFourTypes.length}
+                    className="min-h-0 flex-[5]"
+                  >
+                    <div className="flex flex-col gap-1.5">
+                      {sectionSummaryFourTypes.map((concept, index) => (
+                        <ConceptCard key={concept.id} concept={concept} revealed={true} index={index} revealedIds={revealedIds} />
+                      ))}
+                    </div>
+                  </DashboardPanel>
+                  <DashboardPanel
+                    title="The Three Ways"
+                    accent="#f06a07"
+                    count={sectionSummaryThreeWays.length}
+                    total={sectionSummaryThreeWays.length}
+                    className="min-h-0 flex-[4]"
+                  >
+                    <div className="flex flex-col gap-1.5">
+                      {sectionSummaryThreeWays.map((concept, index) => (
+                        <ConceptCard key={concept.id} concept={concept} revealed={true} index={index} revealedIds={revealedIds} />
+                      ))}
+                    </div>
+                  </DashboardPanel>
+                </div>
+
+                <div className="col-span-4 row-span-1 flex flex-col gap-3 min-h-0">
+                  <div className="h-1/2 min-h-0">
+                    <DashboardPanel
+                      title="Characters"
+                      accent="#3668fc"
+                      count={sectionSummaryCharacters.length}
+                      total={sectionSummaryCharacters.length}
+                      className="h-full"
+                    >
+                      <OrgChart characters={sectionSummaryCharacters} />
+                    </DashboardPanel>
+                  </div>
+                  <DashboardPanel
+                    title="Challenges"
+                    accent="#ef4444"
+                    count={sectionSummaryChallenges.length}
+                    total={sectionSummaryChallenges.length}
+                    className="flex-1 min-h-0"
+                  >
+                    <div className="grid grid-cols-3 xl:grid-cols-4 gap-1.5">
+                      {sectionSummaryChallenges.map((challenge, index) => (
+                        <ChallengeCard key={challenge.id} challenge={challenge} revealed={true} index={index} />
+                      ))}
+                    </div>
+                  </DashboardPanel>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+      )}
+
+      {!isStandaloneHero && !isSegmentIntroPage && !isSegmentSummaryPage && (
         <div className="flex-1 grid grid-cols-5 grid-rows-[1fr_auto] gap-3 min-h-0">
-          {/* Left column (1/5): Epics, Four Types, Three Ways stacked + Center Stage */}
+          {/* Left column (1/5): Epics, Four Types, Three Ways stacked */}
           <div className="col-span-1 row-span-1 flex flex-col gap-3 min-h-0">
-            {mode === 'presentation' && (
-              <InlineCenterStage item={stageItem} revealedIds={revealedIds} onDismiss={dismissStage} />
-            )}
             <DashboardPanel
               title="Epics"
               accent="#f97316"
               count={epics.length}
               total={epicsData.epics.length}
               showProgress={!isExplore}
+              className="min-h-0 flex-[6]"
+              panelRef={epicsPanelRef}
             >
               <div className="flex flex-col gap-1.5">
                 {epics.map((e, i) => (
                   <EpicCard key={e.id} epic={e} revealed={true} index={i} />
                 ))}
+                {stagedPanel === 'epics' && <div ref={targetMarkerRef} className="h-6" aria-hidden />}
               </div>
             </DashboardPanel>
             <DashboardPanel
@@ -125,11 +363,14 @@ export function ContentArea() {
               count={fourTypes.length}
               total={allFourTypesTotal}
               showProgress={!isExplore}
+              className="min-h-0 flex-[5]"
+              panelRef={fourTypesPanelRef}
             >
               <div className="flex flex-col gap-1.5">
                 {fourTypes.map((c, i) => (
                   <ConceptCard key={c.id} concept={c} revealed={true} index={i} revealedIds={revealedIds} />
                 ))}
+                {stagedPanel === 'fourTypes' && <div ref={targetMarkerRef} className="h-6" aria-hidden />}
               </div>
             </DashboardPanel>
             <DashboardPanel
@@ -138,12 +379,14 @@ export function ContentArea() {
               count={threeWays.length}
               total={allThreeWaysTotal}
               showProgress={!isExplore}
-              className="flex-1"
+              className="min-h-0 flex-[4]"
+              panelRef={threeWaysPanelRef}
             >
               <div className="flex flex-col gap-1.5">
                 {threeWays.map((c, i) => (
                   <ConceptCard key={c.id} concept={c} revealed={true} index={i} revealedIds={revealedIds} />
                 ))}
+                {stagedPanel === 'threeWays' && <div ref={targetMarkerRef} className="h-6" aria-hidden />}
               </div>
             </DashboardPanel>
           </div>
@@ -158,6 +401,7 @@ export function ContentArea() {
               total={charactersData.characters.length}
               showProgress={!isExplore}
               className="h-full"
+              panelRef={charactersPanelRef}
             >
               <OrgChart characters={chars} />
             </DashboardPanel>
@@ -169,11 +413,13 @@ export function ContentArea() {
               total={challengesData.challenges.length}
               showProgress={!isExplore}
               className="flex-1 min-h-0"
+              panelRef={challengesPanelRef}
             >
               <div className="grid grid-cols-3 xl:grid-cols-4 gap-1.5">
                 {challenges.map((c, i) => (
                   <ChallengeCard key={c.id} challenge={c} revealed={true} index={i} />
                 ))}
+                {stagedPanel === 'challenges' && <div ref={targetMarkerRef} className="h-6" aria-hidden />}
               </div>
             </DashboardPanel>
           </div>
@@ -186,79 +432,140 @@ export function ContentArea() {
           )}
         </div>
       )}
+
+      {/* Full-screen detail modal for two-phase reveals */}
+      <AnimatePresence mode="wait">
+        {mode === 'presentation' && stagedData && (
+          <FullScreenStage
+            key={(stagedData.data as { id?: string }).id ?? 'staged-item'}
+            item={stagedData}
+            revealedIds={revealedIds}
+            onPlace={() => dispatch({ type: 'REVEAL_NEXT' })}
+            onBack={() => dispatch({ type: 'REVEAL_PREV' })}
+            targetRect={stagedTargetRect}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
 
-// ---- Inline Center Stage — reserved area for newly revealed items ----
+// ---- FullScreenStage — reuses the detail Modal for staged items ----
 
-function InlineCenterStage({
+type StageItemData = {
+  type: 'challenge' | 'concept' | 'character' | 'epic';
+  data: Challenge | Character | ConceptItem | WayItem | Epic;
+};
+
+function FullScreenStage({
   item,
   revealedIds,
-  onDismiss,
+  onPlace,
+  onBack,
+  targetRect,
 }: {
-  item: StageItem;
+  item: StageItemData;
   revealedIds: Set<string>;
-  onDismiss: () => void;
+  onPlace: () => void;
+  onBack: () => void;
+  targetRect: DOMRect | null;
 }) {
-  const color = item ? (item.data as { color?: string }).color ?? '#ff8511' : '#ff8511';
+  const color = (item.data as { color?: string }).color ?? '#ff8511';
 
-  return (
-    <motion.div
-      className="h-full rounded-lg border border-white/[0.06] bg-white/[0.02] overflow-hidden flex flex-col"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.3 }}
-    >
-      <div className="flex items-center gap-2 px-3 py-1.5 border-b border-white/[0.04] flex-shrink-0">
-        <div className="w-0.5 h-3 rounded-full bg-phoenix-400" />
-        <span className="text-[11px] font-semibold text-white/60">Now Revealing</span>
-      </div>
-      <div className="flex-1 flex items-center justify-center p-3 relative">
-        <AnimatePresence mode="wait">
-          {item ? (
-            <motion.div
-              key={`stage-${(item.data as { id: string }).id}`}
-              className="w-full max-w-xs cursor-pointer relative"
-              onClick={onDismiss}
-              initial={{ opacity: 0, scale: 0.8, y: 10 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.9, y: -10 }}
-              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-            >
-              {/* Glow */}
-              <div
-                className="absolute -inset-1 rounded-xl blur-lg opacity-30"
-                style={{ backgroundColor: color }}
-              />
-              <div className="relative">
-                {item.type === 'challenge' && (
-                  <ChallengeCard challenge={item.data as Challenge} revealed={true} index={0} />
-                )}
-                {item.type === 'character' && (
-                  <CharacterCard character={item.data as Character} revealed={true} index={0} />
-                )}
-                {item.type === 'concept' && (
-                  <ConceptCard concept={item.data as ConceptItem | WayItem} revealed={true} index={0} revealedIds={revealedIds} />
-                )}
-                {item.type === 'epic' && (
-                  <EpicCard epic={item.data as Epic} revealed={true} index={0} />
-                )}
-              </div>
-            </motion.div>
-          ) : (
-            <motion.div
-              key="empty-stage"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="text-center"
-            >
-              <span className="text-white/10 text-xs italic">Press Reveal Next</span>
-            </motion.div>
+  // Compute exit destination (offset from viewport center)
+  const vw = typeof window !== 'undefined' ? window.innerWidth : 1920;
+  const vh = typeof window !== 'undefined' ? window.innerHeight : 1080;
+  const cx = vw / 2;
+  const cy = vh / 2;
+  const tx = targetRect ? targetRect.left + targetRect.width / 2 : cx;
+  const ty = targetRect ? targetRect.top + targetRect.height / 2 : cy;
+  const exitX = tx - cx;
+  const exitY = ty - cy;
+  const modalW = Math.min(vw - 64, 1024);
+  const modalH = Math.min(vh * 0.94, 820);
+  const exitScale = targetRect
+    ? Math.max(0.02, Math.min(0.18, Math.min(targetRect.width / modalW, targetRect.height / modalH)))
+    : 0.08;
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.repeat) return;
+      if (e.key === 'ArrowRight' || e.key === 'Escape') {
+        e.preventDefault();
+        onPlace();
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        onBack();
+      }
+    };
+
+    window.addEventListener('keydown', handleKey);
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKey);
+    };
+  }, [onBack, onPlace]);
+
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 lg:p-8 pointer-events-none">
+      {/* Backdrop */}
+      <motion.div
+        className="absolute inset-0 bg-navy-950/80 backdrop-blur-md pointer-events-auto"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        onClick={onPlace}
+      />
+
+      {/* Modal shell — single smooth curve to target on exit */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.88, y: 30 }}
+        animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+        exit={{ x: exitX, y: exitY, scale: exitScale, opacity: 0 }}
+        transition={{
+          type: 'tween',
+          duration: 0.7,
+          ease: [0.16, 1, 0.3, 1],
+        }}
+        className="relative w-full max-w-5xl max-h-[94vh] overflow-hidden rounded-3xl bg-navy-950/95 backdrop-blur-2xl border border-white/[0.08] shadow-2xl pointer-events-auto"
+        style={{
+          boxShadow: `0 0 80px -20px ${color}40, 0 25px 50px -12px rgba(0,0,0,0.5)`,
+        }}
+      >
+        {/* Top accent line */}
+        <div
+          className="absolute top-0 left-0 right-0 h-[2px]"
+          style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }}
+        />
+
+        {/* Close button */}
+        <button
+          onClick={onPlace}
+          className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all z-10"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        {/* Content */}
+        <div className="p-7 md:p-8 lg:p-10 text-base md:text-lg [&_p]:leading-relaxed [&_li]:leading-relaxed">
+          {item.type === 'challenge' && <ChallengeDetailContent challenge={item.data as Challenge} />}
+          {item.type === 'character' && <CharacterDetailContent character={item.data as Character} />}
+          {item.type === 'concept' && (
+            <ConceptDetailContent concept={item.data as ConceptItem | WayItem} revealedIds={revealedIds} />
           )}
-        </AnimatePresence>
-      </div>
-    </motion.div>
+          {item.type === 'epic' && <EpicDetailContent epic={item.data as Epic} />}
+        </div>
+      </motion.div>
+    </div>,
+    document.body,
   );
 }
 
@@ -272,6 +579,7 @@ function DashboardPanel({
   showProgress = false,
   children,
   className = '',
+  panelRef,
 }: {
   title: string;
   accent: string;
@@ -280,12 +588,14 @@ function DashboardPanel({
   showProgress?: boolean;
   children: React.ReactNode;
   className?: string;
+  panelRef?: React.Ref<HTMLDivElement>;
 }) {
   const hasItems = count > 0;
   const isEmpty = showProgress && !hasItems;
 
   return (
     <motion.div
+      ref={panelRef}
       layout
       className={`flex flex-col rounded-lg border overflow-hidden transition-colors duration-500 ${
         isEmpty
@@ -299,9 +609,6 @@ function DashboardPanel({
       <div className="flex items-center gap-2 px-4 py-2 border-b border-white/[0.04] flex-shrink-0">
         <div className="w-0.5 h-3.5 rounded-full" style={{ backgroundColor: accent }} />
         <span className="text-sm font-semibold text-white/70">{title}</span>
-        <span className="text-xs text-white/25 font-mono">
-          {showProgress ? `${count}/${total}` : count}
-        </span>
       </div>
       <div className="flex-1 p-3 overflow-auto min-h-0">
         <AnimatePresence mode="popLayout">
@@ -318,6 +625,9 @@ function DashboardPanel({
 // Grid: 5 columns × 4 rows.
 const GRID_COLS = 5;
 const GRID_ROWS = 4;
+const GRID_GAP = 8;
+const GRID_CELL_PAD = 8;
+const CONNECTOR_COLOR = 'rgba(255, 255, 255, 0.15)';
 
 const GRID_POS: Record<string, [number, number]> = {
   'erik-reid':    [1, 1],
@@ -334,31 +644,152 @@ const GRID_POS: Record<string, [number, number]> = {
 function OrgChart({ characters }: { characters: Character[] }) {
   if (characters.length === 0) return null;
 
+  const visibleIds = new Set(characters.map((character) => character.id));
+
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [size, setSize] = useState({ width: 0, height: 0 });
+
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const updateSize = () => {
+      setSize({ width: el.clientWidth, height: el.clientHeight });
+    };
+
+    updateSize();
+
+    const observer = new ResizeObserver(() => {
+      updateSize();
+    });
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+    };
+  }, []);
+
+  const childrenByParent = new Map<string, string[]>();
+  for (const character of characters) {
+    if (!character.reportsTo) continue;
+    if (!visibleIds.has(character.reportsTo)) continue;
+    if (!GRID_POS[character.id] || !GRID_POS[character.reportsTo]) continue;
+    const list = childrenByParent.get(character.reportsTo) ?? [];
+    list.push(character.id);
+    childrenByParent.set(character.reportsTo, list);
+  }
+
+  const cellWidth = size.width > 0
+    ? (size.width - GRID_GAP * (GRID_COLS - 1)) / GRID_COLS
+    : 0;
+  const cellHeight = size.height > 0
+    ? (size.height - GRID_GAP * (GRID_ROWS - 1)) / GRID_ROWS
+    : 0;
+
+  const getCellRect = (col: number, row: number) => ({
+    left: (col - 1) * (cellWidth + GRID_GAP),
+    top: (row - 1) * (cellHeight + GRID_GAP),
+    width: cellWidth,
+    height: cellHeight,
+  });
+
   return (
     <div
-      className="w-full"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: `repeat(${GRID_COLS}, minmax(0, 1fr))`,
-        gridTemplateRows: `repeat(${GRID_ROWS}, 1fr)`,
-        height: '100%',
-        gap: '8px',
-      }}
+      ref={containerRef}
+      className="relative w-full h-full min-h-0"
     >
-      {characters.map((c) => {
-        const pos = GRID_POS[c.id];
-        if (!pos) return null;
-        const [col, row] = pos;
-        return (
-          <div
-            key={c.id}
-            className="flex flex-col"
-            style={{ gridColumn: col, gridRow: row }}
-          >
-            <CharacterCard character={c} revealed={true} index={0} />
-          </div>
-        );
-      })}
+      <svg
+        className="absolute inset-0 pointer-events-none z-0"
+        width="100%"
+        height="100%"
+        viewBox={`0 0 ${Math.max(size.width, 1)} ${Math.max(size.height, 1)}`}
+        preserveAspectRatio="none"
+      >
+        {size.width > 0 && size.height > 0 && Array.from(childrenByParent.entries()).map(([parentId, childIds]) => {
+          const [parentCol, parentRow] = GRID_POS[parentId];
+          const parentRect = getCellRect(parentCol, parentRow);
+          const parentX = parentRect.left + parentRect.width / 2;
+          const parentY = parentRect.top + parentRect.height - GRID_CELL_PAD;
+
+          const childPoints = childIds.map((childId) => {
+            const [childCol, childRow] = GRID_POS[childId];
+            const childRect = getCellRect(childCol, childRow);
+            return {
+              id: childId,
+              x: childRect.left + childRect.width / 2,
+              y: childRect.top + GRID_CELL_PAD,
+            };
+          });
+
+          const railY = childPoints.length === 1
+            ? parentY + (childPoints[0].y - parentY) / 2
+            : parentY + (Math.min(...childPoints.map((point) => point.y)) - parentY) / 2;
+
+          return (
+            <g key={parentId}>
+              <path
+                d={`M ${parentX} ${parentY} L ${parentX} ${railY}`}
+                fill="none"
+                stroke={CONNECTOR_COLOR}
+                strokeWidth="1.5"
+                strokeLinecap="round"
+              />
+              {childPoints.length > 1 && (
+                <path
+                  d={`M ${Math.min(...childPoints.map((point) => point.x))} ${railY} L ${Math.max(...childPoints.map((point) => point.x))} ${railY}`}
+                  fill="none"
+                  stroke={CONNECTOR_COLOR}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              )}
+              {childPoints.length === 1 && childPoints[0].x !== parentX && (
+                <path
+                  d={`M ${parentX} ${railY} L ${childPoints[0].x} ${railY}`}
+                  fill="none"
+                  stroke={CONNECTOR_COLOR}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              )}
+              {childPoints.map((point) => (
+                <path
+                  key={point.id}
+                  d={`M ${point.x} ${railY} L ${point.x} ${point.y}`}
+                  fill="none"
+                  stroke={CONNECTOR_COLOR}
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                />
+              ))}
+            </g>
+          );
+        })}
+      </svg>
+
+      <div
+        className="absolute inset-0 grid"
+        style={{
+          gridTemplateColumns: `repeat(${GRID_COLS}, minmax(0, 1fr))`,
+          gridTemplateRows: `repeat(${GRID_ROWS}, 1fr)`,
+          gap: `${GRID_GAP}px`,
+        }}
+      >
+        {characters.map((c) => {
+          const pos = GRID_POS[c.id];
+          if (!pos) return null;
+          const [col, row] = pos;
+          return (
+            <div
+              key={c.id}
+              className="relative z-10 flex flex-col min-h-0 p-2"
+              style={{ gridColumn: col, gridRow: row }}
+            >
+              <CharacterCard character={c} revealed={true} index={0} />
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

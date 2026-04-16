@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion';
 import { usePresentation } from '../PresentationContext';
 
+function parseClockToSeconds(clock: string) {
+  const [minutes, seconds] = clock.split(':').map(Number);
+  return minutes * 60 + seconds;
+}
+
 export function TakeawayBanner() {
   const { currentSegment, state } = usePresentation();
 
@@ -8,7 +13,7 @@ export function TakeawayBanner() {
 
   // In presentation mode, only show after enough time has passed
   if (state.mode === 'presentation') {
-    const segDuration = currentSegment.duration * 60;
+    const segDuration = Math.max(0, parseClockToSeconds(currentSegment.end) - parseClockToSeconds(currentSegment.start));
     if (state.segmentElapsedSeconds < segDuration * 0.7) return null;
   }
 
