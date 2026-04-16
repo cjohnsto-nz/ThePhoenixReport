@@ -126,7 +126,7 @@ challenges:
 
   # Segment 3: Bottlenecks and Flow
   - id: business-pressure
-    title: "Business Pressure Overrides Readiness"
+    title: "Pressure Overrides Readiness"
     subtitle: "Promises turn Phoenix into a forced launch"
     segment: segment-3
     description: "Competition, slipping market share, board scrutiny, analyst expectations, and Sarah's constant escalation turn Phoenix into more than a project. Meanwhile Brent keeps getting pulled between outages and Phoenix prep, development still cannot hand over a clean operating plan, and Operations is asked to support a launch it has barely been allowed to prepare for. Even so, Steve and Sarah still lock in the date."

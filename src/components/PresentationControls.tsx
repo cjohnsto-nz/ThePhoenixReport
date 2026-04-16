@@ -226,6 +226,35 @@ function ModeToggle({ isRemote = false }: { isRemote?: boolean }) {
   );
 }
 
+function CardLegibilityToggle() {
+  const { isCardLegibilityMode, setIsCardLegibilityMode } = useControls();
+
+  return (
+    <div className="grid w-full grid-cols-2 rounded-full p-1 border border-white/[0.07] bg-[#141826]/88 backdrop-blur-xl shadow-[inset_0_1px_0_rgba(255,255,255,0.05),0_14px_32px_-24px_rgba(255,133,17,0.45)]">
+      <button
+        onClick={() => setIsCardLegibilityMode(false)}
+        className={`w-full rounded-full px-4 py-2.5 text-sm text-center font-medium transition-all duration-300 ${
+          !isCardLegibilityMode
+            ? 'bg-phoenix-500 text-white shadow-lg shadow-phoenix-500/30'
+            : 'text-white/55 hover:text-white/85 hover:bg-white/[0.05]'
+        }`}
+      >
+        Standard
+      </button>
+      <button
+        onClick={() => setIsCardLegibilityMode(true)}
+        className={`w-full rounded-full px-4 py-2.5 text-sm text-center font-medium transition-all duration-300 ${
+          isCardLegibilityMode
+            ? 'bg-phoenix-500 text-white shadow-lg shadow-phoenix-500/30'
+            : 'text-white/55 hover:text-white/85 hover:bg-white/[0.05]'
+        }`}
+      >
+        Legible
+      </button>
+    </div>
+  );
+}
+
 function FooterIconButton({
   onClick,
   title,
@@ -535,7 +564,7 @@ function RemoteControlsView() {
 
       if (event.key === 'ArrowRight') {
         event.preventDefault();
-        dispatch({ type: 'REVEAL_NEXT' });
+        dispatch({ type: state.stagedId ? 'REQUEST_STAGE_PLACE' : 'REVEAL_NEXT' });
         return;
       }
 
@@ -547,7 +576,7 @@ function RemoteControlsView() {
 
       if (event.key === 'Escape' && state.stagedId) {
         event.preventDefault();
-        dispatch({ type: 'REVEAL_NEXT' });
+        dispatch({ type: 'REQUEST_STAGE_PLACE' });
       }
     };
 
@@ -773,6 +802,10 @@ function RemoteControlsView() {
                 <div className="text-[11px] uppercase tracking-[0.28em] text-white/28 font-semibold mb-4">Controls</div>
                 <div className="grid gap-3">
                   <ModeToggle isRemote />
+                  <div>
+                    <div className="mb-2 text-[10px] uppercase tracking-[0.22em] text-white/30 font-semibold">Card View</div>
+                    <CardLegibilityToggle />
+                  </div>
                   <button
                     onClick={() => setIsPopped(false)}
                     className="h-11 px-4 rounded-2xl border border-white/[0.08] bg-white/[0.04] text-white/70 hover:text-white hover:bg-white/[0.08] transition-all"
@@ -837,7 +870,7 @@ function RemoteControlsView() {
                     </div>
                   </RemoteTransportButton>
                   <RemoteTransportButton
-                    onClick={() => dispatch({ type: 'REVEAL_NEXT' })}
+                    onClick={() => dispatch({ type: state.stagedId ? 'REQUEST_STAGE_PLACE' : 'REVEAL_NEXT' })}
                     disabled={disableNextStep}
                     title="Next step"
                     tone="accent"

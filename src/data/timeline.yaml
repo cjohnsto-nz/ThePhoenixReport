@@ -445,68 +445,87 @@ presentation:
           globalStep:
             name: "More urgency does not create more throughput"
             script: >-
-              The deadline problem keeps recurring because the company keeps treating misses as
-              a motivation failure when the real problem is a system design failure.
+              The deadline problem keeps recurring because urgency is being applied to a
+              system that is structurally overloaded. And while the project slippage is
+              consuming every executive conversation, Patty has been quietly running the
+              numbers on something nobody is watching as closely: the change board.
 
         - type: challenge
           id: incomplete-changes
           modalStep:
             name: "Changes go in but never come out"
             script: >-
-              Patty's change boards reveal something even uglier than overload. Work is
-              entering the system and staying there. Changes are half-finished, waiting on
-              handoffs, reversions, approvals, or Brent. The team jokes that they are the
-              Bates Motel of changes: changes check in, but they do not check out.
+              Patty is alarmed: more than sixty percent of the week's changes did not
+              complete as scheduled. They are being carried forward on the board, piling up
+              like the inventory stacking up in front of Erik's heat-treat oven. Bill stares
+              at the mountain of change cards pushed against today's date and says out loud:
+              we are the Bates Motel of changes. Changes check in, but they do not check
+              out. They are already tracking nine hundred and forty-two pending changes, and
+              will cross a thousand before the end of the week.
           globalStep:
-            name: "Busy is not the same as done"
+            name: "The plant-floor parallel clicks into place"
             script: >-
-              The Bates Motel joke captures the whole feeling of this section. Everyone is exhausted,
-              but almost nothing is truly finishing. The system is burning capacity without
-              producing completion.
+              This is the moment Erik's challenge starts to make sense. Bill looks at the
+              growing pile of changes, then thinks back to the mountain of work in front of
+              the heat-treat oven. An ever-growing pile of inventory on the plant floor.
+              An ever-growing pile of changes inside IT Operations. The same pattern. And
+              then Erik's question comes back to him: there are four types of work. You
+              named one. What are the other three?
 
         - type: concept
           id: four-types-business
           modalStep:
             name: "The first type of work"
             script: >-
-              The first type is business project work: the visible initiatives executives care
-              about, like Phoenix. These are the projects everyone talks about, funds, tracks,
-              and escalates.
+              Erik had told Bill there were four types, and to call when he had the other
+              three. Bill had named the obvious one immediately: business project work.
+              Phoenix, the payroll system, the audit remediation — the visible initiatives
+              that executives fund, track, and escalate. The ones that consume the entire
+              conversation and most of the formal project budget.
           globalStep:
             name: "Not all demand is the same"
             script: >-
-              Until now the organisation has mostly
-              treated visible business projects as if they were the whole queue. The rest of the
-              demand has been mixed in underneath them and managed far less explicitly.
+              Business projects are easy to see because they come with sponsors, deadlines,
+              and escalation chains. The rest of the demand has been living underneath them,
+              mixed in and managed far less deliberately.
 
         - type: concept
           id: four-types-internal
           modalStep:
             name: "The second type of work"
             script: >-
-              The second type is internal IT work: upgrades, migrations, automation, and
-              infrastructure changes. This work is often invisible to the business, which
-              makes it easy to defer, even though it is what keeps the first type possible.
+              Patty had told Bill about it during the commitment-mapping exercise: IT
+              Operations projects. Not Phoenix, not the audit — the internal work the
+              technology teams run themselves. Upgrades, migrations, infrastructure
+              rebuilds, automation. There is no centralised list of these projects. They
+              live in budget codes and people's heads. They are easy to defer because the
+              business cannot see them, even though they are what keeps the first type
+              of work possible.
           globalStep:
             name: "Invisible support work keeps delivery possible"
             script: >-
-              Once Bill sees internal projects as a distinct class of work, he can explain why
-              starving them eventually makes every business promise harder to keep.
+              Once Bill names this as a distinct type, he can explain why starving it
+              eventually makes every business promise harder to keep. The technical debt that
+              surfaces later as outages and unplanned work is largely deferred internal
+              project work.
 
         - type: concept
           id: four-types-changes
           modalStep:
             name: "The third type of work"
             script: >-
-              The third type is changes: the routine operational modifications required to
-              keep systems running. These look small in isolation, but when they are badly
-              managed they create outages, rework, and more demand than the system can absorb.
+              And there, staring at the change board, Bill names the third type: changes.
+              Not projects. Not incidents. The routine operational modifications that
+              Patty's CAB was tracking — nine hundred and forty-two of them. Individually
+              they look small. But they are competing for the same constrained people, they
+              are piling up like inventory, and when they go wrong they create outages and
+              more unplanned demand.
           globalStep:
             name: "Routine work can still destabilise the system"
             script: >-
-              Change work is not background noise. It is a major source of both risk and
-              load. But Bill still has not solved Erik's puzzle. He can feel there is one
-              more destructive category he has not yet learned to name.
+              Bill has now named three of four. Business projects, IT Operations projects,
+              and changes. Erik's puzzle still has one piece missing, and Bill cannot quite
+              see it yet. But he has a sense it is the most destructive one of all.
 
     - id: segment-3
       title: "Unplanned Work, Flow, and the Freeze"

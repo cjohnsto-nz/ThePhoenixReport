@@ -28,7 +28,7 @@ import type { ConceptItem, WayItem, Challenge, Character, Epic, Lesson, QuoteIte
 
 export function ContentArea() {
   const { state, dispatch, currentSegment, segments } = usePresentation();
-  const { revealedIds, mode, stagedId, segmentScreen } = state;
+  const { revealedIds, mode, stagedId, segmentScreen, placementRequestKey } = state;
   const epicsPanelRef = useRef<HTMLDivElement | null>(null);
   const fourTypesPanelRef = useRef<HTMLDivElement | null>(null);
   const threeWaysPanelRef = useRef<HTMLDivElement | null>(null);
@@ -145,12 +145,13 @@ export function ContentArea() {
   const threeWays = isExplore ? conceptsData.threeWays.items : visibleThreeWays;
   const challenges = isExplore ? challengesData.challenges : visibleChallenges;
 
-  const { isPopped } = useControls();
+  const { isPopped, isCardLegibilityMode } = useControls();
   const [placementGhost, setPlacementGhost] = useState<{
     item: StageItemData;
     revealedIds: Set<string>;
     targetRect: DOMRect | null;
   } | null>(null);
+  const lastPlacementRequestKeyRef = useRef(placementRequestKey);
 
   // Determine which panel the staged item belongs to
   const stagedPanel = useMemo((): string | null => {
@@ -220,6 +221,20 @@ export function ContentArea() {
       : 'epics';
     return panelRefMap[sp]?.current?.getBoundingClientRect() ?? null;
   }, [stagedData, stagedPanel, threeWayIds]);
+
+  useEffect(() => {
+    if (placementRequestKey === lastPlacementRequestKeyRef.current) return;
+    lastPlacementRequestKeyRef.current = placementRequestKey;
+
+    if (mode !== 'presentation' || !stagedData) return;
+
+    setPlacementGhost({
+      item: stagedData,
+      revealedIds: new Set(revealedIds),
+      targetRect: getTargetRect(),
+    });
+    dispatch({ type: 'REVEAL_NEXT' });
+  }, [dispatch, getTargetRect, mode, placementRequestKey, revealedIds, stagedData]);
 
   // ===== UNIFIED LAYOUT — same grid for both modes =====
   return (
@@ -304,7 +319,7 @@ export function ContentArea() {
                           total={sectionSummaryEpics.length}
                           className="min-h-0 flex-[6]"
                         >
-                          <div className="flex flex-col gap-1.5">
+                          <div className={`flex flex-col ${isCardLegibilityMode ? 'gap-2' : 'gap-1.5'}`}>
                             {sectionSummaryEpics.map((epic, index) => (
                               <EpicCard key={epic.id} epic={epic} revealed={true} index={index} />
                             ))}
@@ -319,7 +334,7 @@ export function ContentArea() {
                           total={sectionSummaryFourTypes.length}
                           className="min-h-0 flex-[5]"
                         >
-                          <div className="flex flex-col gap-1.5">
+                          <div className={`flex flex-col ${isCardLegibilityMode ? 'gap-2' : 'gap-1.5'}`}>
                             {sectionSummaryFourTypes.map((concept, index) => (
                               <ConceptCard key={concept.id} concept={concept} revealed={true} index={index} revealedIds={revealedIds} />
                             ))}
@@ -334,7 +349,7 @@ export function ContentArea() {
                           total={sectionSummaryThreeWays.length}
                           className="min-h-0 flex-[4]"
                         >
-                          <div className="flex flex-col gap-1.5">
+                          <div className={`flex flex-col ${isCardLegibilityMode ? 'gap-2' : 'gap-1.5'}`}>
                             {sectionSummaryThreeWays.map((concept, index) => (
                               <ConceptCard key={concept.id} concept={concept} revealed={true} index={index} revealedIds={revealedIds} />
                             ))}
@@ -371,7 +386,7 @@ export function ContentArea() {
                           total={sectionSummaryChallenges.length}
                           className="flex-1 min-h-0"
                         >
-                          <div className="grid grid-cols-3 xl:grid-cols-4 gap-1.5">
+                          <div className={`grid grid-cols-3 xl:grid-cols-4 ${isCardLegibilityMode ? 'gap-2' : 'gap-1.5'}`}>
                             {sectionSummaryChallenges.map((challenge, index) => (
                               <ChallengeCard key={challenge.id} challenge={challenge} revealed={true} index={index} />
                             ))}
@@ -400,7 +415,7 @@ export function ContentArea() {
               className="min-h-0 flex-[6]"
               panelRef={epicsPanelRef}
             >
-              <div className="flex flex-col gap-1.5">
+              <div className={`flex flex-col ${isCardLegibilityMode ? 'gap-2' : 'gap-1.5'}`}>
                 {epics.map((e, i) => (
                   <EpicCard key={e.id} epic={e} revealed={true} index={i} />
                 ))}
@@ -416,7 +431,7 @@ export function ContentArea() {
               className="min-h-0 flex-[5]"
               panelRef={fourTypesPanelRef}
             >
-              <div className="flex flex-col gap-1.5">
+              <div className={`flex flex-col ${isCardLegibilityMode ? 'gap-2' : 'gap-1.5'}`}>
                 {fourTypes.map((c, i) => (
                   <ConceptCard key={c.id} concept={c} revealed={true} index={i} revealedIds={revealedIds} />
                 ))}
@@ -432,7 +447,7 @@ export function ContentArea() {
               className="min-h-0 flex-[4]"
               panelRef={threeWaysPanelRef}
             >
-              <div className="flex flex-col gap-1.5">
+              <div className={`flex flex-col ${isCardLegibilityMode ? 'gap-2' : 'gap-1.5'}`}>
                 {threeWays.map((c, i) => (
                   <ConceptCard key={c.id} concept={c} revealed={true} index={i} revealedIds={revealedIds} />
                 ))}
@@ -465,7 +480,7 @@ export function ContentArea() {
               className="flex-1 min-h-0"
               panelRef={challengesPanelRef}
             >
-              <div className="grid grid-cols-3 xl:grid-cols-4 gap-1.5">
+              <div className={`grid grid-cols-3 xl:grid-cols-4 ${isCardLegibilityMode ? 'gap-2' : 'gap-1.5'}`}>
                 {challenges.map((c, i) => (
                   <ChallengeCard key={c.id} challenge={c} revealed={true} index={i} />
                 ))}

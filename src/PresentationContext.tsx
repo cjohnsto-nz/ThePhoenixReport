@@ -10,6 +10,7 @@ type Action =
   | { type: 'TICK' }
   | { type: 'PLAY' }
   | { type: 'PAUSE' }
+  | { type: 'REQUEST_STAGE_PLACE' }
   | { type: 'NEXT_SEGMENT' }
   | { type: 'PREV_SEGMENT' }
   | { type: 'GO_TO_SEGMENT'; index: number }
@@ -297,6 +298,7 @@ const initialState: PresentationState = {
   isRunning: false,
   revealedIds: new Set(),
   stagedId: null,
+  placementRequestKey: 0,
 };
 
 type PersistedPresentationSnapshot = {
@@ -368,6 +370,7 @@ function loadInitialState(): PresentationState {
       isRunning: false,
       revealedIds: new Set(parsed.revealedIds),
       stagedId: parsed.stagedId,
+      placementRequestKey: 0,
     };
   } catch {
     return initialState;
@@ -421,6 +424,14 @@ function reducer(state: PresentationState, action: Action): PresentationState {
         ...state,
         segmentElapsedSeconds: state.segmentElapsedSeconds + 1,
         totalElapsedSeconds: state.totalElapsedSeconds + 1,
+      };
+    }
+
+    case 'REQUEST_STAGE_PLACE': {
+      if (!state.stagedId) return state;
+      return {
+        ...state,
+        placementRequestKey: state.placementRequestKey + 1,
       };
     }
 
@@ -630,6 +641,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
         isRunning: false,
         revealedIds: state.mode === 'explore' ? new Set(getAllIds()) : new Set(),
         stagedId: null,
+        placementRequestKey: 0,
       };
 
     default:

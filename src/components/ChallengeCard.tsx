@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { GlassCard } from './GlassCard';
 import { ChallengeDetailContent } from './DetailModalContent';
 import { Modal } from './Modal';
+import { useControls } from '../ControlsContext';
 import type { Challenge } from '../types';
 
 interface ChallengeCardProps {
@@ -24,6 +25,7 @@ const severityDot = {
 
 export function ChallengeCard({ challenge, revealed, index }: ChallengeCardProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const { isCardLegibilityMode } = useControls();
 
   return (
     <>
@@ -32,13 +34,17 @@ export function ChallengeCard({ challenge, revealed, index }: ChallengeCardProps
         onClick={() => setIsOpen(true)}
         glowColor={`${challenge.color}20`}
         delay={index * 0.04}
-        className="px-3 py-2"
+        className={isCardLegibilityMode ? 'px-3.5 py-3' : 'px-3 py-2'}
       >
         <div className="flex items-center gap-2">
           <span className={`w-2 h-2 rounded-full flex-shrink-0 ${severityDot[challenge.severity]}`} />
           <div className="min-w-0">
-            <span className="text-sm font-medium text-white/85 truncate block">{challenge.title}</span>
-            <span className="text-xs text-white/35 truncate block leading-tight">{challenge.subtitle}</span>
+            <span className={`${isCardLegibilityMode ? 'text-lg font-semibold text-white/92' : 'text-sm font-medium text-white/85'} truncate block leading-tight`}>
+              {challenge.title}
+            </span>
+            {!isCardLegibilityMode && (
+              <span className="text-xs text-white/35 truncate block leading-tight">{challenge.subtitle}</span>
+            )}
           </div>
         </div>
       </GlassCard>

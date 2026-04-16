@@ -183,6 +183,7 @@ export type PresentationState = {
   isRunning: boolean;
   revealedIds: Set<string>;
   stagedId: string | null;
+  placementRequestKey: number;
 };
 
 export interface PresentationStepInfo {
