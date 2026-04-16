@@ -1,5 +1,16 @@
 import type { Challenge, Character, ConceptItem, Epic, QuoteItem, WayItem } from '../types';
 
+function resolveAssetPath(assetPath: string) {
+  if (/^(https?:)?\/\//.test(assetPath) || assetPath.startsWith('data:')) {
+    return assetPath;
+  }
+
+  const normalizedBase = import.meta.env.BASE_URL ?? '/';
+  const trimmedBase = normalizedBase.endsWith('/') ? normalizedBase : `${normalizedBase}/`;
+  const trimmedAsset = assetPath.startsWith('/') ? assetPath.slice(1) : assetPath;
+  return `${trimmedBase}${trimmedAsset}`;
+}
+
 const severityBadge = {
   critical: 'bg-red-500/20 text-red-200 border-red-500/35',
   high: 'bg-orange-500/20 text-orange-200 border-orange-500/35',
@@ -116,13 +127,11 @@ export function QuoteDetailContent({ quote }: { quote: QuoteItem }) {
 
       {quote.imagePath && (
         <figure className="space-y-3">
-          <div className="overflow-hidden rounded-2xl border border-white/[0.08] bg-white/[0.03]">
-            <img
-              src={quote.imagePath}
-              alt={quote.imageAlt ?? `${quote.characterName} supporting image`}
-              className="w-full h-auto object-contain"
-            />
-          </div>
+          <img
+            src={resolveAssetPath(quote.imagePath)}
+            alt={quote.imageAlt ?? `${quote.characterName} supporting image`}
+            className="block w-full h-auto max-h-[500px] object-contain"
+          />
           {quote.imageCaption && (
             <figcaption className="text-sm md:text-base text-white/58 leading-relaxed">
               {quote.imageCaption}
