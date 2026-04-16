@@ -69,20 +69,20 @@ threeWays:
           description: "Optimize for the whole, not individual silos. Local optimizations that don't improve the global flow are an illusion of progress."
           icon: "grid"
 
-        # - id: first-way-protect-bottlenecks
-        #   title: "Protect Bottlenecks"
-        #   description: "Identify and protect the constraint. Any improvement not at the bottleneck is a mirage. Ensure the constraint is never idle and never overloaded with non-critical work."
-        #   icon: "shield"
+        - id: first-way-protect-bottlenecks
+          title: "Protect Bottlenecks"
+          description: "Identify and protect the constraint. Any improvement not at the bottleneck is a mirage. Ensure the constraint is never idle and never overloaded with non-critical work."
+          icon: "shield"
 
-        # - id: first-way-reduce-wip
-        #   title: "Reduce Work-in-Progress"
-        #   description: "Limiting WIP is the key to improving flow. The more work in the system, the longer everything takes. Small batches move faster."
-        #   icon: "minimize"
+        - id: first-way-reduce-wip
+          title: "Reduce Work-in-Progress"
+          description: "Limiting WIP is the key to improving flow. The more work in the system, the longer everything takes. Small batches move faster."
+          icon: "minimize"
 
-        # - id: first-way-optimize-flow
-        #   title: "Optimize Flow"
-        #   description: "Optimize for the smooth, fast flow of work across the entire value stream — from idea to customer value."
-        #   icon: "zap"
+        - id: first-way-optimize-flow
+          title: "Optimize Flow"
+          description: "Optimize for the smooth, fast flow of work across the entire value stream — from idea to customer value."
+          icon: "zap"
 
     - id: second-way
       title: "The Second Way"

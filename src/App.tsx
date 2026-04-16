@@ -8,7 +8,7 @@ export default function App() {
   return (
     <PresentationProvider>
       <ControlsProvider>
-        <div className="relative h-screen overflow-hidden">
+        <div className="relative h-screen overflow-hidden bg-[#050812] text-white">
           <ParticleBackground />
           <div className="relative z-10 h-full">
             <ContentArea />

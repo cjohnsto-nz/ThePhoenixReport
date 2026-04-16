@@ -2,6 +2,18 @@
 # Controls the presentation flow - 60 minutes total
 # Reveals are in narrative order — characters & epics first to set the scene,
 # then challenges & concepts build on them. Order in the array = reveal order.
+# Each reveal can optionally define two explicit script beats for the controls:
+#   modalStep  — shown while the detail modal is on screen
+#   globalStep — shown after the card is placed back into the dashboard
+# Example:
+# - type: character
+#   id: bill-palmer
+#   modalStep:
+#     name: "Meet Bill Palmer"
+#     script: "Bill inherits a crisis-ridden organization and becomes our lens into the crisis."
+#   globalStep:
+#     name: "Bill in context"
+#     script: "Bill's story now anchors the broader system problems already visible on the board."
 
 presentation:
   totalDuration: 60 # minutes
@@ -25,13 +37,55 @@ presentation:
       summary: "Bill inherits a crisis-ridden organization where work is invisible, commitments are disconnected from capacity, and operational chaos dominates daily life. The first section establishes the human cost of unplanned work and frames Phoenix as the forcing function that exposes deeper systemic problems."
       reveals:
         # Story setup: meet the people, then the crisis
-        - { type: character, id: bill-palmer }
-        - { type: character, id: steve-masters }
-        - { type: character, id: wes-davis }
-        - { type: epic, id: phoenix-project }
-        - { type: epic, id: payroll-failure }
+        - type: character
+          id: bill-palmer
+          modalStep:
+            name: "Meet Bill Palmer"
+            script: "Bill Palmer is our point-of-view character. He has just inherited a failing IT organization, and he is walking into a system that is overloaded, opaque, and already on fire."
+          globalStep:
+            name: "Bill inherits the crisis"
+            script: "Back on the global view, position Bill as the leader forced to make sense of chaos. He is not the cause of the dysfunction, but he is the person now accountable for stabilizing it."
+        - type: character
+          id: steve-masters
+          modalStep:
+            name: "Pressure from the top"
+            script: "Steve Masters brings business urgency and executive pressure. He represents the demand for fast results, fixed dates, and visible progress, regardless of what the system can actually support."
+          globalStep:
+            name: "Leadership pressure compounds"
+            script: "With Steve on the board, the audience should feel the squeeze on Bill: operational chaos below, executive pressure above, and almost no room to slow down and understand the system."
+        - type: character
+          id: wes-davis
+          modalStep:
+            name: "Operations under strain"
+            script: "Wes Davis embodies day-to-day operational pain. He lives inside the interruptions, escalations, and fragile systems that keep forcing the organization into reactive mode."
+          globalStep:
+            name: "Heroics hide the damage"
+            script: "Now that Wes is visible in the global view, connect the human toll of interruptions and burnout to the system's deeper structural problems. Heroics keep things moving, but they also conceal how broken the flow has become."
+        - type: epic
+          id: phoenix-project
+          modalStep:
+            name: "The project that changes everything"
+            script: "Phoenix is not just another initiative. It is the forcing function that exposes every hidden weakness in the organization: weak flow, poor visibility, overloaded teams, and decision-making disconnected from capacity."
+          globalStep:
+            name: "Phoenix becomes the lens"
+            script: "Once Phoenix is on the board, use it as the narrative anchor. Every challenge that follows can now be interpreted through the question: why can't this organization deliver its most important work reliably?"
+        - type: epic
+          id: payroll-failure
+          modalStep:
+            name: "Failure becomes visible"
+            script: "The payroll failure makes the risk undeniable. Operational dysfunction is no longer just an internal annoyance; it has produced a business-visible failure with real consequences."
+          globalStep:
+            name: "Consequences are now real"
+            script: "Back on the board, the audience should feel the escalation. The organization is no longer simply stressed; it is producing public, costly failures that the business cannot ignore."
         # Now the challenges emerge
-        - { type: challenge, id: firefighting }
+        - type: challenge
+          id: firefighting
+          modalStep:
+            name: "Firefighting takes over"
+            script: "Firefighting is the default operating mode. Planned work keeps losing to urgent work, so teams never stabilize, strategic work slips, and the system becomes even more reactive over time."
+          globalStep:
+            name: "Unplanned work dominates the board"
+            script: "Once firefighting is placed back into the global view, show how it explains almost everything else. Urgent work is consuming capacity, crowding out planned work, and making reliable delivery impossible."
         - { type: challenge, id: no-visibility }
         - { type: challenge, id: knowledge-silos }
         - { type: challenge, id: blind-commitments }
@@ -89,10 +143,6 @@ presentation:
         - { type: challenge, id: no-ownership }
         # The First Way
         - { type: concept, id: first-way }
-        - { type: concept, id: first-way-manage-system }
-        - { type: concept, id: first-way-protect-bottlenecks }
-        - { type: concept, id: first-way-reduce-wip }
-        - { type: concept, id: first-way-optimize-flow }
 
     - id: segment-4
       title: "Quality, Feedback, and Risk Reduction"
@@ -115,9 +165,6 @@ presentation:
         - { type: challenge, id: dev-ops-tension }
         # The Second Way
         - { type: concept, id: second-way }
-        - { type: concept, id: second-way-feedback-loops }
-        - { type: concept, id: second-way-early-detection }
-        - { type: concept, id: second-way-shared-responsibility }
 
     - id: segment-5
       title: "Learning Organization and Sustainable Performance"
@@ -138,9 +185,6 @@ presentation:
         - { type: challenge, id: tech-debt-vs-features }
         # The Third Way
         - { type: concept, id: third-way }
-        - { type: concept, id: third-way-experimentation }
-        - { type: concept, id: third-way-blameless }
-        - { type: concept, id: third-way-resilience }
         - { type: concept, id: four-types-business }
 
     - id: outro

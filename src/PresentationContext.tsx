@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useReducer, useCallback, useRef, useEffect } from 'react';
-import type { PresentationMode, PresentationState, SegmentScreen, TimelineSegment } from './types';
-import { timelineData } from './data';
+import type { PresentationMode, PresentationState, SegmentScreen, TimelineReveal, TimelineSegment, PresentationStepInfo } from './types';
+import { lookupItem, timelineData } from './data';
 
 const SESSION_STORAGE_KEY = 'phoenix-report-presentation-state';
 
@@ -23,6 +23,7 @@ type Action =
 type PresentationSnapshot = {
   currentSegmentIndex: number;
   segmentScreen: SegmentScreen;
+  currentContentStepIndex: number | null;
   segmentElapsedSeconds: number;
   totalElapsedSeconds: number;
   revealedIds: Set<string>;
@@ -43,6 +44,187 @@ function getSegmentBudgetSeconds(segment: TimelineSegment): number {
 function getTotalTargetSeconds(): number {
   const lastSegment = segments[segments.length - 1];
   return lastSegment ? parseClockToSeconds(lastSegment.end) : 0;
+}
+
+type DerivedContentStep = {
+  id: string;
+  name: string;
+  script?: string;
+  view: 'modal' | 'global';
+  reveal: TimelineReveal;
+};
+
+function getRevealTitle(reveal: TimelineReveal): string {
+  const item = lookupItem(reveal.type, reveal.id) as { title?: string; name?: string } | undefined;
+  return item?.title ?? item?.name ?? reveal.id;
+}
+
+function getRevealPrimaryScript(reveal: TimelineReveal): string | undefined {
+  const item = lookupItem(reveal.type, reveal.id) as Record<string, unknown> | undefined;
+  const description = typeof item?.description === 'string' ? item.description : undefined;
+  const impact = typeof item?.impact === 'string' ? item.impact : undefined;
+  const arc = typeof item?.arc === 'string' ? item.arc : undefined;
+  const subtitle = typeof item?.subtitle === 'string' ? item.subtitle : undefined;
+  return description ?? impact ?? arc ?? subtitle;
+}
+
+function getRevealSecondaryScript(reveal: TimelineReveal): string | undefined {
+  const item = lookupItem(reveal.type, reveal.id) as Record<string, unknown> | undefined;
+  const impact = typeof item?.impact === 'string' ? item.impact : undefined;
+  const arc = typeof item?.arc === 'string' ? item.arc : undefined;
+  const subtitle = typeof item?.subtitle === 'string' ? item.subtitle : undefined;
+  const description = typeof item?.description === 'string' ? item.description : undefined;
+  return impact ?? arc ?? subtitle ?? description;
+}
+
+function getContentSteps(segment: TimelineSegment): DerivedContentStep[] {
+  if (segment.phase === 'intro' || segment.phase === 'outro') return [];
+
+  return segment.reveals.flatMap((reveal) => {
+    const title = getRevealTitle(reveal);
+    return [
+      {
+        id: `${reveal.id}:modal`,
+        name: reveal.modalStep?.name ?? title,
+        script: reveal.modalStep?.script ?? getRevealPrimaryScript(reveal),
+        view: 'modal' as const,
+        reveal,
+      },
+      {
+        id: `${reveal.id}:global`,
+        name: reveal.globalStep?.name ?? `${title} in context`,
+        script: reveal.globalStep?.script ?? getRevealSecondaryScript(reveal) ?? getRevealPrimaryScript(reveal),
+        view: 'global' as const,
+        reveal,
+      },
+    ];
+  });
+}
+
+function getContentStateForStep(segmentIndex: number, stepIndex: number | null) {
+  const revealedIds = getRevealedIdsBeforeSegment(segmentIndex);
+  if (stepIndex === null) {
+    return { revealedIds, stagedId: null as string | null };
+  }
+
+  const segment = segments[segmentIndex];
+  const steps = segment ? getContentSteps(segment) : [];
+  if (steps.length === 0) {
+    return { revealedIds, stagedId: null as string | null };
+  }
+
+  const clampedIndex = Math.max(0, Math.min(stepIndex, steps.length - 1));
+  for (let index = 0; index <= clampedIndex; index += 1) {
+    if (steps[index].view === 'global') {
+      revealedIds.add(steps[index].reveal.id);
+    }
+  }
+
+  const activeStep = steps[clampedIndex];
+  return {
+    revealedIds,
+    stagedId: activeStep.view === 'modal' ? activeStep.reveal.id : null,
+  };
+}
+
+function toPresentationStepInfo(step: DerivedContentStep): PresentationStepInfo {
+  return {
+    id: step.id,
+    name: step.name,
+    script: step.script,
+    view: step.view,
+  };
+}
+
+function getIntroStepInfo(segment: TimelineSegment): PresentationStepInfo {
+  return {
+    id: `${segment.id}:intro`,
+    name: `${segment.title} intro`,
+    script: segment.narrativeArc ?? segment.subtitle,
+    view: 'page',
+  };
+}
+
+function getSummaryStepInfo(segment: TimelineSegment): PresentationStepInfo {
+  return {
+    id: `${segment.id}:summary`,
+    name: `${segment.title} summary`,
+    script: segment.summary ?? segment.takeaway ?? segment.subtitle,
+    view: 'page',
+  };
+}
+
+function getStandaloneStepInfo(segment: TimelineSegment): PresentationStepInfo {
+  return {
+    id: `${segment.id}:standalone`,
+    name: segment.title,
+    script: segment.narrativeArc ?? segment.takeaway ?? segment.subtitle,
+    view: 'page',
+  };
+}
+
+function getSegmentEntryStepInfo(index: number): PresentationStepInfo | null {
+  const segment = segments[index];
+  if (!segment) return null;
+  if (segment.phase === 'intro' || segment.phase === 'outro') {
+    return getStandaloneStepInfo(segment);
+  }
+  return getIntroStepInfo(segment);
+}
+
+function getCurrentPresentationStepInfo(state: PresentationState): PresentationStepInfo | null {
+  const segment = segments[state.currentSegmentIndex];
+  if (!segment) return null;
+
+  if (segment.phase === 'intro' || segment.phase === 'outro') {
+    return getStandaloneStepInfo(segment);
+  }
+
+  if (state.segmentScreen === 'intro') {
+    return getIntroStepInfo(segment);
+  }
+
+  if (state.segmentScreen === 'summary') {
+    return getSummaryStepInfo(segment);
+  }
+
+  const steps = getContentSteps(segment);
+  if (state.currentContentStepIndex === null || steps.length === 0) {
+    return {
+      id: `${segment.id}:content-start`,
+      name: `${segment.title} setup`,
+      script: segment.narrativeArc ?? segment.subtitle,
+      view: 'page',
+    };
+  }
+
+  return toPresentationStepInfo(steps[Math.max(0, Math.min(state.currentContentStepIndex, steps.length - 1))]);
+}
+
+function getNextPresentationStepInfo(state: PresentationState): PresentationStepInfo | null {
+  const segment = segments[state.currentSegmentIndex];
+  if (!segment) return null;
+
+  if (segment.phase === 'intro' || segment.phase === 'outro') {
+    return getSegmentEntryStepInfo(state.currentSegmentIndex + 1);
+  }
+
+  if (state.segmentScreen === 'intro') {
+    const steps = getContentSteps(segment);
+    return steps[0] ? toPresentationStepInfo(steps[0]) : getSummaryStepInfo(segment);
+  }
+
+  if (state.segmentScreen === 'summary') {
+    return getSegmentEntryStepInfo(state.currentSegmentIndex + 1);
+  }
+
+  const steps = getContentSteps(segment);
+  const nextIndex = state.currentContentStepIndex === null ? 0 : state.currentContentStepIndex + 1;
+  if (steps[nextIndex]) {
+    return toPresentationStepInfo(steps[nextIndex]);
+  }
+
+  return getSummaryStepInfo(segment);
 }
 
 function getAllIds(): string[] {
@@ -90,6 +272,7 @@ function getRevealedIdsThroughSegment(index: number): Set<string> {
 const initialPresentationSnapshot: PresentationSnapshot = {
   currentSegmentIndex: 0,
   segmentScreen: getDefaultSegmentScreen(0),
+  currentContentStepIndex: null,
   segmentElapsedSeconds: 0,
   totalElapsedSeconds: 0,
   revealedIds: new Set(),
@@ -103,6 +286,7 @@ const initialState: PresentationState = {
   mode: 'presentation',
   currentSegmentIndex: 0,
   segmentScreen: getDefaultSegmentScreen(0),
+  currentContentStepIndex: null,
   segmentElapsedSeconds: 0,
   totalElapsedSeconds: 0,
   isRunning: false,
@@ -113,6 +297,7 @@ const initialState: PresentationState = {
 type PersistedPresentationSnapshot = {
   currentSegmentIndex: number;
   segmentScreen: SegmentScreen;
+  currentContentStepIndex: number | null;
   segmentElapsedSeconds: number;
   totalElapsedSeconds: number;
   revealedIds: string[];
@@ -123,6 +308,7 @@ type PersistedPresentationState = {
   mode: PresentationMode;
   currentSegmentIndex: number;
   segmentScreen: SegmentScreen;
+  currentContentStepIndex: number | null;
   segmentElapsedSeconds: number;
   totalElapsedSeconds: number;
   isRunning: boolean;
@@ -135,6 +321,7 @@ function serializeSnapshot(snapshot: PresentationSnapshot): PersistedPresentatio
   return {
     currentSegmentIndex: snapshot.currentSegmentIndex,
     segmentScreen: snapshot.segmentScreen,
+    currentContentStepIndex: snapshot.currentContentStepIndex,
     segmentElapsedSeconds: snapshot.segmentElapsedSeconds,
     totalElapsedSeconds: snapshot.totalElapsedSeconds,
     revealedIds: Array.from(snapshot.revealedIds),
@@ -146,6 +333,7 @@ function hydrateSnapshot(snapshot: PersistedPresentationSnapshot): PresentationS
   return {
     currentSegmentIndex: snapshot.currentSegmentIndex,
     segmentScreen: snapshot.segmentScreen,
+    currentContentStepIndex: snapshot.currentContentStepIndex,
     segmentElapsedSeconds: snapshot.segmentElapsedSeconds,
     totalElapsedSeconds: snapshot.totalElapsedSeconds,
     revealedIds: new Set(snapshot.revealedIds),
@@ -169,6 +357,7 @@ function loadInitialState(): PresentationState {
       mode: parsed.mode,
       currentSegmentIndex: parsed.currentSegmentIndex,
       segmentScreen: parsed.segmentScreen,
+      currentContentStepIndex: parsed.currentContentStepIndex,
       segmentElapsedSeconds: parsed.segmentElapsedSeconds,
       totalElapsedSeconds: parsed.totalElapsedSeconds,
       isRunning: false,
@@ -189,6 +378,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
           savedPresentationSnapshot = {
             currentSegmentIndex: state.currentSegmentIndex,
             segmentScreen: state.segmentScreen,
+            currentContentStepIndex: state.currentContentStepIndex,
             segmentElapsedSeconds: state.segmentElapsedSeconds,
             totalElapsedSeconds: state.totalElapsedSeconds,
             revealedIds: new Set(state.revealedIds),
@@ -199,6 +389,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
           ...state,
           mode: 'explore',
           isRunning: false,
+          currentContentStepIndex: null,
           revealedIds: new Set(getAllIds()),
           stagedId: null,
         };
@@ -208,7 +399,8 @@ function reducer(state: PresentationState, action: Action): PresentationState {
         ...state,
         mode: 'presentation',
         currentSegmentIndex: savedPresentationSnapshot.currentSegmentIndex,
-          segmentScreen: savedPresentationSnapshot.segmentScreen,
+        segmentScreen: savedPresentationSnapshot.segmentScreen,
+        currentContentStepIndex: savedPresentationSnapshot.currentContentStepIndex,
         segmentElapsedSeconds: savedPresentationSnapshot.segmentElapsedSeconds,
         totalElapsedSeconds: savedPresentationSnapshot.totalElapsedSeconds,
         isRunning: false,
@@ -237,6 +429,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
           ...state,
           currentSegmentIndex: state.currentSegmentIndex + 1,
           segmentScreen: getDefaultSegmentScreen(state.currentSegmentIndex + 1),
+          currentContentStepIndex: null,
           segmentElapsedSeconds: 0,
           revealedIds: getRevealedIdsBeforeSegment(state.currentSegmentIndex + 1),
           stagedId: null,
@@ -247,6 +440,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
         return {
           ...state,
           segmentScreen: 'content',
+          currentContentStepIndex: null,
           stagedId: null,
         };
       }
@@ -257,36 +451,31 @@ function reducer(state: PresentationState, action: Action): PresentationState {
           ...state,
           currentSegmentIndex: state.currentSegmentIndex + 1,
           segmentScreen: getDefaultSegmentScreen(state.currentSegmentIndex + 1),
+          currentContentStepIndex: null,
           segmentElapsedSeconds: 0,
           revealedIds: getRevealedIdsBeforeSegment(state.currentSegmentIndex + 1),
           stagedId: null,
         };
       }
 
-      // Two-phase reveal: first stage center-screen, then place in dashboard
-      if (state.stagedId) {
-        // Phase 2: place the staged item into the dashboard
+      const steps = getContentSteps(currentSeg);
+      const nextStepIndex = state.currentContentStepIndex === null ? 0 : state.currentContentStepIndex + 1;
+      if (!steps[nextStepIndex]) {
         return {
           ...state,
-          revealedIds: new Set([...state.revealedIds, state.stagedId]),
+          currentContentStepIndex: null,
+          segmentScreen: 'summary',
+          revealedIds: getRevealedIdsThroughSegment(state.currentSegmentIndex),
           stagedId: null,
         };
       }
 
-      // Phase 1: stage the next unrevealed item (array order = reveal order)
-      const next = currentSeg.reveals.find(
-        (r) => !state.revealedIds.has(r.id),
-      );
-      if (!next) {
-        return {
-          ...state,
-          segmentScreen: 'summary',
-          stagedId: null,
-        };
-      }
+      const nextContentState = getContentStateForStep(state.currentSegmentIndex, nextStepIndex);
       return {
         ...state,
-        stagedId: next.id,
+        currentContentStepIndex: nextStepIndex,
+        revealedIds: nextContentState.revealedIds,
+        stagedId: nextContentState.stagedId,
       };
     }
 
@@ -301,6 +490,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
           ...state,
           currentSegmentIndex: prevIndex,
           segmentScreen: getTerminalSegmentScreen(prevIndex),
+          currentContentStepIndex: null,
           segmentElapsedSeconds: 0,
           revealedIds: getRevealedIdsThroughSegment(prevIndex),
           stagedId: null,
@@ -311,7 +501,8 @@ function reducer(state: PresentationState, action: Action): PresentationState {
         return {
           ...state,
           segmentScreen: 'content',
-          stagedId: null,
+          currentContentStepIndex: Math.max(0, getContentSteps(currentSeg).length - 1),
+          ...getContentStateForStep(state.currentSegmentIndex, Math.max(0, getContentSteps(currentSeg).length - 1)),
         };
       }
 
@@ -322,36 +513,41 @@ function reducer(state: PresentationState, action: Action): PresentationState {
           ...state,
           currentSegmentIndex: prevIndex,
           segmentScreen: getTerminalSegmentScreen(prevIndex),
+          currentContentStepIndex: null,
           segmentElapsedSeconds: 0,
           revealedIds: getRevealedIdsThroughSegment(prevIndex),
           stagedId: null,
         };
       }
 
-      if (state.stagedId) {
+      if (state.currentContentStepIndex === null) {
         return {
           ...state,
-          stagedId: null,
-        };
-      }
-
-      const revealedInSegment = currentSeg.reveals.filter((r) => state.revealedIds.has(r.id));
-      const lastRevealed = revealedInSegment[revealedInSegment.length - 1];
-      if (!lastRevealed) {
-        return {
-          ...state,
+          currentContentStepIndex: null,
           segmentScreen: 'intro',
+          revealedIds: getRevealedIdsBeforeSegment(state.currentSegmentIndex),
           stagedId: null,
         };
       }
 
-      const revealedIds = new Set(state.revealedIds);
-      revealedIds.delete(lastRevealed.id);
+      const prevStepIndex = state.currentContentStepIndex - 1;
+      if (prevStepIndex < 0) {
+        return {
+          ...state,
+          currentContentStepIndex: null,
+          segmentScreen: 'intro',
+          revealedIds: getRevealedIdsBeforeSegment(state.currentSegmentIndex),
+          stagedId: null,
+        };
+      }
+
+      const prevContentState = getContentStateForStep(state.currentSegmentIndex, prevStepIndex);
 
       return {
         ...state,
-        revealedIds,
-        stagedId: lastRevealed.id,
+        currentContentStepIndex: prevStepIndex,
+        revealedIds: prevContentState.revealedIds,
+        stagedId: prevContentState.stagedId,
       };
     }
 
@@ -368,6 +564,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
         ...state,
         currentSegmentIndex: nextIndex,
         segmentScreen: getDefaultSegmentScreen(nextIndex),
+        currentContentStepIndex: null,
         segmentElapsedSeconds: 0,
         revealedIds: newRevealed,
         stagedId: null,
@@ -381,6 +578,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
         ...state,
         currentSegmentIndex: prevIndex,
         segmentScreen: getDefaultSegmentScreen(prevIndex),
+        currentContentStepIndex: null,
         segmentElapsedSeconds: 0,
         revealedIds: newRevealed,
         stagedId: null,
@@ -394,6 +592,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
         ...state,
         currentSegmentIndex: idx,
         segmentScreen: getDefaultSegmentScreen(idx),
+        currentContentStepIndex: null,
         segmentElapsedSeconds: 0,
         revealedIds: newRevealed,
         stagedId: null,
@@ -410,6 +609,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
     case 'REVEAL_ALL':
       return {
         ...state,
+        currentContentStepIndex: null,
         revealedIds: new Set(getAllIds()),
         stagedId: null,
       };
@@ -419,6 +619,7 @@ function reducer(state: PresentationState, action: Action): PresentationState {
         ...state,
         currentSegmentIndex: 0,
         segmentScreen: getDefaultSegmentScreen(0),
+        currentContentStepIndex: null,
         segmentElapsedSeconds: 0,
         totalElapsedSeconds: 0,
         isRunning: false,
@@ -462,6 +663,8 @@ interface PresentationContextType {
   segments: TimelineSegment[];
   currentSegment: TimelineSegment | undefined;
   split: SplitInfo;
+  currentStep: PresentationStepInfo | null;
+  nextStep: PresentationStepInfo | null;
 }
 
 const PresentationContext = createContext<PresentationContextType | null>(null);
@@ -495,6 +698,7 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
       mode: state.mode,
       currentSegmentIndex: state.currentSegmentIndex,
       segmentScreen: state.segmentScreen,
+      currentContentStepIndex: state.currentContentStepIndex,
       segmentElapsedSeconds: state.segmentElapsedSeconds,
       totalElapsedSeconds: state.totalElapsedSeconds,
       isRunning: false,
@@ -537,6 +741,8 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
   }, [state.mode, state.stagedId]);
 
   const currentSegment = segments[state.currentSegmentIndex];
+  const currentStep = getCurrentPresentationStepInfo(state);
+  const nextStep = getNextPresentationStepInfo(state);
 
   const split: SplitInfo = (() => {
     const seg = currentSegment;
@@ -565,7 +771,7 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
   })();
 
   return (
-    <PresentationContext.Provider value={{ state, dispatch, segments, currentSegment, split }}>
+    <PresentationContext.Provider value={{ state, dispatch, segments, currentSegment, split, currentStep, nextStep }}>
       {children}
     </PresentationContext.Provider>
   );

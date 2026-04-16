@@ -3,6 +3,14 @@
 export interface TimelineReveal {
   type: 'challenge' | 'concept' | 'character' | 'epic';
   id: string;
+  modalStep?: {
+    name?: string;
+    script?: string;
+  };
+  globalStep?: {
+    name?: string;
+    script?: string;
+  };
 }
 
 export interface TimelineSegment {
@@ -132,6 +140,8 @@ export type PresentationState = {
   mode: PresentationMode;
   currentSegmentIndex: number;
   segmentScreen: SegmentScreen;
+  /** Active step within a content segment. Null means before the first content step. */
+  currentContentStepIndex: number | null;
   segmentElapsedSeconds: number;
   totalElapsedSeconds: number;
   isRunning: boolean;
@@ -139,3 +149,10 @@ export type PresentationState = {
   /** Id of item currently shown center-stage (not yet placed in dashboard) */
   stagedId: string | null;
 };
+
+export interface PresentationStepInfo {
+  id: string;
+  name: string;
+  script?: string;
+  view: 'page' | 'modal' | 'global';
+}

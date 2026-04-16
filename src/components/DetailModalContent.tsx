@@ -138,21 +138,19 @@ export function ConceptDetailContent({
           <SectionLabel>Principles</SectionLabel>
           <div className="space-y-4">
             {concept.principles.map((principle) => {
-              const isRevealed = !revealedIds || revealedIds.has(principle.id);
-
               return (
                 <div
                   key={principle.id}
                   className="p-4 md:p-5 rounded-2xl border transition-all duration-500"
                   style={{
-                    backgroundColor: isRevealed ? `${color}12` : 'rgba(255, 255, 255, 0.05)',
-                    borderColor: isRevealed ? `${color}28` : 'rgba(255, 255, 255, 0.1)',
+                    backgroundColor: `${color}12`,
+                    borderColor: `${color}28`,
                   }}
                 >
-                  <h4 className={`text-base md:text-lg font-semibold mb-2 ${isRevealed ? 'text-white/96' : 'text-white/82'}`}>
+                  <h4 className="text-base md:text-lg font-semibold mb-2 text-white/96">
                     {principle.title}
                   </h4>
-                  <p className={`text-sm md:text-base leading-relaxed ${isRevealed ? 'text-white/82' : 'text-white/66'}`}>
+                  <p className="text-sm md:text-base leading-relaxed text-white/82">
                     {principle.description}
                   </p>
                 </div>
