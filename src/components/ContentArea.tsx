@@ -23,7 +23,6 @@ import {
 import { EpicCard } from './EpicCard';
 import { Modal } from './Modal';
 import { SegmentHeader } from './SegmentHeader';
-import { TakeawayBanner } from './TakeawayBanner';
 import { useControls } from '../ControlsContext';
 import type { ConceptItem, WayItem, Challenge, Character, Epic, Lesson, QuoteItem } from '../types';
 
@@ -41,10 +40,7 @@ export function ContentArea() {
     [],
   );
   const threeWayIds = useMemo(
-    () => new Set([
-      ...conceptsData.threeWays.items.map((item) => item.id),
-      ...conceptsData.threeWays.items.flatMap((item) => item.principles.map((principle) => principle.id)),
-    ]),
+    () => new Set(conceptsData.threeWays.items.map((item) => item.id)),
     [],
   );
 
@@ -477,13 +473,6 @@ export function ContentArea() {
               </div>
             </DashboardPanel>
           </div>
-
-          {/* Takeaway banner (presentation only) */}
-          {mode === 'presentation' && (
-            <div className="col-span-5">
-              <TakeawayBanner />
-            </div>
-          )}
         </div>
       )}
 

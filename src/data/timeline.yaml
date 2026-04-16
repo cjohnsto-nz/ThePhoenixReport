@@ -181,21 +181,6 @@ presentation:
               conversation. He is speaking into a room that has already decided speed is
               survival.
 
-        - type: quote
-          id: sarah-touching-story
-          modalStep:
-            name: "Sarah refuses the technical explanation"
-            script: >-
-              Bill tries to explain the real operational constraints behind Phoenix, and Sarah
-              cuts straight through him. Bill, that's a touching story, but we're not
-              discussing water fountains, we're discussing Phoenix. In one line she reframes
-              system reality as excuse-making.
-          globalStep:
-            name: "Risk gets reframed as hesitation"
-            script: >-
-              That quote lands because it shows how quickly genuine technical risk gets
-              dismissed once a deadline has become a business promise.
-
         - type: challenge
           id: blind-commitments
           modalStep:
@@ -212,6 +197,21 @@ presentation:
               That is what makes these commitments blind. The business is not choosing between two
               fully understood options. It is promising an outcome before the operational work has
               been honestly sized, sequenced, or resourced.
+
+        - type: quote
+          id: sarah-touching-story
+          modalStep:
+            name: "Sarah refuses the technical explanation"
+            script: >-
+              Bill tries to explain the real operational constraints behind Phoenix, and Sarah
+              cuts straight through him. Bill, that's a touching story, but we're not
+              discussing water fountains, we're discussing Phoenix. In one line she reframes
+              system reality as excuse-making.
+          globalStep:
+            name: "Risk gets reframed as hesitation"
+            script: >-
+              That quote lands because it shows how quickly genuine technical risk gets
+              dismissed once a deadline has become a business promise.
 
         - type: challenge
           id: it-unreliable
@@ -318,7 +318,7 @@ presentation:
           globalStep:
             name: "The question behind the framework"
             script: |-
-              Erik leaves Bill with a slip of paper and a challenge: you have named one type of work, now go find the other three. After that meeting, Bill can feel the shape of the framework, but he still cannot name the last, most destructive category.
+              Erik leaves Bill with a slip of paper and a challenge: you have already named one type of work, now go find the other three. What Erik means is business project work like Phoenix, the visible work everyone talks about. Bill can recognize that category, but he still cannot name the internal work, the changes, or the last and most destructive category.
         - type: challenge
           id: high-wip
           modalStep:
@@ -340,19 +340,34 @@ presentation:
           modalStep:
             name: "Bill discovers the staffing problem is also a value problem"
             script: >-
-              This lands in Chapter 8, after Bill has real demand-and-capacity numbers. He goes
-              to Steve and makes the case plainly: Phoenix and the audit are competing for the
-              same scarce people, the team is definitely understaffed, and either the project
-              list must shrink or IT has to staff up. Steve's answer is brutal. IT is already
-              expensive, Phoenix is over budget, and new headcount is off the table.
+              Bill finally has the numbers he needs, so he goes to Steve expecting the staffing
+              problem to become obvious. He makes the case plainly: Phoenix and the audit are
+              competing for the same scarce people, the team is definitely understaffed, and
+              either the project list must shrink or IT has to staff up.
           globalStep:
             name: "The company sees IT as cost before value"
             script: >-
-              This is the moment Steve pushes the conflict into the open. He tells Bill that if
-              anything, they may have to cut heads in IT, not add them. In the book, that is
-              the executive logic Bill is fighting: the company experiences IT as high cost and
-              low value, so even a correct staffing diagnosis does not automatically earn more
-              staff. It raises the threat of layoffs and outsourcing instead.
+              Steve's response pushes the real conflict into the open. The data does not change
+              how he sees IT. He still experiences it first as an expensive function that keeps
+              missing. That means even a correct staffing diagnosis does not automatically earn
+              more staff. It raises the threat of cuts, layoffs, and outsourcing instead.
+
+        - type: quote
+          id: steve-cut-heads
+          modalStep:
+            name: "Steve says what Bill did not expect to hear"
+            script: >-
+              Instead of treating the numbers as proof that IT needs relief, Steve doubles down.
+              His answer is not that the system is overloaded. His answer is that IT is already
+              too expensive, Phoenix is already over budget, and the organization will have to
+              cope with what it has.
+          globalStep:
+            name: "The value problem becomes unmistakable"
+            script: >-
+              This is why the staffing conversation matters so much. Bill is no longer arguing
+              only about capacity. He is colliding with an executive worldview that sees IT as
+              cost before value. If leadership sees the function that way, every request for
+              headcount sounds like overhead instead of protection for the business.
 
         - type: challenge
           id: bottleneck-people
@@ -455,14 +470,16 @@ presentation:
           modalStep:
             name: "The first type of work"
             script: >-
-              Bill finally starts naming the demand. The first type is business project work:
-              the visible initiatives that executives care about, like Phoenix. These are the
-              projects everyone talks about, funds, and tracks.
+              This is the category Erik meant Bill had already named without realizing it.
+              The first type is business project work: the visible initiatives executives care
+              about, like Phoenix. These are the projects everyone talks about, funds, tracks,
+              and escalates.
           globalStep:
             name: "Not all demand is the same"
             script: >-
-              That sounds obvious, but it matters because the organisation has been treating
-              every request as if it belonged to one giant undifferentiated queue.
+              That sounds obvious, but it matters because until now the organisation has mostly
+              treated visible business projects as if they were the whole queue. The rest of the
+              demand has been mixed in underneath them and managed far less explicitly.
 
         - type: concept
           id: four-types-internal
