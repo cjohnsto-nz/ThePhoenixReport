@@ -76,7 +76,6 @@ characters:
         text: "The wait time is the percentage of time busy divided by the percentage of time idle."
         imagePath: "/utilization-vs-wait-time.png"
         imageAlt: "Chart showing wait time rising sharply as resource utilization approaches one hundred percent"
-        imageCaption: "This is the queueing curve Bill uses to explain why seemingly short tasks stall for days once every handoff depends on people who are already near full utilization."
     avatar: "👨‍💼"
     color: "#3668fc"
 
