@@ -40,3 +40,11 @@ epics:
     status: "Transformational"
     icon: "🦄"
     color: "#8b5cf6"
+
+  - id: project-narwhal
+    title: "Project Narwhal"
+    subtitle: "Learning through safe failure"
+    description: "Narwhal represents the team's shift from avoiding failure to practicing resilience. By deliberately breaking parts of the system in controlled ways, the organization learns faster, hardens its platform, and proves that experimentation can reduce risk instead of increasing it."
+    status: "Learning engine"
+    icon: "🧪"
+    color: "#10b981"

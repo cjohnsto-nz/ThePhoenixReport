@@ -17,13 +17,14 @@ import {
   CharacterDetailContent,
   ConceptDetailContent,
   EpicDetailContent,
+  QuoteDetailContent,
 } from './DetailModalContent';
 import { EpicCard } from './EpicCard';
 import { Modal } from './Modal';
 import { SegmentHeader } from './SegmentHeader';
 import { TakeawayBanner } from './TakeawayBanner';
 import { useControls } from '../ControlsContext';
-import type { ConceptItem, WayItem, Challenge, Character, Epic } from '../types';
+import type { ConceptItem, WayItem, Challenge, Character, Epic, QuoteItem } from '../types';
 
 export function ContentArea() {
   const { state, dispatch, currentSegment, segments } = usePresentation();
@@ -55,8 +56,8 @@ export function ContentArea() {
         const data = lookupItem(reveal.type, reveal.id);
         if (data)
           return {
-            type: reveal.type as 'challenge' | 'concept' | 'character' | 'epic',
-            data: data as Challenge | Character | ConceptItem | WayItem | Epic,
+            type: reveal.type as 'challenge' | 'concept' | 'character' | 'epic' | 'quote',
+            data: data as Challenge | Character | ConceptItem | WayItem | Epic | QuoteItem,
           };
       }
     }
@@ -152,8 +153,9 @@ export function ContentArea() {
   // Determine which panel the staged item belongs to
   const stagedPanel = useMemo((): string | null => {
     if (!stagedData) return null;
-    const itemData = stagedData.data as { id?: string; parentWay?: string };
+    const itemData = stagedData.data as { id?: string; parentWay?: string; characterId?: string };
     if (stagedData.type === 'character') return 'characters';
+    if (stagedData.type === 'quote') return null;
     if (stagedData.type === 'challenge') return 'challenges';
     if (stagedData.type === 'epic') return 'epics';
     if (stagedData.type === 'concept') {
@@ -168,8 +170,10 @@ export function ContentArea() {
     if (!stagedData) return null;
 
     // Characters: compute exact grid cell from known positions
-    if (stagedData.type === 'character') {
-      const charId = (stagedData.data as { id?: string }).id ?? '';
+    if (stagedData.type === 'character' || stagedData.type === 'quote') {
+      const charId = stagedData.type === 'quote'
+        ? ((stagedData.data as { characterId?: string }).characterId ?? '')
+        : ((stagedData.data as { id?: string }).id ?? '');
       const pos = GRID_POS[charId];
       const panel = charactersPanelRef.current;
       if (pos && panel) {
@@ -209,7 +213,7 @@ export function ContentArea() {
     };
     const sp = stagedData.type === 'concept'
       ? (threeWayIds.has((stagedData.data as { id?: string }).id ?? '') ? 'threeWays' : 'fourTypes')
-      : stagedData.type === 'character' ? 'characters'
+      : stagedData.type === 'character' || stagedData.type === 'quote' ? 'characters'
       : stagedData.type === 'challenge' ? 'challenges'
       : 'epics';
     return panelRefMap[sp]?.current?.getBoundingClientRect() ?? null;
@@ -527,8 +531,8 @@ function PlacementMarker({
 // ---- FullScreenStage — reuses the detail Modal for staged items ----
 
 type StageItemData = {
-  type: 'challenge' | 'concept' | 'character' | 'epic';
-  data: Challenge | Character | ConceptItem | WayItem | Epic;
+  type: 'challenge' | 'concept' | 'character' | 'epic' | 'quote';
+  data: Challenge | Character | ConceptItem | WayItem | Epic | QuoteItem;
 };
 
 function FullScreenStage({
@@ -580,7 +584,7 @@ function FullScreenStage({
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 lg:p-8 pointer-events-none">
       {/* Backdrop */}
       <motion.div
-        className="absolute inset-0 bg-[#050812]/72 backdrop-blur-xl pointer-events-auto"
+        className="absolute inset-0 modal-scrim pointer-events-auto"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
@@ -592,7 +596,7 @@ function FullScreenStage({
         initial={{ opacity: 0, scale: 0.88, y: 30 }}
         animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
         transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
-        className="relative w-full max-w-5xl max-h-[94vh] overflow-hidden rounded-3xl backdrop-blur-2xl border border-white/[0.08] shadow-2xl pointer-events-auto"
+        className="relative w-full max-w-5xl max-h-[94vh] overflow-hidden rounded-3xl border border-white/[0.08] shadow-2xl pointer-events-auto"
         style={{
           background: 'rgba(5,8,18,0.95)',
           boxShadow: `0 0 80px -20px ${color}40, 0 25px 50px -12px rgba(0,0,0,0.5)`,
@@ -619,6 +623,7 @@ function FullScreenStage({
         <div className="p-7 md:p-8 lg:p-10 text-base md:text-lg [&_p]:leading-relaxed [&_li]:leading-relaxed">
           {item.type === 'challenge' && <ChallengeDetailContent challenge={item.data as Challenge} />}
           {item.type === 'character' && <CharacterDetailContent character={item.data as Character} />}
+          {item.type === 'quote' && <QuoteDetailContent quote={item.data as QuoteItem} />}
           {item.type === 'concept' && (
             <ConceptDetailContent concept={item.data as ConceptItem | WayItem} revealedIds={revealedIds} />
           )}
@@ -659,7 +664,7 @@ function PlacementGhost({
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 lg:p-8 pointer-events-none">
       <motion.div
-        className="absolute inset-0 bg-[#050812]/72 backdrop-blur-xl"
+        className="absolute inset-0 modal-scrim"
         initial={{ opacity: 1 }}
         animate={{ opacity: 0 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
@@ -670,7 +675,7 @@ function PlacementGhost({
         animate={{ x: exitX, y: exitY, scale: exitScale, opacity: 0 }}
         transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
         onAnimationComplete={onComplete}
-        className="relative w-full max-w-5xl max-h-[94vh] overflow-hidden rounded-3xl backdrop-blur-2xl border border-white/[0.08] shadow-2xl"
+        className="relative w-full max-w-5xl max-h-[94vh] overflow-hidden rounded-3xl border border-white/[0.08] shadow-2xl"
         style={{
           background: 'rgba(5,8,18,0.95)',
           boxShadow: `0 0 80px -20px ${color}40, 0 25px 50px -12px rgba(0,0,0,0.5)`,
@@ -684,6 +689,7 @@ function PlacementGhost({
         <div className="p-7 md:p-8 lg:p-10 text-base md:text-lg [&_p]:leading-relaxed [&_li]:leading-relaxed">
           {item.type === 'challenge' && <ChallengeDetailContent challenge={item.data as Challenge} />}
           {item.type === 'character' && <CharacterDetailContent character={item.data as Character} />}
+          {item.type === 'quote' && <QuoteDetailContent quote={item.data as QuoteItem} />}
           {item.type === 'concept' && (
             <ConceptDetailContent concept={item.data as ConceptItem | WayItem} revealedIds={revealedIds} />
           )}

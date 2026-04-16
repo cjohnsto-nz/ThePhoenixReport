@@ -55,26 +55,31 @@ type DerivedContentStep = {
 };
 
 function getRevealTitle(reveal: TimelineReveal): string {
-  const item = lookupItem(reveal.type, reveal.id) as { title?: string; name?: string } | undefined;
+  const item = lookupItem(reveal.type, reveal.id) as { title?: string; name?: string; characterName?: string } | undefined;
+  if (typeof item?.characterName === 'string') {
+    return `${item.characterName} quote`;
+  }
   return item?.title ?? item?.name ?? reveal.id;
 }
 
 function getRevealPrimaryScript(reveal: TimelineReveal): string | undefined {
   const item = lookupItem(reveal.type, reveal.id) as Record<string, unknown> | undefined;
+  const text = typeof item?.text === 'string' ? item.text : undefined;
   const description = typeof item?.description === 'string' ? item.description : undefined;
   const impact = typeof item?.impact === 'string' ? item.impact : undefined;
   const arc = typeof item?.arc === 'string' ? item.arc : undefined;
   const subtitle = typeof item?.subtitle === 'string' ? item.subtitle : undefined;
-  return description ?? impact ?? arc ?? subtitle;
+  return text ?? description ?? impact ?? arc ?? subtitle;
 }
 
 function getRevealSecondaryScript(reveal: TimelineReveal): string | undefined {
   const item = lookupItem(reveal.type, reveal.id) as Record<string, unknown> | undefined;
+  const text = typeof item?.text === 'string' ? item.text : undefined;
   const impact = typeof item?.impact === 'string' ? item.impact : undefined;
   const arc = typeof item?.arc === 'string' ? item.arc : undefined;
   const subtitle = typeof item?.subtitle === 'string' ? item.subtitle : undefined;
   const description = typeof item?.description === 'string' ? item.description : undefined;
-  return impact ?? arc ?? subtitle ?? description;
+  return impact ?? arc ?? subtitle ?? text ?? description;
 }
 
 function getContentSteps(segment: TimelineSegment): DerivedContentStep[] {
@@ -140,7 +145,7 @@ function getIntroStepInfo(segment: TimelineSegment): PresentationStepInfo {
   return {
     id: `${segment.id}:intro`,
     name: `${segment.title} intro`,
-    script: segment.narrativeArc ?? segment.subtitle,
+    script: segment.pageScript ?? segment.narrativeArc ?? segment.subtitle,
     view: 'page',
   };
 }
@@ -158,7 +163,7 @@ function getStandaloneStepInfo(segment: TimelineSegment): PresentationStepInfo {
   return {
     id: `${segment.id}:standalone`,
     name: segment.title,
-    script: segment.narrativeArc ?? segment.takeaway ?? segment.subtitle,
+    script: segment.pageScript ?? segment.narrativeArc ?? segment.takeaway ?? segment.subtitle,
     view: 'page',
   };
 }
@@ -193,7 +198,7 @@ function getCurrentPresentationStepInfo(state: PresentationState): PresentationS
     return {
       id: `${segment.id}:content-start`,
       name: `${segment.title} setup`,
-      script: segment.narrativeArc ?? segment.subtitle,
+      script: segment.contentSetupScript ?? segment.narrativeArc ?? segment.subtitle,
       view: 'page',
     };
   }

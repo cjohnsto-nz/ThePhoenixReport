@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import type { Challenge, Character, ConceptItem, WayItem, Epic } from '../types';
+import type { Challenge, Character, ConceptItem, WayItem, Epic, QuoteItem } from '../types';
 import { ChallengeCard } from './ChallengeCard';
 import { CharacterCard } from './CharacterCard';
 import { ConceptCard } from './ConceptCard';
@@ -7,8 +7,8 @@ import { EpicCard } from './EpicCard';
 
 interface CenterStageProps {
   item: {
-    type: 'challenge' | 'concept' | 'character' | 'epic';
-    data: Challenge | Character | ConceptItem | WayItem | Epic;
+    type: 'challenge' | 'concept' | 'character' | 'epic' | 'quote';
+    data: Challenge | Character | ConceptItem | WayItem | Epic | QuoteItem;
   } | null;
   revealedIds: Set<string>;
   onDismiss: () => void;
@@ -28,7 +28,7 @@ export function CenterStage({ item, revealedIds, onDismiss }: CenterStageProps) 
         >
           {/* Subtle backdrop */}
           <motion.div
-            className="absolute inset-0 bg-navy-950/60 backdrop-blur-sm pointer-events-auto"
+            className="absolute inset-0 modal-scrim pointer-events-auto"
             onClick={onDismiss}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

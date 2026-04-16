@@ -5,6 +5,7 @@ import type {
   CharactersData,
   ChallengesData,
   EpicsData,
+  QuoteItem,
 } from './types';
 
 // Import raw YAML files
@@ -31,6 +32,23 @@ export function lookupItem(type: string, id: string) {
   }
   if (type === 'character') {
     return charactersData.characters.find((c) => c.id === id);
+  }
+  if (type === 'quote') {
+    for (const character of charactersData.characters) {
+      const quote = character.quotes.find((entry) => entry.id === id);
+      if (quote) {
+        const item: QuoteItem = {
+          id: quote.id,
+          text: quote.text,
+          characterId: character.id,
+          characterName: character.name,
+          characterRole: character.role,
+          avatar: character.avatar,
+          color: character.color,
+        };
+        return item;
+      }
+    }
   }
   if (type === 'epic') {
     return epicsData.epics.find((e) => e.id === id);

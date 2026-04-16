@@ -1,4 +1,4 @@
-import type { Challenge, Character, ConceptItem, Epic, WayItem } from '../types';
+import type { Challenge, Character, ConceptItem, Epic, QuoteItem, WayItem } from '../types';
 
 const severityBadge = {
   critical: 'bg-red-500/20 text-red-200 border-red-500/35',
@@ -81,11 +81,37 @@ export function CharacterDetailContent({ character }: { character: Character }) 
         <p className="text-base md:text-lg text-white/82 leading-relaxed">{character.description}</p>
       </div>
 
+      <div>
+        <SectionLabel>Arc</SectionLabel>
+        <p className="text-base md:text-lg text-white/76 leading-relaxed">{character.arc}</p>
+      </div>
+    </div>
+  );
+}
+
+export function QuoteDetailContent({ quote }: { quote: QuoteItem }) {
+  return (
+    <div className="space-y-8">
+      <div className="flex flex-col md:flex-row md:items-center gap-5 md:gap-7">
+        <div
+          className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-3xl flex items-center justify-center text-5xl md:text-6xl flex-shrink-0"
+          style={{ backgroundColor: `${quote.color}18` }}
+        >
+          {quote.avatar}
+        </div>
+        <div>
+          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white leading-tight pr-12">
+            {quote.characterName}
+          </h2>
+          <p className="text-base md:text-lg text-white/68 mt-1 leading-snug">{quote.characterRole}</p>
+        </div>
+      </div>
+
       <blockquote
-        className="pl-5 py-4 border-l-[3px] italic text-base md:text-lg text-white/76 leading-relaxed"
-        style={{ borderColor: character.color }}
+        className="pl-5 py-4 border-l-[3px] italic text-xl md:text-2xl lg:text-3xl text-white/88 leading-relaxed"
+        style={{ borderColor: quote.color }}
       >
-        &ldquo;{character.quote}&rdquo;
+        &ldquo;{quote.text}&rdquo;
       </blockquote>
     </div>
   );

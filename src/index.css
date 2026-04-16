@@ -60,3 +60,12 @@ body {
 .modal-overlay {
   transition: opacity 0.3s ease;
 }
+
+.modal-scrim {
+  background:
+    linear-gradient(rgba(2, 5, 12, 0.9), rgba(2, 5, 12, 0.9)),
+    radial-gradient(circle at 1px 1px, rgba(255, 255, 255, 0.018) 0.8px, transparent 0.95px),
+    radial-gradient(circle at 1.5px 1.5px, rgba(0, 0, 0, 0.03) 0.75px, transparent 0.9px);
+  background-size: auto, 4px 4px, 5px 5px;
+  background-position: 0 0, 0 0, 1px 2px;
+}

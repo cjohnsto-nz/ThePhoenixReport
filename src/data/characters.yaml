@@ -12,20 +12,43 @@ characters:
     reportsTo: null
     description: "The demanding CEO who sees IT as a black hole of money and broken promises. He gives Bill an ultimatum — fix IT or lose the department. Represents the business pressure that drives urgency."
     arc: "From antagonist to ally"
-    quote: "The business depends on IT more than ever. If IT can't deliver, we'll outsource."
+    quotes:
+      - id: steve-outsourcing-ultimatum
+        text: "The business depends on IT more than ever. If IT can't deliver, we'll outsource."
+      - id: steve-flow-forward
+        text: "The flow of work should ideally go in one direction only: forward."
     avatar: "👔"
     color: "#ef4444"
+
+  - id: dick-landry
+    name: "Dick Landry"
+    role: "CFO"
+    archetype: "The Financial Realist"
+    traits: "Blunt · numbers-driven · crisis-focused"
+    segment: segment-1
+    reportsTo: null
+    description: "The CFO who makes the payroll failure impossible to minimize. Dick turns operational mistakes into immediate business stakes by forcing Bill to confront cash exposure, employee trust, and executive accountability."
+    arc: "From hard pressure to operational clarity"
+    quotes:
+      - id: dick-deep-kimchi
+        text: "We're in deep kimchi."
+    avatar: "💼"
+    color: "#64748b"
 
   - id: erik-reid
     name: "Erik Reid"
     role: "Board Member & Mentor"
     archetype: "The Wise Mentor"
     traits: "Philosophical · Socratic · constraints-focused"
-    segment: segment-3
+    segment: segment-2
     reportsTo: null
     description: "The enigmatic mentor who guides Bill through the principles of flow, constraints, and the Three Ways. Erik draws parallels between IT and manufacturing, introducing the Theory of Constraints thinking that transforms Bill's approach."
     arc: "The wise guide"
-    quote: "Any improvement made anywhere besides the bottleneck is an illusion."
+    quotes:
+      - id: erik-bottleneck-illusion
+        text: "Any improvement made anywhere besides the bottleneck is an illusion."
+      - id: erik-what-is-work
+        text: "What then, exactly, is your definition of 'work?'"
     avatar: "🎩"
     color: "#10b981"
 
@@ -38,20 +61,41 @@ characters:
     reportsTo: steve-masters
     description: "The reluctant hero. Bill is thrust into the role of VP of IT Operations and must navigate the chaos of a failing IT organization. He evolves from a firefighting manager to a systems thinker who transforms how IT delivers value."
     arc: "From firefighter to systems thinker"
-    quote: "Until you've figured out how to manage the flow of work, you'll never be able to deliver on time."
+    quotes:
+      - id: bill-talked-into-job
+        text: "I can't believe it. He just talked me into taking a new job I don't want. How did that happen?"
+      - id: bill-manage-flow
+        text: "Until you've figured out how to manage the flow of work, you'll never be able to deliver on time."
     avatar: "👨‍💼"
     color: "#3668fc"
+
+  - id: nancy-mailer
+    name: "Nancy Mailer"
+    role: "Chief Audit Executive"
+    archetype: "The Risk Messenger"
+    traits: "Exacting · unsentimental · control-focused"
+    segment: segment-1
+    reportsTo: null
+    description: "Nancy brings the SOX findings that prove the chaos is not limited to outages and missed deadlines. She represents the moment hidden control failures become executive and board-level risk."
+    arc: "From auditor to forcing function"
+    quotes:
+      - id: nancy-threaten-business
+        text: "These findings are not theoretical. They threaten the business."
+    avatar: "📑"
+    color: "#f59e0b"
 
   - id: chris-allers
     name: "Chris Allers"
     role: "VP of Application Development"
     archetype: "The Rival"
     traits: "Defensive · siloed · eventually collaborative"
-    segment: segment-2
+    segment: segment-3
     reportsTo: steve-masters
     description: "Leads the development team and often clashes with Operations. Represents the classic Dev vs Ops divide that must be bridged for the organization to improve."
     arc: "From adversary to partner"
-    quote: "We shipped it on time. It's not our fault Ops can't deploy it."
+    quotes:
+      - id: chris-not-our-fault
+        text: "We shipped it on time. It's not our fault Ops can't deploy it."
     avatar: "💻"
     color: "#06b6d4"
 
@@ -60,13 +104,32 @@ characters:
     role: "SVP of Retail Operations"
     archetype: "The Business Voice"
     traits: "Revenue-focused · pragmatic · impatient for results"
-    segment: segment-4
+    segment: segment-1
     reportsTo: steve-masters
     description: "Represents the business stakeholders who depend on IT. Sarah's frustration with broken deployments and missed deadlines provides the crucial business perspective on why feedback and quality matter."
     arc: "From frustrated customer to satisfied partner"
-    quote: "Every minute of downtime costs us hundreds of thousands of dollars."
+    quotes:
+      - id: sarah-touching-story
+        text: "Bill, that's a touching story but we're not discussing water fountains, we're discussing Phoenix."
+      - id: sarah-downtime-cost
+        text: "Every minute of downtime costs us hundreds of thousands of dollars."
     avatar: "🏪"
     color: "#f43f5e"
+
+  - id: maggie-lee
+    name: "Maggie Lee"
+    role: "Senior Director of Retail Program Management"
+    archetype: "The Business Sponsor"
+    traits: "Commercial · direct · outcome-focused"
+    segment: segment-4
+    reportsTo: sarah-moulton
+    description: "Maggie translates Phoenix from an IT project into a business bet. She presses for real time-to-market, exposes weak reporting and data quality, and keeps the discussion tied to customer value instead of internal activity."
+    arc: "From sponsor pressure to business clarity"
+    quotes:
+      - id: maggie-market-moves-without-us
+        text: "If this takes years, the market moves without us."
+    avatar: "📈"
+    color: "#14b8a6"
 
   - id: wes-davis
     name: "Wes Davis"
@@ -77,7 +140,9 @@ characters:
     reportsTo: bill-palmer
     description: "A loyal operations manager who works tirelessly but reactively. Wes embodies the well-meaning but overwhelmed IT worker, always firefighting but never getting ahead."
     arc: "From reactive to proactive"
-    quote: "We're barely keeping the lights on as it is."
+    quotes:
+      - id: wes-keeping-lights-on
+        text: "We're barely keeping the lights on as it is."
     avatar: "🔧"
     color: "#f97316"
 
@@ -86,11 +151,13 @@ characters:
     role: "VP of IT Service Support"
     archetype: "The Process Champion"
     traits: "Methodical · disciplined · change-focused"
-    segment: segment-4
+    segment: segment-2
     reportsTo: bill-palmer
     description: "The champion of process and change management. Patty brings discipline to the chaos by implementing proper change controls and feedback mechanisms that help stabilize the environment."
     arc: "From bureaucrat to enabler of flow"
-    quote: "We need to make work visible and manage it properly."
+    quotes:
+      - id: patty-make-work-visible
+        text: "We need to make work visible and manage it properly."
     avatar: "📋"
     color: "#ec4899"
 
@@ -99,24 +166,45 @@ characters:
     role: "Lead Engineer"
     archetype: "The Bottleneck"
     traits: "Brilliant · overloaded · single point of failure"
-    segment: segment-2
+    segment: segment-1
     reportsTo: wes-davis
     description: "The brilliant but dangerously overloaded engineer. Brent is the single point of failure — every critical task runs through him. His bottleneck status illustrates the fragility of knowledge concentration."
     arc: "From bottleneck to mentor"
-    quote: "I'm the only one who knows how this works."
+    quotes:
+      - id: brent-only-one-knows
+        text: "I'm the only one who knows how this works."
     avatar: "🧑‍💻"
     color: "#8b5cf6"
+
+  - id: william-mason
+    name: "William Mason"
+    role: "Director of QA"
+    archetype: "The Quality Gate"
+    traits: "Methodical · skeptical · release-focused"
+    segment: segment-2
+    reportsTo: chris-allers
+    description: "William gives the deployment story its quality lens. He sees broken releases, inconsistent test results, and the compounding cost of shipping faster than the organization can validate."
+    arc: "From gatekeeper to feedback advocate"
+    quotes:
+      - id: william-production-pays-bill
+        text: "If we keep learning this late, production pays the bill."
+    avatar: "🧪"
+    color: "#22c55e"
 
   - id: john-pesche
     name: "John Pesche"
     role: "Chief Information Security Officer"
     archetype: "The Gatekeeper"
     traits: "Risk-averse · compliance-driven · security-minded"
-    segment: segment-3
+    segment: segment-4
     reportsTo: bill-palmer
     description: "The CISO caught between compliance demands and operational reality. John must learn that security integrated into the flow is more effective than security as a gate."
     arc: "From gatekeeper to enabler"
-    quote: "Security isn't a phase — it must be built into the process."
+    quotes:
+      - id: john-orange-jumpsuits
+        text: "Compliance is not optional. It's the law. My job is to keep them out of orange jumpsuits."
+      - id: john-security-not-a-phase
+        text: "Security isn't a phase — it must be built into the process."
     avatar: "🛡️"
     color: "#eab308"
 

@@ -1,7 +1,7 @@
 // Core type definitions for the Phoenix Report
 
 export interface TimelineReveal {
-  type: 'challenge' | 'concept' | 'character' | 'epic';
+  type: 'challenge' | 'concept' | 'character' | 'epic' | 'quote';
   id: string;
   modalStep?: {
     name?: string;
@@ -20,6 +20,8 @@ export interface TimelineSegment {
   start: string;
   end: string;
   phase: string;
+  pageScript?: string;
+  contentSetupScript?: string;
   narrativeArc?: string;
   takeaway?: string;
   summary?: string;
@@ -87,7 +89,22 @@ export interface Character {
   reportsTo: string | null;
   description: string;
   arc: string;
-  quote: string;
+  quotes: CharacterQuote[];
+  avatar: string;
+  color: string;
+}
+
+export interface CharacterQuote {
+  id: string;
+  text: string;
+}
+
+export interface QuoteItem {
+  id: string;
+  text: string;
+  characterId: string;
+  characterName: string;
+  characterRole: string;
   avatar: string;
   color: string;
 }
@@ -127,7 +144,7 @@ export interface EpicsData {
 }
 
 export type RevealedItem = {
-  type: 'challenge' | 'concept' | 'character' | 'epic';
+  type: 'challenge' | 'concept' | 'character' | 'epic' | 'quote';
   id: string;
   revealedAt: number; // timestamp
 };

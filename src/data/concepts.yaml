@@ -7,6 +7,18 @@ fourTypesOfWork:
   icon: "layers"
   color: "phoenix"
   items:
+    - id: four-types-overview
+      title: "The Four Types of Work"
+      subtitle: "A lens for seeing all demand on IT"
+      description: "Bill's breakthrough is realizing that all demand on IT falls into four categories: business projects, internal projects, changes, and unplanned work. Once those categories are visible, the conversation shifts from effort to capacity, trade-offs, and flow."
+      examples:
+        - "Business projects like Phoenix"
+        - "Internal improvements and platform work"
+        - "Routine changes and releases"
+        - "Incidents, outages, and recovery work"
+      icon: "layers"
+      color: "#f59e0b"
+
     - id: four-types-business
       title: "Business Projects"
       subtitle: "Revenue-generating work"

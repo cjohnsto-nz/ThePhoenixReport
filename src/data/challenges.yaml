@@ -74,6 +74,16 @@ challenges:
     severity: high
     color: "#f97316"
 
+  - id: incomplete-changes
+    title: "Changes Go In, Never Come Out"
+    subtitle: "Scheduled work stalls in the system"
+    segment: segment-2
+    description: "Once Patty makes changes visible, the organization discovers that too much scheduled work enters the system and never exits cleanly. Partial work, reversions, and unresolved dependencies create the appearance of progress without producing completion."
+    impact: "Lead times stretch, handoffs multiply, and the team confuses activity with finished work."
+    icon: "arrow-right-left"
+    severity: high
+    color: "#f59e0b"
+
   - id: stalled-projects
     title: "Stalled Projects"
     subtitle: "Projects stuck on dependencies"
@@ -166,6 +176,16 @@ challenges:
     severity: high
     color: "#f97316"
 
+  - id: failed-handoffs
+    title: "Handoffs Turn Minutes Into Weeks"
+    subtitle: "Queue time overwhelms task time"
+    segment: segment-4
+    description: "Simple work takes far too long because it waits between teams, approvals, and environments. The handoff problem matters more than the task itself: once work crosses too many boundaries, queues dominate delivery."
+    impact: "Lead times explode, feedback arrives too late, and quality problems surface after the cost of change has already risen."
+    icon: "move-right"
+    severity: high
+    color: "#14b8a6"
+
   - id: long-recovery
     title: "Long Recovery Times"
     subtitle: "Slow restoration after outages"
@@ -224,5 +244,15 @@ challenges:
     description: "The business constantly pushes for new features while technical debt accumulates. Infrastructure deteriorates, systems become fragile, and the cost of change increases over time."
     impact: "Eventually the accumulated debt creates a crisis that forces a reckoning — either invest or collapse."
     icon: "credit-card"
+    severity: high
+    color: "#6366f1"
+
+  - id: vendor-lock-in
+    title: "The Constraint Moves Outside IT"
+    subtitle: "Partners and platforms can bottleneck strategy"
+    segment: segment-5
+    description: "By the end of the book, the slowest point in the system is no longer an internal team. Outsourced platforms and long vendor lead times become the new constraint, proving that strategic capability cannot be delegated indefinitely."
+    impact: "The organization can improve internally and still lose speed if its critical platforms are owned by partners who cannot move at business pace."
+    icon: "link"
     severity: high
     color: "#6366f1"
