@@ -1263,7 +1263,7 @@ presentation:
           modalStep:
             name: "The constraint moves outside IT"
             script: |-
-              Sarah brings a real competitive threat: a rival is already selling custom build-to-order kits, and Parts Unlimited is losing sales. Wes investigates what it would take to change the outsourced MRP system that runs the plants and comes back furious. The vendor wants six months for requirements, nine more for build and test, no real start until June, and fifty thousand dollars just for the feasibility study and a slot in the queue. That means a business-critical change cannot even begin on business time.
+              Sarah brings a real competitive threat: a rival is already selling custom build-to-order kits, and Parts Unlimited is losing sales. Wes investigates what it would take to customize the outsourced MRP system that runs the plants and comes back furious. The vendor wants six months for requirements, nine more for build and test, no real start until June, and fifty thousand dollars just for the feasibility study and a slot in the queue. That means a business-critical change cannot even begin on business time.
           globalStep:
             name: "Strategic capabilities must be owned"
             script: |-
