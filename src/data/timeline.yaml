@@ -49,7 +49,7 @@ presentation:
         with no visibility, brittle knowledge silos, and promises being made long before
         capacity and readiness are understood.
       summary: >-
-        Bill's first days teach the book's opening lessons the hard way. Reliability failures
+        Bill's first days teach those opening lessons the hard way. Reliability failures
         become business crises immediately. Changes nobody can see cannot be governed.
         Knowledge trapped in Brent makes every emergency more dangerous, business leaders keep
         committing to Phoenix without understanding operational reality, and trust in IT keeps
@@ -75,7 +75,7 @@ presentation:
           globalStep:
             name: "Steve sets the stakes"
             script: |-
-              This is not a congratulations scene. Steve is not offering Bill a prize. He is telling him that the company is in trouble, Phoenix is late, and leadership is out of time.
+              Steve is not congratulating Bill or offering him a prize. He is telling him that the company is in trouble, Phoenix is late, and leadership is out of time.
         - type: "quote"
           id: "bill-talked-into-job"
           modalStep:
@@ -115,7 +115,7 @@ presentation:
           globalStep:
             name: "Patty starts to make chaos legible"
             script: |-
-              That first impression matters. Patty's role in the book is not to add more bureaucracy. It is to give Bill a way to see the work clearly enough to manage it.
+              Patty's first impression matters. She is not there to add more bureaucracy. She is there to give Bill a way to see the work clearly enough to manage it.
         - type: character
           id: wes-davis
           modalStep:
@@ -161,7 +161,7 @@ presentation:
           globalStep:
             name: "The organisation is brittle, not just overloaded"
             script: >-
-              This is the deeper danger of knowledge silos. Work does not merely wait in a queue.
+              The deeper danger of knowledge silos is that work does not merely wait in a queue.
               It waits for a specific human being, and when that person is pulled into a crisis,
               every other priority stalls with them.
 
@@ -186,7 +186,7 @@ presentation:
           modalStep:
             name: "The launch date is set before the work is understood"
             script: >-
-              The book makes this painfully concrete in the Phoenix meeting. Bill points out that
+              Bill makes this painfully concrete in the Phoenix meeting. He points out that
               the company gave new water fountains nine months of rollout planning, but Phoenix,
               which touches thousands of point-of-sale and back-office systems, is being given one
               week. The date is being committed before Operations even has complete specifications,
@@ -194,7 +194,7 @@ presentation:
           globalStep:
             name: "Promises are outrunning capacity"
             script: >-
-              That is what makes these commitments blind. The business is not choosing between two
+              What makes these commitments blind is that the business is not choosing between two
               fully understood options. It is promising an outcome before the operational work has
               been honestly sized, sequenced, or resourced.
 
@@ -210,7 +210,7 @@ presentation:
           globalStep:
             name: "Risk gets reframed as hesitation"
             script: >-
-              That quote lands because it shows how quickly genuine technical risk gets
+              Sarah's quote lands because it shows how quickly genuine technical risk gets
               dismissed once a deadline has become a business promise.
 
         - type: challenge
@@ -255,7 +255,7 @@ presentation:
           globalStep:
             name: "Invisible work drives every bad decision"
             script: >-
-              This is the deepest problem in the opening. A system you cannot see is a system
+              The deepest problem in the opening is visibility. A system you cannot see is a system
               you can only react to, and reaction is all this organisation has left.
 
         - type: "epic"
@@ -279,7 +279,7 @@ presentation:
         for the deeper cause. He expected to find a few broken processes. What he actually
         finds is a system drowning in work it has already accepted.
       contentSetupScript: >-
-        This is where the story changes from incident response to diagnosis. Patty gives
+        Here the story changes from incident response to diagnosis. Patty gives
         Bill numbers. Erik gives him language. And together they make the chaos measurable.
       narrativeArc: >-
         Once the smoke clears enough to see the board, Bill discovers the real enemy is
@@ -289,14 +289,14 @@ presentation:
         and even obvious staffing problems will be dismissed if the business sees IT as
         cost instead of value.
       summary: >-
-        This section is where the system becomes measurable. Bill learns that demand is far
+        Here the system becomes measurable. Bill learns that demand is far
         larger than anyone has admitted, that Brent is functioning as the constraint for both
         project work and operational work, and that the change board has exposed a whole class
         of work the company was barely counting. He also sees how overload turns into daily
         context switching, stalled critical-path work, and public deadline slippage. And he
         learns something wider than staffing: when executives experience IT mainly as high cost
         and weak delivery, even a correct capacity diagnosis will not automatically earn more
-        support. By the end of the block, the team can see the overload clearly, but the business
+        support. By this point, the team can see the overload clearly, but the business
         still drives Phoenix toward launch anyway.
       reveals:
         - type: "character"
@@ -331,7 +331,7 @@ presentation:
           globalStep:
             name: "Overload becomes visible"
             script: >-
-              This is the turning point from intuition to evidence. The organisation is not
+              Overload becomes visible here, and intuition finally gives way to evidence. The organisation is not
               failing because people do not care. It is failing because it has said yes to far
               more work than it can physically carry.
 
@@ -364,7 +364,7 @@ presentation:
           globalStep:
             name: "The value problem becomes unmistakable"
             script: >-
-              This is why the staffing conversation matters so much. Bill is no longer arguing
+              The staffing conversation matters so much because Bill is no longer arguing
               only about capacity. He is colliding with an executive worldview that sees IT as
               cost before value. If leadership sees the function that way, every request for
               headcount sounds like overhead instead of protection for the business.
@@ -381,7 +381,7 @@ presentation:
           globalStep:
             name: "Brent must be protected"
             script: >-
-              This is where Bill's management problem changes shape. The question is no
+              Bill's management problem changes shape here. The question is no
               longer how to make Brent work harder. The question is how to stop wasting the
               one constraint everyone depends on.
 
@@ -397,7 +397,7 @@ presentation:
           globalStep:
             name: "The response is protection and knowledge transfer"
             script: >-
-              That is why Bill creates the level-three escalation pool, gates access to
+              Bill creates the level-three escalation pool, gates access to
               Brent, and insists that other engineers document what they learn. He is trying
               to protect the constraint while making the system smarter every time Brent is
               needed.
@@ -414,7 +414,7 @@ presentation:
           globalStep:
             name: "Context switching burns capacity invisibly"
             script: >-
-              This is why the team feels constantly busy without making proportional progress.
+              The team feels constantly busy without making proportional progress because
               Every interruption destroys continuity, every emergency resets focus, and the
               cumulative cost never appears on a project plan.
 
@@ -430,7 +430,7 @@ presentation:
           globalStep:
             name: "In progress does not mean advancing"
             script: >-
-              This is how overloaded systems create the illusion of movement. Lots of commitments
+              Overloaded systems create the illusion of movement this way: lots of commitments
               stay active on paper while the real work waits on Brent, on infrastructure, or on the
               next interruption.
 
@@ -446,8 +446,8 @@ presentation:
           globalStep:
             name: "More urgency does not create more throughput"
             script: >-
-              That is why the deadline problem keeps recurring. The company keeps treating misses as
-              a motivation failure when the book keeps showing a system design failure.
+              The deadline problem keeps recurring because the company keeps treating misses as
+              a motivation failure when the real problem is a system design failure.
 
         - type: challenge
           id: incomplete-changes
@@ -461,7 +461,7 @@ presentation:
           globalStep:
             name: "Busy is not the same as done"
             script: >-
-              That line captures the whole feeling of this section. Everyone is exhausted,
+              The Bates Motel joke captures the whole feeling of this section. Everyone is exhausted,
               but almost nothing is truly finishing. The system is burning capacity without
               producing completion.
 
@@ -470,14 +470,14 @@ presentation:
           modalStep:
             name: "The first type of work"
             script: >-
-              This is the category Erik meant Bill had already named without realizing it.
+              Erik meant this category when he said Bill had already named one type without realizing it.
               The first type is business project work: the visible initiatives executives care
               about, like Phoenix. These are the projects everyone talks about, funds, tracks,
               and escalates.
           globalStep:
             name: "Not all demand is the same"
             script: >-
-              That sounds obvious, but it matters because until now the organisation has mostly
+              It sounds obvious, but it matters because until now the organisation has mostly
               treated visible business projects as if they were the whole queue. The rest of the
               demand has been mixed in underneath them and managed far less explicitly.
 
@@ -506,7 +506,7 @@ presentation:
           globalStep:
             name: "Routine work can still destabilise the system"
             script: >-
-              This is why Patty's boards matter so much. Change work is not background noise.
+              Patty's boards matter so much because change work is not background noise.
               It is a major source of both risk and load. But even here, Bill still has not
               solved Erik's puzzle. He can feel there is one more destructive category he has
               not yet learned to name.
@@ -520,19 +520,20 @@ presentation:
       pageScript: >-
         After weeks of escalation from Sarah, commitments to the board and analysts, and a
         constant drumbeat that Phoenix must restore growth, the launch date stops feeling
-        optional. Bill and Wes keep warning that the release is reckless, but the company
-        has turned Phoenix into a promise it believes it must keep. In the book, Sarah sets
-        the marketing launch for Saturday, September 13, with Phoenix deploying at 5 p.m.
-        the previous day. The deployment goes ahead despite every warning sign, and it turns
-        into a public disaster.
+        optional. Bill and Wes keep warning that the release is reckless and pleading for
+        more time, but the company has turned Phoenix into a promise it believes it must
+        keep. Sarah sets the marketing launch for Saturday, September 13, which means
+        production has to go live at 5 p.m. the previous day. The start of this segment sits
+        inside that final argument over whether anyone can still stop the launch.
       contentSetupScript: >-
-        This is the emotional low point of the book. Stores are affected, journalists are
-        calling, Steve wants normal operations restored immediately, and Sarah is still
-        pushing for Phoenix fixes while recovery work swallows the team. Bill nearly quits.
-        The team nearly collapses. And then, almost unexpectedly, the story turns.
+        The opening beats stay in the last fight before launch. Sarah is pushing to keep the
+        date, Bill and Wes are pleading to delay, and Steve is trapped between operational
+        warnings and promises already made to the board, analysts, and the business. Then
+        Phoenix goes live on Friday evening, and the segment turns from warning to fallout.
       narrativeArc: >-
-        The breakthrough comes when Bill can finally name the system's real enemy and
-        connect flow to the discipline of accepting work only with real capacity data.
+        Bill loses the argument about go-live, lives through the anti-work it unleashes, and
+        only then reaches the breakthrough that connects flow to disciplined project
+        acceptance.
       takeaway: >-
         Unplanned work destroys planned work, and recovery only starts when leaders stop
         accepting work blindly, say no with data, and let capacity set the pace.
@@ -548,37 +549,37 @@ presentation:
         - type: challenge
           id: business-pressure
           modalStep:
-            name: "Phoenix becomes a promise the company feels it cannot break"
+            name: "Bill and Wes plead for delay"
             script: >-
-              This is the pressure that leads directly into go-live. Sarah keeps repeating
-              that the competition is not standing still and that every day costs market
-              share. Steve is making commitments upward to the board and outward to analysts.
-              By now, Phoenix is no longer being discussed as a risky release that might be
-              delayed. It is being treated as proof that the company still has a future.
+              By the time the final meetings happen, Bill and Wes are no longer arguing about
+              minor readiness details. They are pleading for delay. They know Operations is
+              not ready, they know the stores will absorb the blast radius, and they know the
+              company is treating a business promise as if it were proof of technical
+              readiness. Sarah keeps pressing the market-share argument, and Steve keeps
+              hearing the commitments he has already made upward.
           globalStep:
-            name: "The pressure does not end when Phoenix launches"
+            name: "Phoenix goes live anyway"
             script: >-
-              That is what makes the failure so brutal in the book. After the button is
-              pressed, the pressure keeps coming. Stores still need to operate, the press is
-              calling, customers are suffering, Steve wants normal business restored, and
-              Sarah is still pushing for fixes while Bill's team is barely keeping the system
-              alive.
+              The argument ends here. Sarah's Saturday launch date means Phoenix is pushed
+              into production at 5 p.m. on Friday. From this point on, the story is no longer
+              about whether Bill can stop the release. It is about what happens because he
+              cannot.
 
         - type: challenge
           id: ground-floor-disconnect
           modalStep:
             name: "The launch fails where the business actually lives"
             script: >-
-              The main consequence is not abstract system instability. By Saturday morning,
-              stores cannot transact normally. The in-store POS systems are down, so staff
-              fall back to manual tills and manual card swipes, carbon-copy receipts get
-              stuffed into shoeboxes, people run out for more supplies and change, and the
-              phones in IT light up with calls from roughly a hundred and twenty stores. This
-              is the ground-floor reality the launch decision had lost touch with.
+              By Saturday morning, the failure is landing exactly where Bill feared it would:
+              in the stores. The in-store POS systems are down, so staff fall back to manual
+              tills and manual card swipes, carbon-copy receipts get stuffed into shoeboxes,
+              people run out for more supplies and change, and the phones in IT light up with
+              calls from roughly a hundred and twenty stores. The decision to launch was made
+              high above the ground floor. The consequences are not.
           globalStep:
             name: "IT failure becomes frontline business failure"
             script: >-
-              This is one of the book's clearest lessons. IT systems directly shape whether
+              The first visible consequence is that IT systems directly shape whether
               employees can serve customers and whether the company can actually sell
               anything. Once the stores fall back to paper and manual work, you can no longer
               pretend technology failure is merely a technical problem.
@@ -588,16 +589,16 @@ presentation:
           modalStep:
             name: "The damage spreads from performance to trust"
             script: >-
-              The fallout keeps widening. Some online customers find the site unusable. Others
-              arrive at stores and discover their transactions were lost, or worse, that they
-              were charged twice or three times. Finance opens another war room to process
-              piles of faxed problem orders, engineers have to build emergency tools for the
-              backlog, and then the website starts exposing customer credit card numbers when
-              sessions crash.
+              The damage does not stay in the stores. Some online customers find the site
+              unusable. Others arrive at stores and discover their transactions were lost, or
+              worse, that they were charged twice or three times. Finance opens another war
+              room to process piles of faxed problem orders, engineers have to build
+              emergency tools for the backlog, and then the website starts exposing customer
+              credit card numbers when sessions crash.
           globalStep:
             name: "Phoenix becomes a public fiasco"
             script: >-
-              By this point the launch has become more than a bad deployment. It is a customer
+              Now the launch has become more than a bad deployment. It is a customer
               trust problem, a data integrity problem, a security breach, a finance problem,
               and a press story all at once. That is why the recovery effort swallows the
               organisation whole.
@@ -607,9 +608,9 @@ presentation:
           modalStep:
             name: "Chris stops acting like the other side"
             script: >-
-              After the Phoenix disaster, Chris Allers, the head of development, does
-              something new. He apologises to Bill and agrees to meet with him regularly.
-              That sounds small, but in this book it is huge. For the first time, Development
+              In the middle of the Phoenix cleanup, Chris Allers, the head of development,
+              does something new. He apologises to Bill and agrees to meet with him regularly.
+              On paper that sounds small, but here it is huge. For the first time, Development
               and Operations start talking about the same system instead of defending their
               own silos.
           globalStep:
@@ -621,38 +622,84 @@ presentation:
         - type: challenge
           id: no-ownership
           modalStep:
-            name: "Bill reaches breaking point"
+            name: "The invoicing crisis tests Bill's new discipline"
             script: >-
-              Then comes the invoicing crisis and a fifty-million-dollar cash shortfall. Bill
-              runs a disciplined investigation, but Steve barges in with an all-hands-on-
-              keyboards order that destroys the team's focus. Bill finally snaps and resigns.
-              He does it because he has been given responsibility without authority, and he
-              knows the system cannot be fixed that way.
+              Just as the team starts regaining some footing, Accounts Receivable discovers
+              that customers have not been invoiced for three days, opening a potential
+              fifty-million-dollar cash shortfall. Bill does not treat it like another panic
+              sprint. He treats it like an Apollo 13 incident. Patty assembles the recent
+              changes, owners are assigned to each plausible cause, and Bill gives one clear
+              order: nobody touches anything without approval. Most importantly, he refuses
+              to throw Brent into the outage just because Brent is the usual answer. Bill is
+              finally trying to protect the constraint and keep the investigation disciplined.
           globalStep:
-            name: "Authority and accountability finally collide"
+            name: "Bill is finally managing the system, not feeding the reflex"
             script: >-
-              Bill's resignation is the emotional pivot of the story. When Steve eventually
-              talks him back, the relationship changes. Bill is no longer just absorbing
-              executive pressure. Steve now understands that leadership behaviour is part of
-              the system too.
+              The key point is not that Bill has become passive. It is the opposite. He is
+              finally leading the way he thinks the system must be led: gather evidence,
+              control the blast radius, and stop making Brent the answer to every fire.
+
+        - type: quote
+          id: steve-captain-kirk
+          modalStep:
+            name: "Steve blows up the discipline Bill is trying to build"
+            script: >-
+              Dick tells Steve that IT is dragging its feet, and Steve calls Bill at home.
+              Bill argues that the team finally has a real incident process, that rushing in
+              blind will make the outage worse, and that dragging Brent back into the middle
+              of the crisis will repeat the same dependency they have been trying to break.
+              Steve rejects all of it. He wants visible urgency, Brent in the office, and
+              every available engineer on the problem immediately.
+          globalStep:
+            name: "Poor leadership turns one crisis into several"
+            script: >-
+              Bill hangs up and tells Steve to expect his resignation in the morning. Then
+              the consequences arrive exactly as Bill feared. Steve's all-hands override
+              pulls Brent back into the crisis, coordination breaks down, the inventory
+              systems go down as well, and Finance loses even more of the visibility it needs
+              to close the quarter. Bill's resignation is not just emotional exhaustion. It
+              is the verdict on a leadership pattern that destroys operating discipline the
+              moment pressure spikes.
+
+        - type: quote
+          id: steve-ninety-days
+          modalStep:
+            name: "Bill steps away before Steve earns a second chance"
+            script: >-
+              Bill really does leave. For several days he sleeps, deletes the work accounts,
+              takes Grant to watch trains, and tries to remember what ordinary family life
+              feels like. While he is away, Wes and Patty tell him that Steve's override has
+              made the situation worse, exactly as Bill predicted. Even then, Bill does not
+              rush back. Steve has to call Paige, admit he has been a jackass, and ask Bill
+              for one more conversation.
+          globalStep:
+            name: "Steve finally gives Bill a reason to return"
+            script: >-
+              Steve does not bully Bill back. He apologises, admits he delegated IT away,
+              says Erik and the audit committee forced him to face how badly he has handled
+              the relationship, and offers Bill ninety days to try again with real backing.
+              That is the beginning of Steve's character change. He stops demanding rescue
+              and starts asking Bill to help him understand the system he has been making
+              worse.
 
         - type: quote
           id: steve-say-no-with-data
           modalStep:
             name: "The offsite turns no into a leadership duty"
             script: >-
-              This is the line that converts the conversation from frustration into management
-              discipline. Bill explains that IT has been acting like compliant order takers,
-              accepting work without proving it can be delivered. Steve's answer is that leaders
-              are supposed to say no when the system cannot carry more load, but that no has to
-              be backed by real demand-and-capacity data. Erik then makes the test concrete:
-              before accepting work, ask whether it increases the flow of project work through
-              IT, whether it improves operational stability or recovery time, and whether it
-              increases capacity at the bottleneck.
+              Back at the offsite, Steve makes the change public. He admits he was wrong,
+              says he made the IT problems worse, and starts rebuilding trust with the team.
+              Only after that does Bill make the deeper case that IT has been acting like
+              compliant order takers, accepting work without proving it can be delivered.
+              Steve's answer is that leaders are supposed to say no when the system cannot
+              carry more load, but that no has to be backed by real demand-and-capacity
+              data. Erik then makes the test concrete: before accepting work, ask whether it
+              increases the flow of project work through IT, whether it improves operational
+              stability or recovery time, and whether it increases capacity at the bottleneck.
           globalStep:
             name: "Capacity planning becomes the basis for commitment"
             script: >-
-              This is where Erik's plant lesson finally lands in executive language. In the
+              Erik's plant lesson finally lands in executive language here. In the
               plant, they check bills of material, routings, work centers, and existing load
               before accepting an order. Bill now sees that IT needs the same discipline before
               it accepts another project, and that projects should be screened against three
@@ -695,7 +742,7 @@ presentation:
           globalStep:
             name: "The blockage becomes visible"
             script: >-
-              This is the moment the conversation changes from why are smart people behind
+              The conversation changes at this point from why are smart people behind
               to where, exactly, is flow being blocked.
 
         - type: concept
@@ -703,7 +750,7 @@ presentation:
           modalStep:
             name: "Bill finally names the fourth type"
             script: >-
-              This is where the book places the realization. After Phoenix blows up and Patty's
+              The realization finally lands here. After Phoenix blows up and Patty's
               board shows that planned changes did not get finished because recovery work took
               over, Bill finally sees what Erik meant. The fourth type is unplanned work:
               incidents, outages, recovery, escalations. It is the most destructive because it
@@ -727,7 +774,7 @@ presentation:
           globalStep:
             name: "Local wins create global losses"
             script: >-
-              This is the point where Erik's first big lesson lands. Bill has now seen the
+              Erik's first big lesson lands at this point. Bill has now seen the
               constraint, the queue, the damage from unplanned work, and the failure of each
               silo to optimise the whole. That is what teaches him the First Way: start with
               flow across the entire system, not local efficiency inside each team.
@@ -745,7 +792,7 @@ presentation:
           globalStep:
             name: "Neglected debt returns as unplanned work"
             script: >-
-              This is why Erik links technical debt directly to Brent and to unplanned work. When
+              Erik links technical debt directly to Brent and to unplanned work for exactly this reason. When
               operability gets deferred, the future shows up as outages, rework, and even less
               capacity for the next round of features.
 
@@ -796,7 +843,7 @@ presentation:
         learn that many supposedly new problems are actually repeat findings and repeat patterns.
         Queue math makes long lead times visible, and audit scoping plus the Ron-and-Maggie sponsor
         interviews make business risk visible in lost orders, stockouts, and bad demand signals. By
-        the end of this block, quality stops meaning 'inspect harder later' and starts meaning
+        this point, quality stops meaning 'inspect harder later' and starts meaning
         shorter feedback loops, clearer release control, and business-aligned countermeasures.
       reveals:
         - type: character
@@ -829,7 +876,7 @@ presentation:
           globalStep:
             name: "A repeat finding is proof the system did not learn"
             script: >-
-              That phrase matters because it changes the meaning of the audit. The issue is no
+              The phrase matters because it changes the meaning of the audit. The issue is no
               longer just control weakness. It is organisational memory failure.
 
         - type: quote
@@ -844,7 +891,7 @@ presentation:
           globalStep:
             name: "The tokenization disaster shows the limit of John's model"
             script: >-
-              This is where John's arc becomes painful instead of cartoonish. He bypasses the
+              John's arc becomes painful instead of cartoonish here. He bypasses the
               normal system to rush tokenization into production, helps trigger a payroll
               disaster, and then learns in the audit meeting that the work was not even in
               scope for SOX. He is chasing risk, but he is not yet tracing where the business
@@ -855,7 +902,7 @@ presentation:
           modalStep:
             name: "Erik names John's blind spot"
             script: >-
-              This is the line that reframes the whole audit story. Erik does not tell John
+              Erik's line reframes the whole audit story. He does not tell John
               that controls are useless. He tells him that without seeing the end-to-end
               business process, John cannot tell which controls are essential, which are
               redundant, and which are solving the wrong problem entirely.
@@ -890,7 +937,7 @@ presentation:
           modalStep:
             name: "Bill makes the queue math visible"
             script: >-
-              This is the cleanest visual summary of what Patty and Bill have just learned.
+              Bill's chart is the cleanest visual summary of what he and Patty have just learned.
               Once a person in the chain is near full utilization, work does not slow down a
               little. It waits exponentially longer. So a task that looks like thirty minutes
               of touch time turns into days of lead time because it keeps landing in somebody
@@ -898,7 +945,7 @@ presentation:
           globalStep:
             name: "Overutilization is why the chain seizes up"
             script: >-
-              This is the late-mid lesson the team needed. The problem is not merely that too
+              The late-mid lesson the team needed is that the problem is not merely that too
               many people are busy. It is that every overloaded handoff magnifies the wait for
               the next one. That is why Brent's quick tasks get stuck, why the whole task
               chain becomes unpredictable, and why protecting capacity matters more than
@@ -916,8 +963,8 @@ presentation:
           globalStep:
             name: "Lead time is mostly waiting, not doing"
             script: >-
-              This is why the company keeps being surprised by how long seemingly small tasks take.
-              The work is not intrinsically large. The queues are.
+              The company keeps being surprised by how long seemingly small tasks take because
+              the work is not intrinsically large. The queues are.
 
         - type: challenge
           id: deployment-failures
@@ -990,7 +1037,7 @@ presentation:
           modalStep:
             name: "Ron names the demand-signal failure outright"
             script: >-
-              This is the line that makes Ron connect directly to Maggie. He says the company is
+              Ron's line connects him directly to Maggie. He says the company is
               clueless about what customers want: too much product that will never sell and not
               enough of the items that do. That ties sales forecast accuracy back to the same bad
               order, inventory, and stockout data Maggie later attacks from the retail side.
@@ -1006,7 +1053,7 @@ presentation:
           modalStep:
             name: "Maggie names the reporting failure behind the business frustration"
             script: >-
-              Maggie is where the book stops talking about Phoenix as an abstract strategy and
+              Maggie is where the story stops talking about Phoenix as an abstract strategy and
               starts talking about what the business still cannot see. She tells Bill and Patty
               that most of the time Retail is flying blind. The order entry and inventory data
               are often wrong, the monthly reports from Finance are full of errors, and the
@@ -1015,7 +1062,7 @@ presentation:
           globalStep:
             name: "Her complaint is not cosmetic reporting"
             script: >-
-              That complaint matters because Maggie is not asking for prettier dashboards. She
+              Maggie's complaint matters because she is not asking for prettier dashboards. She
               is saying the company cannot tell what customers want, cannot reliably see
               stockouts and sales patterns, and therefore cannot make fast commercial bets with
               confidence. This is business blindness, not reporting polish.
@@ -1025,7 +1072,7 @@ presentation:
           modalStep:
             name: "Maggie reduces the whole problem to one line"
             script: >-
-              This is the line that makes Maggie memorable. She is not complaining that the
+              Maggie's line makes her memorable. She is not complaining that the
               reports are inconvenient. She is saying the business lacks trustworthy, timely
               information about demand, inventory, and customer behaviour. For her, that makes
               Phoenix unfinished no matter how much code has shipped.
@@ -1059,7 +1106,7 @@ presentation:
       end: "55:00"
       phase: late
       pageScript: >-
-        By the end of the book, the change is measurable. Major outages are down, recovery
+        By now, the change is measurable. Major outages are down, recovery
         is faster, and Brent is almost caught up. But the real question is bigger than
         stability. Can this organisation turn operational improvement into strategic
         advantage?
@@ -1110,7 +1157,7 @@ presentation:
           globalStep:
             name: "Leadership has matured"
             script: >-
-              That matters because executive behaviour helped create the old system. By the
+              Leadership's change matters because executive behaviour helped create the old system. By the
               end, the CEO sounds like someone who has internalised systems thinking instead
               of just applying pressure.
 
@@ -1119,14 +1166,14 @@ presentation:
           modalStep:
             name: "The team learns to fail safely"
             script: >-
-              Near the end of the book, the team starts deliberately breaking things in
+              Near the end, the team starts deliberately breaking things in
               controlled ways to make the platform more resilient. The point is no longer to
               avoid every failure at all costs. The point is to practice, learn, and harden
               the system before reality does it for you.
           globalStep:
             name: "Failure becomes a teacher"
             script: >-
-              This is a deep cultural shift. Failure stops being something to hide and starts
+              A deep cultural shift is underway. Failure stops being something to hide and starts
               becoming something the team studies and learns from.
 
         - type: "challenge"
@@ -1138,13 +1185,13 @@ presentation:
           globalStep:
             name: "Strategic capabilities must be owned"
             script: |-
-              This is one of the book's sharpest late lessons. The company outsourced MRP because it looked non-strategic and expensive. Now that same system determines whether Parts Unlimited can respond to the market. The vendor is not just slow. It is charging for access to its own queue while the business falls behind. At that point, bringing the capability back in-house is not an ideological move. It is a competitive necessity.
+              One of the sharpest late lessons emerges here. The company outsourced MRP because it looked non-strategic and expensive. Now that same system determines whether Parts Unlimited can respond to the market. The vendor is not just slow. It is charging for access to its own queue while the business falls behind. At that point, bringing the capability back in-house is not an ideological move. It is a competitive necessity.
         - type: quote
           id: wes-eighteen-months
           modalStep:
             name: "Wes brings back the vendor's answer"
             script: >-
-              This quote is where the pain becomes undeniable. Wes is not complaining about a bad
+              Wes makes the pain undeniable here. He is not complaining about a bad
               meeting or a difficult partner. He is reporting the vendor's actual operating model:
               long requirement lead times, long development lead times, delayed staffing, and an
               upfront fee before meaningful work even starts.
@@ -1161,13 +1208,13 @@ presentation:
             name: "Steve names the strategic danger directly"
             script: >-
               Steve's language matters here because it shows how far the executive understanding
-              has evolved. Earlier in the book he treated IT largely as cost and broken promises.
+              has evolved. Earlier he treated IT largely as cost and broken promises.
               Here he sees the outsourced MRP platform for what it has become: a core capability
               whose owner is now constraining the future of the company.
           globalStep:
             name: "In-house becomes the only credible path"
             script: >-
-              That is why the proposal changes from incremental vendor management to contract
+              The proposal changes from incremental vendor management to contract
               buyout. Bill's team argues for spending nearly a million dollars to regain control of
               the application, pull roughly six people back into the company, and integrate MRP
               with Unicorn so build-to-order capability can be delivered in about ninety days
@@ -1200,7 +1247,7 @@ presentation:
           globalStep:
             name: "Learning becomes a business capability"
             script: >-
-              This is the destination of the book. IT stops being a cost centre that the
+              The story reaches its destination here. IT stops being a cost centre that the
               business tolerates and becomes a capability the business depends on to win.
 
     - id: outro
@@ -1210,8 +1257,8 @@ presentation:
       end: "60:00"
       phase: outro
       pageScript: >-
-        The Phoenix Project is not really a book about servers, tickets, or org charts. It
-        is a book about learning to see the system: the flow of work, the constraint, the
+        At its core, this story is not really about servers, tickets, or org charts. It
+        is about learning to see the system: the flow of work, the constraint, the
         feedback loops, and the culture that determines whether people can improve it. Bill
         Palmer enters the story as a reluctant manager trying to survive the week. He leaves
         it as someone who understands how the business actually runs.

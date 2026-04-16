@@ -17,6 +17,10 @@ characters:
         text: "The business depends on IT more than ever. If IT can't deliver, we'll outsource."
       - id: steve-cut-heads
         text: "Any budget increases are out of the question. If anything, we may have to cut some heads in your area."
+      - id: steve-captain-kirk
+        text: "I'm Captain Kirk. You're Scotty. And I need warp speed, so get your goddamned engineers off their asses!"
+      - id: steve-ninety-days
+        text: "I'd like you to resume your role as VP of IT Operations, effective immediately. I'd like to work with you, as Erik coined it, as the two sides of a dysfunctional marriage. All I'm asking is that you spend ninety days with me and give it a try."
       - id: steve-say-no-with-data
         text: "If you, or for that matter, anyone knows that a project will fail, I need you to say so. And I need it backed up with data."
       - id: steve-outsourcer-hostage

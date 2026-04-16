@@ -140,7 +140,7 @@ challenges:
     subtitle: "Store operations absorb the cost of a bad launch"
     segment: segment-3
     description: "Phoenix goes live at 5 p.m. on Friday, but by Saturday morning the consequences are landing on store staff and customers. With POS systems down, stores fall back to manual tills, manual card swipes, shoeboxes full of carbon-copy receipts, emergency trips for change supplies, and frantic calls into IT from around 120 stores. The launch decision was made far above the ground floor, but the damage is felt immediately by the people trying to serve customers."
-    impact: "The book's core operational lesson becomes visible: IT systems are not back-office abstractions. When they fail, frontline work breaks, customers wait, and the business literally cannot transact normally."
+    impact: "The core operational lesson becomes visible: IT systems are not back-office abstractions. When they fail, frontline work breaks, customers wait, and the business literally cannot transact normally."
     icon: "store"
     severity: critical
     color: "#f97316"
@@ -261,7 +261,7 @@ challenges:
     title: "The Constraint Moves Outside IT"
     subtitle: "Partners and platforms can bottleneck strategy"
     segment: segment-5
-    description: "Late in the book, the next competitive move depends on changing the outsourced mainframe MRP system that supports the plants. Wes finds that the vendor wants six months for requirements, nine months for development and testing, unavailable resources until June, and a $50K feasibility study just to secure a place in the queue. What looked like a cost-saving outsource has become a strategic trap: the company cannot match a competitor's build-to-order capability because the vendor controls both pace and price."
+    description: "Later, the next competitive move depends on changing the outsourced mainframe MRP system that supports the plants. Wes finds that the vendor wants six months for requirements, nine months for development and testing, unavailable resources until June, and a $50K feasibility study just to secure a place in the queue. What looked like a cost-saving outsource has become a strategic trap: the company cannot match a competitor's build-to-order capability because the vendor controls both pace and price."
     impact: "Internal improvements are not enough when an external vendor owns a capability that now determines time to market. The company remains strategically slow, overcharged for change, and unable to compete until it brings the bottleneck capability back under its own control."
     icon: "link"
     severity: high
