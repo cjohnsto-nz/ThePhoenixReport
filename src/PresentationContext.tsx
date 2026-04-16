@@ -2,6 +2,8 @@ import React, { createContext, useContext, useReducer, useCallback, useRef, useE
 import type { PresentationMode, PresentationState, SegmentScreen, TimelineSegment } from './types';
 import { timelineData } from './data';
 
+const SESSION_STORAGE_KEY = 'phoenix-report-presentation-state';
+
 // Actions
 type Action =
   | { type: 'SET_MODE'; mode: PresentationMode }
@@ -107,6 +109,76 @@ const initialState: PresentationState = {
   revealedIds: new Set(),
   stagedId: null,
 };
+
+type PersistedPresentationSnapshot = {
+  currentSegmentIndex: number;
+  segmentScreen: SegmentScreen;
+  segmentElapsedSeconds: number;
+  totalElapsedSeconds: number;
+  revealedIds: string[];
+  stagedId: string | null;
+};
+
+type PersistedPresentationState = {
+  mode: PresentationMode;
+  currentSegmentIndex: number;
+  segmentScreen: SegmentScreen;
+  segmentElapsedSeconds: number;
+  totalElapsedSeconds: number;
+  isRunning: boolean;
+  revealedIds: string[];
+  stagedId: string | null;
+  savedPresentationSnapshot: PersistedPresentationSnapshot;
+};
+
+function serializeSnapshot(snapshot: PresentationSnapshot): PersistedPresentationSnapshot {
+  return {
+    currentSegmentIndex: snapshot.currentSegmentIndex,
+    segmentScreen: snapshot.segmentScreen,
+    segmentElapsedSeconds: snapshot.segmentElapsedSeconds,
+    totalElapsedSeconds: snapshot.totalElapsedSeconds,
+    revealedIds: Array.from(snapshot.revealedIds),
+    stagedId: snapshot.stagedId,
+  };
+}
+
+function hydrateSnapshot(snapshot: PersistedPresentationSnapshot): PresentationSnapshot {
+  return {
+    currentSegmentIndex: snapshot.currentSegmentIndex,
+    segmentScreen: snapshot.segmentScreen,
+    segmentElapsedSeconds: snapshot.segmentElapsedSeconds,
+    totalElapsedSeconds: snapshot.totalElapsedSeconds,
+    revealedIds: new Set(snapshot.revealedIds),
+    stagedId: snapshot.stagedId,
+  };
+}
+
+function loadInitialState(): PresentationState {
+  if (typeof window === 'undefined') return initialState;
+
+  try {
+    const raw = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
+    if (!raw) return initialState;
+
+    const parsed = JSON.parse(raw) as PersistedPresentationState;
+    if (!parsed || !parsed.savedPresentationSnapshot) return initialState;
+
+    savedPresentationSnapshot = hydrateSnapshot(parsed.savedPresentationSnapshot);
+
+    return {
+      mode: parsed.mode,
+      currentSegmentIndex: parsed.currentSegmentIndex,
+      segmentScreen: parsed.segmentScreen,
+      segmentElapsedSeconds: parsed.segmentElapsedSeconds,
+      totalElapsedSeconds: parsed.totalElapsedSeconds,
+      isRunning: false,
+      revealedIds: new Set(parsed.revealedIds),
+      stagedId: parsed.stagedId,
+    };
+  } catch {
+    return initialState;
+  }
+}
 
 function reducer(state: PresentationState, action: Action): PresentationState {
   switch (action.type) {
@@ -395,7 +467,7 @@ interface PresentationContextType {
 const PresentationContext = createContext<PresentationContextType | null>(null);
 
 export function PresentationProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
+  const [state, dispatch] = useReducer(reducer, initialState, loadInitialState);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
@@ -415,6 +487,24 @@ export function PresentationProvider({ children }: { children: React.ReactNode }
       }
     };
   }, [state.isRunning]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const persistedState: PersistedPresentationState = {
+      mode: state.mode,
+      currentSegmentIndex: state.currentSegmentIndex,
+      segmentScreen: state.segmentScreen,
+      segmentElapsedSeconds: state.segmentElapsedSeconds,
+      totalElapsedSeconds: state.totalElapsedSeconds,
+      isRunning: false,
+      revealedIds: Array.from(state.revealedIds),
+      stagedId: state.stagedId,
+      savedPresentationSnapshot: serializeSnapshot(savedPresentationSnapshot),
+    };
+
+    window.sessionStorage.setItem(SESSION_STORAGE_KEY, JSON.stringify(persistedState));
+  }, [state]);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {

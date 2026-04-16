@@ -1,5 +1,5 @@
 import { useMemo, useState, useEffect, useRef, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useAnimate } from 'framer-motion';
 import { createPortal } from 'react-dom';
 import { usePresentation } from '../PresentationContext';
 import {
@@ -136,6 +136,11 @@ export function ContentArea() {
   const challenges = isExplore ? challengesData.challenges : visibleChallenges;
 
   const { isPopped } = useControls();
+  const [placementGhost, setPlacementGhost] = useState<{
+    item: StageItemData;
+    revealedIds: Set<string>;
+    targetRect: DOMRect | null;
+  } | null>(null);
 
   // Determine which panel the staged item belongs to
   const stagedPanel = useMemo((): string | null => {
@@ -151,44 +156,43 @@ export function ContentArea() {
     return null;
   }, [stagedData, fourTypeIds, threeWayIds]);
 
-  // Measure the invisible marker at the exact position where the next card will appear
-  const [targetMarkerRect, setTargetMarkerRect] = useState<DOMRect | null>(null);
-  const targetMarkerRef = useCallback((node: HTMLDivElement | null) => {
-    setTargetMarkerRect(node ? node.getBoundingClientRect() : null);
-  }, []);
+  // Build a stable getter that reads position at the moment of need (never stale)
+  const getTargetRect = useCallback((): DOMRect | null => {
+    if (!stagedData) return null;
 
-  // For characters: compute exact grid cell position within the characters panel
-  const characterCellRect = useMemo((): DOMRect | null => {
-    if (stagedPanel !== 'characters' || !stagedData) return null;
-    const charId = (stagedData.data as { id?: string }).id ?? '';
-    const pos = GRID_POS[charId];
-    const panel = charactersPanelRef.current;
-    if (!pos || !panel) return null;
+    // Characters: compute exact grid cell from known positions
+    if (stagedData.type === 'character') {
+      const charId = (stagedData.data as { id?: string }).id ?? '';
+      const pos = GRID_POS[charId];
+      const panel = charactersPanelRef.current;
+      if (pos && panel) {
+        const panelRect = panel.getBoundingClientRect();
+        const headerEl = panel.querySelector('[class*="border-b"]') as HTMLElement | null;
+        const headerH = headerEl ? headerEl.offsetHeight : 32;
+        const pad = 12; // p-3
+        const contentW = panelRect.width - pad * 2;
+        const contentH = panelRect.height - headerH - pad * 2;
+        const [col, row] = pos;
+        const cellW = (contentW - GRID_GAP * (GRID_COLS - 1)) / GRID_COLS;
+        const cellH = (contentH - GRID_GAP * (GRID_ROWS - 1)) / GRID_ROWS;
+        return new DOMRect(
+          panelRect.left + pad + (col - 1) * (cellW + GRID_GAP),
+          panelRect.top + headerH + pad + (row - 1) * (cellH + GRID_GAP),
+          cellW,
+          cellH,
+        );
+      }
+    }
 
-    // The inner content area has p-3 padding, and the header takes some space
-    const panelRect = panel.getBoundingClientRect();
-    const headerEl = panel.querySelector('[class*="border-b"]') as HTMLElement | null;
-    const headerH = headerEl ? headerEl.offsetHeight : 32;
-    const pad = 12; // p-3
-    const contentLeft = panelRect.left + pad;
-    const contentTop = panelRect.top + headerH + pad;
-    const contentW = panelRect.width - pad * 2;
-    const contentH = panelRect.height - headerH - pad * 2;
+    // All other panels: read the invisible slot that sits at the next card position.
+    if (stagedPanel && typeof document !== 'undefined') {
+      const marker = document.querySelector(`[data-placement-marker="${stagedPanel}"]`) as HTMLElement | null;
+      if (marker) {
+        return marker.getBoundingClientRect();
+      }
+    }
 
-    const [col, row] = pos;
-    const cellW = (contentW - GRID_GAP * (GRID_COLS - 1)) / GRID_COLS;
-    const cellH = (contentH - GRID_GAP * (GRID_ROWS - 1)) / GRID_ROWS;
-    const cellLeft = contentLeft + (col - 1) * (cellW + GRID_GAP);
-    const cellTop = contentTop + (row - 1) * (cellH + GRID_GAP);
-
-    return new DOMRect(cellLeft, cellTop, cellW, cellH);
-  }, [stagedPanel, stagedData]);
-
-  // Use precise marker position for list panels, computed cell for characters, panel fallback
-  const stagedTargetRect = useMemo(() => {
-    if (characterCellRect) return characterCellRect;
-    if (targetMarkerRect) return targetMarkerRect;
-    if (!stagedPanel) return null;
+    // Final fallback: whole panel rect
     const panelRefMap: Record<string, React.RefObject<HTMLDivElement | null>> = {
       characters: charactersPanelRef,
       challenges: challengesPanelRef,
@@ -196,8 +200,13 @@ export function ContentArea() {
       threeWays: threeWaysPanelRef,
       fourTypes: fourTypesPanelRef,
     };
-    return panelRefMap[stagedPanel]?.current?.getBoundingClientRect() ?? null;
-  }, [characterCellRect, targetMarkerRect, stagedPanel]);
+    const sp = stagedData.type === 'concept'
+      ? (threeWayIds.has((stagedData.data as { id?: string }).id ?? '') ? 'threeWays' : 'fourTypes')
+      : stagedData.type === 'character' ? 'characters'
+      : stagedData.type === 'challenge' ? 'challenges'
+      : 'epics';
+    return panelRefMap[sp]?.current?.getBoundingClientRect() ?? null;
+  }, [stagedData, stagedPanel, threeWayIds]);
 
   // ===== UNIFIED LAYOUT — same grid for both modes =====
   return (
@@ -314,7 +323,11 @@ export function ContentArea() {
                       total={sectionSummaryCharacters.length}
                       className="h-full"
                     >
-                      <OrgChart characters={sectionSummaryCharacters} />
+                      <div className="grid grid-cols-3 xl:grid-cols-4 gap-1.5">
+                        {sectionSummaryCharacters.map((character, index) => (
+                          <CharacterCard key={character.id} character={character} revealed={true} index={index} />
+                        ))}
+                      </div>
                     </DashboardPanel>
                   </div>
                   <DashboardPanel
@@ -354,7 +367,7 @@ export function ContentArea() {
                 {epics.map((e, i) => (
                   <EpicCard key={e.id} epic={e} revealed={true} index={i} />
                 ))}
-                {stagedPanel === 'epics' && <div ref={targetMarkerRef} className="h-6" aria-hidden />}
+                {(epics.length === 0 || stagedPanel === 'epics') && <PlacementMarker panel="epics" />}
               </div>
             </DashboardPanel>
             <DashboardPanel
@@ -370,7 +383,7 @@ export function ContentArea() {
                 {fourTypes.map((c, i) => (
                   <ConceptCard key={c.id} concept={c} revealed={true} index={i} revealedIds={revealedIds} />
                 ))}
-                {stagedPanel === 'fourTypes' && <div ref={targetMarkerRef} className="h-6" aria-hidden />}
+                {(fourTypes.length === 0 || stagedPanel === 'fourTypes') && <PlacementMarker panel="fourTypes" />}
               </div>
             </DashboardPanel>
             <DashboardPanel
@@ -386,7 +399,7 @@ export function ContentArea() {
                 {threeWays.map((c, i) => (
                   <ConceptCard key={c.id} concept={c} revealed={true} index={i} revealedIds={revealedIds} />
                 ))}
-                {stagedPanel === 'threeWays' && <div ref={targetMarkerRef} className="h-6" aria-hidden />}
+                {(threeWays.length === 0 || stagedPanel === 'threeWays') && <PlacementMarker panel="threeWays" />}
               </div>
             </DashboardPanel>
           </div>
@@ -403,7 +416,7 @@ export function ContentArea() {
               className="h-full"
               panelRef={charactersPanelRef}
             >
-              <OrgChart characters={chars} />
+              <div className="h-full"><OrgChart characters={chars} /></div>
             </DashboardPanel>
             </div>
             <DashboardPanel
@@ -419,7 +432,7 @@ export function ContentArea() {
                 {challenges.map((c, i) => (
                   <ChallengeCard key={c.id} challenge={c} revealed={true} index={i} />
                 ))}
-                {stagedPanel === 'challenges' && <div ref={targetMarkerRef} className="h-6" aria-hidden />}
+                {(challenges.length === 0 || stagedPanel === 'challenges') && <PlacementMarker panel="challenges" />}
               </div>
             </DashboardPanel>
           </div>
@@ -434,18 +447,56 @@ export function ContentArea() {
       )}
 
       {/* Full-screen detail modal for two-phase reveals */}
-      <AnimatePresence mode="wait">
-        {mode === 'presentation' && stagedData && (
-          <FullScreenStage
-            key={(stagedData.data as { id?: string }).id ?? 'staged-item'}
-            item={stagedData}
-            revealedIds={revealedIds}
-            onPlace={() => dispatch({ type: 'REVEAL_NEXT' })}
-            onBack={() => dispatch({ type: 'REVEAL_PREV' })}
-            targetRect={stagedTargetRect}
-          />
-        )}
-      </AnimatePresence>
+      {mode === 'presentation' && stagedData && (
+        <FullScreenStage
+          key={(stagedData.data as { id?: string }).id ?? 'staged-item'}
+          item={stagedData}
+          revealedIds={revealedIds}
+          onPlace={() => {
+            setPlacementGhost({
+              item: stagedData,
+              revealedIds: new Set(revealedIds),
+              targetRect: getTargetRect(),
+            });
+            dispatch({ type: 'REVEAL_NEXT' });
+          }}
+          onBack={() => dispatch({ type: 'REVEAL_PREV' })}
+        />
+      )}
+
+      {placementGhost && (
+        <PlacementGhost
+          item={placementGhost.item}
+          revealedIds={placementGhost.revealedIds}
+          targetRect={placementGhost.targetRect}
+          onComplete={() => setPlacementGhost(null)}
+        />
+      )}
+    </div>
+  );
+}
+
+function PlacementMarker({
+  panel,
+}: {
+  panel: 'epics' | 'fourTypes' | 'threeWays' | 'challenges';
+}) {
+  return (
+    <div
+      data-placement-marker={panel}
+      aria-hidden
+      className="pointer-events-none select-none invisible relative bg-white/[0.04] backdrop-blur-xl border border-white/[0.08] rounded-lg overflow-hidden px-3 py-2"
+      style={{
+        boxShadow: '0 0 20px -8px rgba(255, 133, 17, 0.15), inset 0 1px 0 0 rgba(255,255,255,0.06)',
+      }}
+    >
+      <div className="flex items-center gap-2">
+        <span className="text-base flex-shrink-0">•</span>
+        <div className="min-w-0 flex-1">
+          <span className="text-sm font-medium truncate block">Placeholder title</span>
+          <span className="text-xs truncate block leading-tight">Placeholder subtitle</span>
+        </div>
+      </div>
     </div>
   );
 }
@@ -462,17 +513,111 @@ function FullScreenStage({
   revealedIds,
   onPlace,
   onBack,
-  targetRect,
 }: {
   item: StageItemData;
   revealedIds: Set<string>;
   onPlace: () => void;
   onBack: () => void;
-  targetRect: DOMRect | null;
 }) {
   const color = (item.data as { color?: string }).color ?? '#ff8511';
+  const isBusyRef = useRef(false);
+  const handlePlaceRef = useRef(onPlace);
+  handlePlaceRef.current = () => {
+    if (isBusyRef.current) return;
+    isBusyRef.current = true;
+    onPlace();
+  };
+  const onBackRef = useRef(onBack);
+  onBackRef.current = onBack;
 
-  // Compute exit destination (offset from viewport center)
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.repeat) return;
+      if (e.key === 'ArrowRight' || e.key === 'Escape') {
+        e.preventDefault();
+        handlePlaceRef.current();
+      }
+      if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        onBackRef.current();
+      }
+    };
+
+    window.addEventListener('keydown', handleKey);
+
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', handleKey);
+    };
+  }, []);
+
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 lg:p-8 pointer-events-none">
+      {/* Backdrop */}
+      <motion.div
+        className="absolute inset-0 bg-navy-950/80 backdrop-blur-md pointer-events-auto"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        onClick={() => handlePlaceRef.current()}
+      />
+
+      {/* Modal shell */}
+      <motion.div
+        initial={{ opacity: 0, scale: 0.88, y: 30 }}
+        animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+        transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+        className="relative w-full max-w-5xl max-h-[94vh] overflow-hidden rounded-3xl bg-navy-950/95 backdrop-blur-2xl border border-white/[0.08] shadow-2xl pointer-events-auto"
+        style={{
+          boxShadow: `0 0 80px -20px ${color}40, 0 25px 50px -12px rgba(0,0,0,0.5)`,
+        }}
+      >
+        {/* Top accent line */}
+        <div
+          className="absolute top-0 left-0 right-0 h-[2px]"
+          style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }}
+        />
+
+        {/* Close button */}
+        <button
+          onClick={() => handlePlaceRef.current()}
+          className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all z-10"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+        {/* Content */}
+        <div className="p-7 md:p-8 lg:p-10 text-base md:text-lg [&_p]:leading-relaxed [&_li]:leading-relaxed">
+          {item.type === 'challenge' && <ChallengeDetailContent challenge={item.data as Challenge} />}
+          {item.type === 'character' && <CharacterDetailContent character={item.data as Character} />}
+          {item.type === 'concept' && (
+            <ConceptDetailContent concept={item.data as ConceptItem | WayItem} revealedIds={revealedIds} />
+          )}
+          {item.type === 'epic' && <EpicDetailContent epic={item.data as Epic} />}
+        </div>
+      </motion.div>
+    </div>,
+    document.body,
+  );
+}
+
+function PlacementGhost({
+  item,
+  revealedIds,
+  targetRect,
+  onComplete,
+}: {
+  item: StageItemData;
+  revealedIds: Set<string>;
+  targetRect: DOMRect | null;
+  onComplete: () => void;
+}) {
+  const color = (item.data as { color?: string }).color ?? '#ff8511';
   const vw = typeof window !== 'undefined' ? window.innerWidth : 1920;
   const vh = typeof window !== 'undefined' ? window.innerHeight : 1080;
   const cx = vw / 2;
@@ -487,74 +632,30 @@ function FullScreenStage({
     ? Math.max(0.02, Math.min(0.18, Math.min(targetRect.width / modalW, targetRect.height / modalH)))
     : 0.08;
 
-  useEffect(() => {
-    document.body.style.overflow = 'hidden';
-
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.repeat) return;
-      if (e.key === 'ArrowRight' || e.key === 'Escape') {
-        e.preventDefault();
-        onPlace();
-      }
-      if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        onBack();
-      }
-    };
-
-    window.addEventListener('keydown', handleKey);
-
-    return () => {
-      document.body.style.overflow = '';
-      window.removeEventListener('keydown', handleKey);
-    };
-  }, [onBack, onPlace]);
-
   return createPortal(
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 lg:p-8 pointer-events-none">
-      {/* Backdrop */}
       <motion.div
-        className="absolute inset-0 bg-navy-950/80 backdrop-blur-md pointer-events-auto"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        className="absolute inset-0 bg-navy-950/80 backdrop-blur-md"
+        initial={{ opacity: 1 }}
+        animate={{ opacity: 0 }}
         transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-        onClick={onPlace}
       />
 
-      {/* Modal shell — single smooth curve to target on exit */}
       <motion.div
-        initial={{ opacity: 0, scale: 0.88, y: 30 }}
-        animate={{ opacity: 1, scale: 1, x: 0, y: 0 }}
-        exit={{ x: exitX, y: exitY, scale: exitScale, opacity: 0 }}
-        transition={{
-          type: 'tween',
-          duration: 0.7,
-          ease: [0.16, 1, 0.3, 1],
-        }}
-        className="relative w-full max-w-5xl max-h-[94vh] overflow-hidden rounded-3xl bg-navy-950/95 backdrop-blur-2xl border border-white/[0.08] shadow-2xl pointer-events-auto"
+        initial={{ opacity: 1, scale: 1, x: 0, y: 0 }}
+        animate={{ x: exitX, y: exitY, scale: exitScale, opacity: 0 }}
+        transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+        onAnimationComplete={onComplete}
+        className="relative w-full max-w-5xl max-h-[94vh] overflow-hidden rounded-3xl bg-navy-950/95 backdrop-blur-2xl border border-white/[0.08] shadow-2xl"
         style={{
           boxShadow: `0 0 80px -20px ${color}40, 0 25px 50px -12px rgba(0,0,0,0.5)`,
         }}
       >
-        {/* Top accent line */}
         <div
           className="absolute top-0 left-0 right-0 h-[2px]"
           style={{ background: `linear-gradient(90deg, transparent, ${color}, transparent)` }}
         />
 
-        {/* Close button */}
-        <button
-          onClick={onPlace}
-          className="absolute top-5 right-5 w-10 h-10 flex items-center justify-center rounded-full bg-white/5 hover:bg-white/10 text-white/40 hover:text-white transition-all z-10"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-
-        {/* Content */}
         <div className="p-7 md:p-8 lg:p-10 text-base md:text-lg [&_p]:leading-relaxed [&_li]:leading-relaxed">
           {item.type === 'challenge' && <ChallengeDetailContent challenge={item.data as Challenge} />}
           {item.type === 'character' && <CharacterDetailContent character={item.data as Character} />}
@@ -612,7 +713,7 @@ function DashboardPanel({
       </div>
       <div className="flex-1 p-3 overflow-auto min-h-0">
         <AnimatePresence mode="popLayout">
-          {!isEmpty && children}
+          {children}
         </AnimatePresence>
       </div>
     </motion.div>
