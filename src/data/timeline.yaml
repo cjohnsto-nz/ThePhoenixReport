@@ -889,12 +889,11 @@ presentation:
         something surprising: not every scary IT finding is where the real financial risk
         lives. To understand that, Bill has to watch John, Finance, Audit, and Erik collide.
       contentSetupScript: >-
-        The first half of this section belongs to John. He begins as the man with the binder,
-        convinced that more controls and more urgency must mean more safety. What changes him
-        is learning to trace the full business process and seeing where the company is
-        actually relying on controls to catch material error. The back half belongs to Bill
-        and Patty's sponsor interviews, where Ron and Maggie translate IT defects into lost
-        orders, bad demand data, and delayed market response.
+        Steve forwards Bill an urgent note from Nancy: the internal audit has found serious
+        SOX deficiencies, and IT needs to be in an 8 a.m. meeting immediately. Bill walks in
+        with almost no context except that something bad has surfaced. The room is silent,
+        Nancy has a grave stack of findings, and John is already there with his black binder,
+        convinced that pushing harder on controls is how you keep the company safe.
       narrativeArc: >-
         The organisation starts making better decisions when it can see both the work and
         the business impact, and when it learns which controls genuinely matter.
