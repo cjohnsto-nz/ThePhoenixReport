@@ -518,21 +518,18 @@ presentation:
       end: "35:00"
       phase: mid
       pageScript: >-
-        After weeks of escalation from Sarah, commitments to the board and analysts, and a
-        constant drumbeat that Phoenix must restore growth, the launch date stops feeling
-        optional. But before the disaster arrives, there is a long buildup of warning signs.
-        Phoenix work keeps losing time to outages, Brent keeps getting yanked into whatever
-        is already broken, Development and Operations still do not share a clean deployment
-        plan, and Sarah keeps treating every delay as proof that IT lacks urgency. By the
-        time Friday night arrives, the company is trying to launch a system that has not
-        been given the calm, coordinated preparation it actually needs.
+        Phoenix is now under crushing pressure. Sarah keeps escalating every slip, Steve is
+        carrying commitments he has already made to the board and analysts, and Bill can see
+        that Operations is being asked to support a launch it has not been allowed to prepare
+        for properly. Brent is still being pulled into whatever is already broken,
+        Development is still short on clean specifications and handoffs, and every delay is
+        being read as hesitation instead of warning.
       contentSetupScript: >-
-        The opening beats stay with the buildup and the last fight before launch. First Bill
-        tries to protect Phoenix work from all the competing demands that keep starving it.
-        Then Sarah and Steve set a date anyway. Then Friday night proves how unready the
-        rollout really is. Bill still makes one last push to stop it, but once the database
-        conversion begins the launch crosses a single, irreversible point. Only after that
-        does the story tip into Saturday's fallout.
+        Bill is trying to hold Phoenix work together while everything else keeps intruding on
+        it. The arguments over readiness are still live, the handoffs between Development and
+        Operations are still messy, and Friday night is arriving faster than the system is
+        stabilizing. What matters here is whether anyone will listen before the rollout goes
+        past the point where it can still be stopped.
       narrativeArc: >-
         Bill watches competing priorities and bad handoffs starve the launch, loses the
         argument over whether to stop it, lives through the anti-work it unleashes, and only
@@ -541,17 +538,17 @@ presentation:
         Unplanned work destroys planned work, and recovery only starts when leaders stop
         accepting work blindly, say no with data, and let capacity set the pace.
       summary: >-
-        The segment begins by showing why Phoenix was so fragile before launch ever began:
-        critical prep work was starved by outages, dependencies, last-minute handoffs, and a
-        leadership culture that confused urgency with readiness. The Friday rollout then
-        confirms every warning Bill had raised, and Saturday teaches him what unplanned work
-        really is: anti-work that burns up everything the company meant to do. Erik then
-        helps him connect Brent, technical debt, and overloaded commitments into one system
-        problem. At the offsite, Bill finally states the deeper leadership failure: IT has
-        been accepting work without any real analysis of demand, constrained resources, or
-        the risk to existing commitments. The breakthrough is not another heroic recovery.
-        It is the decision to stop being compliant order takers, freeze new work, and
-        finally manage according to capacity and flow.
+        Phoenix is fragile long before launch night: critical prep work is starved by
+        outages, dependencies, last-minute handoffs, and a leadership culture that confuses
+        urgency with readiness. The Friday rollout confirms every warning Bill raised, and
+        Saturday teaches him what unplanned work really is: anti-work that burns up
+        everything the company meant to do. Erik then helps him connect Brent, technical
+        debt, and overloaded commitments into one system problem. At the offsite, Bill
+        finally states the deeper leadership failure: IT has been accepting work without any
+        real analysis of demand, constrained resources, or the risk to existing
+        commitments. The breakthrough is not another heroic recovery. It is the decision to
+        stop being compliant order takers, freeze new work, and finally manage according to
+        capacity and flow.
       reveals:
         - type: challenge
           id: business-pressure
@@ -569,10 +566,9 @@ presentation:
           globalStep:
             name: "The launch date is set before readiness exists"
             script: >-
-              This is where Sarah pins down the date: marketing launches on Saturday,
-              September 13, and Phoenix deploys at 5 p.m. the previous day. But that is still
-              only the business date on the calendar. The real go-live moment has not
-              happened yet. What follows is the scramble to survive the path to it.
+              Sarah pins down the date here: marketing launches on Saturday,
+              September 13, and Phoenix deploys at 5 p.m. the previous day. Whether Operations
+              can actually be ready by then is not a question anyone in that room is willing to ask.
 
         - type: challenge
           id: deployment-chaos
@@ -627,7 +623,7 @@ presentation:
           globalStep:
             name: "From here, the launch can only fail forward"
             script: >-
-              This is the singular go-live point for the story. Up to here, Bill can still
+              This is the singular go-live point. Up to here, Bill can still
               try to stop Phoenix. After this, the business is trapped inside the rollout.
               Phoenix may still limp toward being online, but the stores, the POS systems,
               and the next morning's operations are now hostage to whatever this conversion
