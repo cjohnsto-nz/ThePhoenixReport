@@ -287,12 +287,12 @@ challenges:
     severity: high
     color: "#6366f1"
 
-  - id: heroics-over-systems
-    title: "Heroics Over Systems"
-    subtitle: "Reliance on individual heroes"
-    segment: segment-5
-    description: "The organization relies on individual heroics rather than systemic solutions. When things break, they depend on heroes working through the night instead of building systems that don't break."
-    impact: "Unsustainable. Heroes burn out. The system never improves because heroics mask systemic problems."
-    icon: "star"
-    severity: high
-    color: "#eab308"
+  # - id: heroics-over-systems
+  #   title: "Heroics Over Systems"
+  #   subtitle: "Reliance on individual heroes"
+  #   segment: segment-5
+  #   description: "The organization relies on individual heroics rather than systemic solutions. When things break, they depend on heroes working through the night instead of building systems that don't break."
+  #   impact: "Unsustainable. Heroes burn out. The system never improves because heroics mask systemic problems."
+  #   icon: "star"
+  #   severity: high
+  #   color: "#eab308"

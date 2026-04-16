@@ -1245,6 +1245,20 @@ presentation:
               A deep cultural shift is underway. Failure stops being something to hide and starts
               becoming something the team studies and learns from.
 
+        - type: concept
+          id: third-way
+          modalStep:
+            name: "The Third Way"
+            script: >-
+              The Third Way is continual learning and experimentation. Practice failure.
+              Run experiments. Hold blameless reviews. Build resilience into the way work
+              happens so the organisation gets better every time it encounters stress.
+          globalStep:
+            name: "Learning becomes a business capability"
+            script: >-
+              IT stops being a cost centre that the business tolerates and becomes a
+              capability the business depends on to win.
+        
         - type: "challenge"
           id: "vendor-lock-in"
           modalStep:
@@ -1288,36 +1302,6 @@ presentation:
               the application, pull roughly six people back into the company, and integrate MRP
               with Unicorn so build-to-order capability can be delivered in about ninety days
               instead of eighteen months.
-
-        - type: challenge
-          id: heroics-over-systems
-          modalStep:
-            name: "Do not celebrate the wrong thing"
-            script: >-
-              Even now, the temptation remains to celebrate heroes instead of fixing systems.
-              Pull Brent into the next emergency, rescue the next project, and tell yourself
-              the company is fine because smart people saved it again.
-          globalStep:
-            name: "Less heroism, more capability"
-            script: >-
-              Flow and feedback are still not enough if the organisation only improves when
-              disaster forces it to. Unicorn, deliberate experiments, and the move away from
-              heroics show what has to happen next: a healthy system has to practice learning
-              on purpose, not just survive the next fire.
-
-        - type: concept
-          id: third-way
-          modalStep:
-            name: "The Third Way"
-            script: >-
-              The Third Way is continual learning and experimentation. Practice failure.
-              Run experiments. Hold blameless reviews. Build resilience into the way work
-              happens so the organisation gets better every time it encounters stress.
-          globalStep:
-            name: "Learning becomes a business capability"
-            script: >-
-              IT stops being a cost centre that the business tolerates and becomes a
-              capability the business depends on to win.
 
     - id: outro
       title: "The Transformation"
