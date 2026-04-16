@@ -129,17 +129,37 @@ challenges:
     title: "Business Pressure Overrides Readiness"
     subtitle: "Market promises turn Phoenix into a forced launch"
     segment: segment-3
-    description: "Competition, slipping market share, board scrutiny, analyst expectations, and Sarah's constant escalation turn Phoenix into more than a project. By the time Bill and Wes warn that the launch is reckless, the date has become a public promise the company feels it cannot delay."
-    impact: "Operational warnings are treated as hesitation, risky shortcuts multiply, and after go-live the same pressure keeps demanding answers, fixes, and public reassurance while the system is still on fire."
+    description: "Competition, slipping market share, board scrutiny, analyst expectations, and Sarah's constant escalation turn Phoenix into more than a project. Meanwhile Brent keeps getting pulled between outages and Phoenix prep, development still cannot hand over a clean operating plan, and Operations is asked to support a launch it has barely been allowed to prepare for. Even so, Steve and Sarah still lock in the date."
+    impact: "Operational warnings are treated as hesitation, critical preparation gets starved by competing priorities, and the launch date becomes a business promise long before the system is actually ready to carry it."
     icon: "megaphone"
     severity: critical
     color: "#f43f5e"
+
+  - id: deployment-chaos
+    title: "Deployment Chaos"
+    subtitle: "Go-live begins with missing files, bad versions, and no stable test run"
+    segment: segment-3
+    description: "By Friday evening, the deployment has technically started but nobody can run it cleanly. QA cannot get Phoenix to pass smoke tests, developers keep sending partial fixes and changing versions midstream, Operations is still discovering missing files and firewall requirements, and every team is learning critical deployment facts during the rollout instead of before it."
+    impact: "The launch becomes a death march before the true point of no return is even reached. Fatigue rises, coordination collapses, and the company burns hours discovering basics that should have been settled days or weeks earlier."
+    icon: "bug"
+    severity: critical
+    color: "#ef4444"
+
+  - id: irreversible-rollout
+    title: "Point Of No Return"
+    subtitle: "The database conversion commits the business to a bad launch"
+    segment: segment-3
+    description: "Bill can still stop Phoenix until the overnight database conversion begins. Once the conversion starts, the rollout cannot be cleanly stopped or restarted. When that process crawls and the POS systems depend on it to come back up, the company is trapped inside a launch it should never have crossed into."
+    impact: "From that moment on, the business can only fail forward. Stores, customers, and Finance are now hostage to the outcome of a rollout that no longer has a safe exit."
+    icon: "waypoints"
+    severity: critical
+    color: "#f97316"
 
   - id: ground-floor-disconnect
     title: "Ground-Floor Reality Gets Ignored"
     subtitle: "Store operations absorb the cost of a bad launch"
     segment: segment-3
-    description: "Phoenix goes live at 5 p.m. on Friday, but by Saturday morning the consequences are landing on store staff and customers. With POS systems down, stores fall back to manual tills, manual card swipes, shoeboxes full of carbon-copy receipts, emergency trips for change supplies, and frantic calls into IT from around 120 stores. The launch decision was made far above the ground floor, but the damage is felt immediately by the people trying to serve customers."
+    description: "After the overnight rollout crosses the point of no return, Saturday morning lands on store staff and customers. With POS systems down, stores fall back to manual tills, manual card swipes, shoeboxes full of carbon-copy receipts, emergency trips for change supplies, and frantic calls into IT from around 120 stores. The launch decision was made far above the ground floor, but the damage is felt immediately by the people trying to serve customers."
     impact: "The core operational lesson becomes visible: IT systems are not back-office abstractions. When they fail, frontline work breaks, customers wait, and the business literally cannot transact normally."
     icon: "store"
     severity: critical

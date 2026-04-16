@@ -520,57 +520,126 @@ presentation:
       pageScript: >-
         After weeks of escalation from Sarah, commitments to the board and analysts, and a
         constant drumbeat that Phoenix must restore growth, the launch date stops feeling
-        optional. Bill and Wes keep warning that the release is reckless and pleading for
-        more time, but the company has turned Phoenix into a promise it believes it must
-        keep. Sarah sets the marketing launch for Saturday, September 13, which means
-        production has to go live at 5 p.m. the previous day. The start of this segment sits
-        inside that final argument over whether anyone can still stop the launch.
+        optional. But before the disaster arrives, there is a long buildup of warning signs.
+        Phoenix work keeps losing time to outages, Brent keeps getting yanked into whatever
+        is already broken, Development and Operations still do not share a clean deployment
+        plan, and Sarah keeps treating every delay as proof that IT lacks urgency. By the
+        time Friday night arrives, the company is trying to launch a system that has not
+        been given the calm, coordinated preparation it actually needs.
       contentSetupScript: >-
-        The opening beats stay in the last fight before launch. Sarah is pushing to keep the
-        date, Bill and Wes are pleading to delay, and Steve is trapped between operational
-        warnings and promises already made to the board, analysts, and the business. Then
-        Phoenix goes live on Friday evening, and the segment turns from warning to fallout.
+        The opening beats stay with the buildup and the last fight before launch. First Bill
+        tries to protect Phoenix work from all the competing demands that keep starving it.
+        Then Sarah and Steve set a date anyway. Then Friday night proves how unready the
+        rollout really is. Bill still makes one last push to stop it, but once the database
+        conversion begins the launch crosses a single, irreversible point. Only after that
+        does the story tip into Saturday's fallout.
       narrativeArc: >-
-        Bill loses the argument about go-live, lives through the anti-work it unleashes, and
-        only then reaches the breakthrough that connects flow to disciplined project
-        acceptance.
+        Bill watches competing priorities and bad handoffs starve the launch, loses the
+        argument over whether to stop it, lives through the anti-work it unleashes, and only
+        then reaches the breakthrough that connects flow to disciplined project acceptance.
       takeaway: >-
         Unplanned work destroys planned work, and recovery only starts when leaders stop
         accepting work blindly, say no with data, and let capacity set the pace.
       summary: >-
-        Phoenix's fallout teaches Bill what unplanned work really is: anti-work that burns up
-        everything the company meant to do. Erik then helps him connect Brent, technical debt,
-        and overloaded commitments into one system problem. At the offsite, Bill finally states
-        the deeper leadership failure: IT has been accepting work without any real analysis of
-        demand, constrained resources, or the risk to existing commitments. The breakthrough is
-        not another heroic recovery. It is the decision to stop being compliant order takers,
-        freeze new work, and finally manage according to capacity and flow.
+        The segment begins by showing why Phoenix was so fragile before launch ever began:
+        critical prep work was starved by outages, dependencies, last-minute handoffs, and a
+        leadership culture that confused urgency with readiness. The Friday rollout then
+        confirms every warning Bill had raised, and Saturday teaches him what unplanned work
+        really is: anti-work that burns up everything the company meant to do. Erik then
+        helps him connect Brent, technical debt, and overloaded commitments into one system
+        problem. At the offsite, Bill finally states the deeper leadership failure: IT has
+        been accepting work without any real analysis of demand, constrained resources, or
+        the risk to existing commitments. The breakthrough is not another heroic recovery.
+        It is the decision to stop being compliant order takers, freeze new work, and
+        finally manage according to capacity and flow.
       reveals:
         - type: challenge
           id: business-pressure
           modalStep:
-            name: "Bill and Wes plead for delay"
+            name: "Phoenix keeps losing ground before launch night even starts"
             script: >-
-              By the time the final meetings happen, Bill and Wes are no longer arguing about
-              minor readiness details. They are pleading for delay. They know Operations is
-              not ready, they know the stores will absorb the blast radius, and they know the
-              company is treating a business promise as if it were proof of technical
-              readiness. Sarah keeps pressing the market-share argument, and Steve keeps
-              hearing the commitments he has already made upward.
+              The launch trouble starts well before Friday night. Sarah escalates every Phoenix
+              slip as if it proves IT lacks urgency. At the September 3 project meeting,
+              Kirsten reports that only three of twelve critical-path tasks were completed.
+              Brent is late again because he has been pulled into outages and other production
+              work, while Development is still late with concrete specifications for test and
+              production. Bill and Wes argue that Operations has not been given a real chance
+              to prepare, but Sarah turns the conversation back to market pressure and Steve
+              lets the date harden anyway.
           globalStep:
-            name: "Phoenix goes live anyway"
+            name: "The launch date is set before readiness exists"
             script: >-
-              The argument ends here. Sarah's Saturday launch date means Phoenix is pushed
-              into production at 5 p.m. on Friday. From this point on, the story is no longer
-              about whether Bill can stop the release. It is about what happens because he
-              cannot.
+              This is where Sarah pins down the date: marketing launches on Saturday,
+              September 13, and Phoenix deploys at 5 p.m. the previous day. But that is still
+              only the business date on the calendar. The real go-live moment has not
+              happened yet. What follows is the scramble to survive the path to it.
+
+        - type: challenge
+          id: deployment-chaos
+          modalStep:
+            name: "Friday night begins with a rollout that cannot even stand up in test"
+            script: >-
+              By 4 p.m. Friday, IT Operations is assembled for the deployment, but there is
+              almost nothing clean to deploy. Developers are still making last-minute code
+              changes, QA cannot get Phoenix to pass smoke tests, files are missing, firewall
+              ports were never specified, versions are changing faster than anyone can test
+              them, and Brent plus the Operations team are reduced to googling configuration
+              problems in real time. The rollout is already a death march before the actual
+              go-live point has even arrived.
+          globalStep:
+            name: "The launch is already failing before the irreversible step"
+            script: >-
+              Bill pulls Wes, Patty, and William aside for a gut check, and they all tell him
+              the same thing: this is FUBAR. William says there is genuine risk they will not
+              have anything running by 8 a.m. when the stores open. Crucially, though, Wes
+              says they can still stop the rollout for now. The point of no return has not
+              been crossed yet.
+
+        - type: quote
+          id: sarah-we-must-go
+          modalStep:
+            name: "Bill makes one last push to stop the launch"
+            script: >-
+              Bill takes that last opening and uses it. He emails Steve recommending a one-week
+              delay, warns of a near-certain disaster, then calls him directly. Steve refuses
+              to stop unless Sarah agrees. Bill goes to Sarah in person, repeats the risks,
+              and asks her to look at what is happening in the war room. She is unmoved.
+              Marketing is ready, Development is ready, and in her mind Operations is the only
+              thing standing in the way.
+          globalStep:
+            name: "The final off-ramp closes"
+            script: >-
+              Sarah's reply is the last real decision before go-live: everyone is ready but
+              you, we must go. After that, the team is no longer arguing about whether this is
+              wise. They are being driven forward by a decision already made above them.
+
+        - type: challenge
+          id: irreversible-rollout
+          modalStep:
+            name: "The true go-live moment is the database conversion"
+            script: >-
+              The actual point of no return arrives later that Friday night, around the moment
+              the database conversion begins. Bill asks Wes exactly when they become committed,
+              and Wes answers plainly: once they start converting the database so it can take
+              orders from both the in-store POS systems and Phoenix, they are committed.
+              Later they discover the conversion is crawling, cannot be stopped cleanly, and
+              must finish before the POS systems can come back.
+          globalStep:
+            name: "From here, the launch can only fail forward"
+            script: >-
+              This is the singular go-live point for the story. Up to here, Bill can still
+              try to stop Phoenix. After this, the business is trapped inside the rollout.
+              Phoenix may still limp toward being online, but the stores, the POS systems,
+              and the next morning's operations are now hostage to whatever this conversion
+              does.
 
         - type: challenge
           id: ground-floor-disconnect
           modalStep:
             name: "The launch fails where the business actually lives"
             script: >-
-              By Saturday morning, the failure is landing exactly where Bill feared it would:
+              By Saturday morning, after the overnight rollout crosses that point of no
+              return, the failure is landing exactly where Bill feared it would:
               in the stores. The in-store POS systems are down, so staff fall back to manual
               tills and manual card swipes, carbon-copy receipts get stuffed into shoeboxes,
               people run out for more supplies and change, and the phones in IT light up with

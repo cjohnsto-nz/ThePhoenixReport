@@ -133,6 +133,8 @@ characters:
         text: "Bill, that's a touching story but we're not discussing water fountains, we're discussing Phoenix."
       - id: sarah-downtime-cost
         text: "Every minute of downtime costs us hundreds of thousands of dollars."
+      - id: sarah-we-must-go
+        text: "Everyone is ready but you. Marketing, Dev, Project Management all have given this project their all. Now it's your turn. WE MUST GO!"
     avatar: "🏪"
     color: "#f43f5e"
 
