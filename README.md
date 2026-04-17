@@ -2,6 +2,8 @@
 
 The Phoenix Report is an interactive presentation site for The Phoenix Project by Gene Kim, Kevin Behr, and George Spafford. It turns the book into a paced, presenter-friendly walkthrough of the story, the major characters, the core DevOps ideas, and the operational lessons that emerge over the course of the narrative.
 
+<img width="1635" height="956" alt="image" src="https://github.com/user-attachments/assets/e95a824c-966f-423e-8476-81b80891b11f" />
+
 The app is built as a static React + TypeScript + Vite site with a YAML-driven content model. The presentation itself is not hard-coded into components. Instead, the UI resolves timeline steps, cards, quotes, and lesson summaries from data files under `src/data/`.
 
 ## What It Covers
