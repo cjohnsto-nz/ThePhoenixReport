@@ -1,81 +1,73 @@
 import yaml from 'js-yaml';
-import type {
-  TimelineData,
-  LessonsData,
-  ConceptsData,
-  CharactersData,
-  ChallengesData,
-  EpicsData,
-  QuoteItem,
-} from './types';
+import type { DeckData, DeckSegment, DeckSlide } from './types';
 
-// Import raw YAML files
-import timelineYaml from './data/timeline.yaml?raw';
-import lessonsYaml from './data/lessons.yaml?raw';
-import conceptsYaml from './data/concepts.yaml?raw';
-import charactersYaml from './data/characters.yaml?raw';
-import challengesYaml from './data/challenges.yaml?raw';
-import epicsYaml from './data/epics.yaml?raw';
+import deckYaml from './data/deck.yaml?raw';
 
 function parse<T>(raw: string): T {
   return yaml.load(raw) as T;
 }
 
-export const timelineData = parse<TimelineData>(timelineYaml);
-export const lessonsData = parse<LessonsData>(lessonsYaml);
-export const conceptsData = parse<ConceptsData>(conceptsYaml);
-export const charactersData = parse<CharactersData>(charactersYaml);
-export const challengesData = parse<ChallengesData>(challengesYaml);
-export const epicsData = parse<EpicsData>(epicsYaml);
+export const deckData = parse<DeckData>(deckYaml);
 
-// Helper to look up any item by id across all data sources
-export function lookupItem(type: string, id: string) {
-  if (type === 'challenge') {
-    return challengesData.challenges.find((c) => c.id === id);
-  }
-  if (type === 'character') {
-    return charactersData.characters.find((c) => c.id === id);
-  }
-  if (type === 'quote') {
-    for (const character of charactersData.characters) {
-      const quote = character.quotes?.find((entry) => entry.id === id);
-      if (quote) {
-        const item: QuoteItem = {
-          id: quote.id,
-          text: quote.text,
-          characterId: character.id,
-          characterName: character.name,
-          characterRole: character.role,
-          avatar: character.avatar,
-          color: character.color,
-          imagePath: quote.imagePath,
-          imageAlt: quote.imageAlt,
-          imageCaption: quote.imageCaption,
-        };
-        return item;
-      }
-    }
-  }
-  if (type === 'epic') {
-    return epicsData.epics.find((e) => e.id === id);
-  }
-  if (type === 'concept') {
-    // Search through all concept locations
-    const ftow = conceptsData.fourTypesOfWork;
-    const tw = conceptsData.threeWays;
+export function getSlidesBeforeSegment(segments: DeckSegment[], segmentIndex: number) {
+  return segments
+    .slice(0, segmentIndex)
+    .reduce((count, segment) => count + segment.slides.length, 0);
+}
 
-    // Four types items
-    const found =
-      ftow.items.find((i) => i.id === id) ??
-      tw.items.find((i) => i.id === id);
+export function flattenSlides(segments: DeckSegment[]) {
+  return segments.flatMap((segment, segmentIndex) =>
+    segment.slides.map((slide, slideIndex) => ({
+      segment,
+      segmentIndex,
+      slide,
+      slideIndex,
+    })),
+  );
+}
 
-    if (found) return found;
+export function getSlideByAbsoluteIndex(segments: DeckSegment[], absoluteIndex: number) {
+  return flattenSlides(segments)[absoluteIndex] ?? null;
+}
 
-    // Search principles within ways
-    for (const way of tw.items) {
-      const principle = way.principles.find((p) => p.id === id);
-      if (principle) return { ...principle, color: way.color, parentWay: way.title };
-    }
+export function getAbsoluteSlideIndex(segments: DeckSegment[], segmentIndex: number, slideIndex: number) {
+  return getSlidesBeforeSegment(segments, segmentIndex) + slideIndex;
+}
+
+export function getNextSlide(
+  segments: DeckSegment[],
+  segmentIndex: number,
+  slideIndex: number,
+): { segmentIndex: number; slideIndex: number } {
+  const segment = segments[segmentIndex];
+  if (!segment) return { segmentIndex: 0, slideIndex: 0 };
+
+  if (slideIndex < segment.slides.length - 1) {
+    return { segmentIndex, slideIndex: slideIndex + 1 };
   }
-  return undefined;
+
+  const nextSegmentIndex = Math.min(segmentIndex + 1, segments.length - 1);
+  if (nextSegmentIndex === segmentIndex) return { segmentIndex, slideIndex };
+  return { segmentIndex: nextSegmentIndex, slideIndex: 0 };
+}
+
+export function getPreviousSlide(
+  segments: DeckSegment[],
+  segmentIndex: number,
+  slideIndex: number,
+): { segmentIndex: number; slideIndex: number } {
+  if (slideIndex > 0) return { segmentIndex, slideIndex: slideIndex - 1 };
+
+  const previousSegmentIndex = Math.max(segmentIndex - 1, 0);
+  if (previousSegmentIndex === segmentIndex) return { segmentIndex, slideIndex };
+
+  const previousSegment = segments[previousSegmentIndex];
+  return {
+    segmentIndex: previousSegmentIndex,
+    slideIndex: Math.max(0, previousSegment.slides.length - 1),
+  };
+}
+
+export function getSlideLeadText(slide: DeckSlide) {
+  return slide.discussionPrompt ?? slide.body ?? slide.subtitle ?? slide.title;
 }

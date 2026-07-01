@@ -10,9 +10,8 @@ interface WindowPortalProps {
 }
 
 /**
- * Opens a new browser window and renders children into it via a React portal.
+ * Opens a presenter window and renders children into it via a React portal.
  * The new window shares the same React tree, so all state/context works normally.
- * Stylesheets are cloned from the parent document so Tailwind classes apply.
  */
 export function WindowPortal({
   children,
@@ -33,7 +32,7 @@ export function WindowPortal({
 
     const popup = window.open(
       '',
-      'phoenixControls',
+      'aiOffsiteControls',
       [
         `width=${width}`,
         `height=${height}`,
@@ -100,7 +99,7 @@ export function WindowPortal({
     // Base styles on the popup body
     popup.document.body.style.margin = '0';
     popup.document.body.style.padding = '0';
-    popup.document.body.style.background = '#060912';
+    popup.document.body.style.background = '#030506';
     popup.document.body.style.overflow = 'hidden';
     popup.document.body.style.fontFamily = 'Inter, system-ui, sans-serif';
 

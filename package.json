@@ -1,11 +1,12 @@
 {
-  "name": "the-phoenix-report",
+  "name": "ai-offsite-presentation",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "validate:deck": "node scripts/validate-deck.cjs",
+    "build": "npm run validate:deck && tsc -b && vite build",
     "preview": "vite preview"
   },
   "dependencies": {

@@ -1,0 +1,338 @@
+presentation:
+  title: "AI Community of Practice Offsite"
+  subtitle: "Getting on the same page before we build"
+  totalDuration: 120
+  segments:
+    - id: getting-aligned
+      title: "Getting Aligned"
+      shortTitle: "Aligned"
+      start: "00:00"
+      end: "05:00"
+      accent: "#22d3ee"
+      slides:
+        - id: welcome
+          variant: title
+          title: "AI Community of Practice"
+          subtitle: "Getting on the same page before we build"
+          bullets:
+            - "Shared language"
+            - "Working model"
+            - "Platform landscape"
+            - "Build brief"
+          discussionPrompt: "What is top of mind as we start?"
+          speakerNotes: >-
+            Kick off by making the day practical. We are not here to admire AI
+            from a distance. We are here to build shared language, agree how the
+            community should work, understand the platform options, and shape an
+            achievable build brief.
+
+        - id: builder-community
+          variant: statement
+          title: "This is a builder community"
+          subtitle: "The point is useful capability, not passive training."
+          body: "Everyone in the room should be able to contribute at their level today."
+          discussionPrompt: "What do you want to be able to build after today?"
+          speakerNotes: >-
+            Reinforce that mixed skill levels are intentional. Some people will
+            configure, some will build low-code flows, and some will work closer
+            to APIs and custom tools. The common expectation is contribution.
+
+    - id: ai-101
+      title: "AI 101"
+      shortTitle: "AI 101"
+      start: "05:00"
+      end: "60:00"
+      accent: "#22d3ee"
+      slides:
+        - id: ai-is-not-one-thing
+          variant: list
+          title: "AI is not one thing"
+          subtitle: "Use the terms carefully."
+          body: "AI is the umbrella. Models are trained. Inference runs a trained model against an input."
+          bullets:
+            - "Model: the trained statistical system"
+            - "Training: the process used to create or tune it"
+            - "Inference: using the trained model to produce an output"
+          speakerNotes: >-
+            Start broad and keep it plain. The goal is not academic precision.
+            The goal is a shared vocabulary that stops people mixing model,
+            training, inference, chatbot, and agent into one vague idea.
+
+        - id: model-is-frozen
+          variant: statement
+          title: "A model is frozen between training runs"
+          subtitle: "Your conversation does not rewrite the base model."
+          body: "Systems can add memory or logs, but that is not the same thing as the model learning from you in real time."
+          discussionPrompt: "Where have you heard the opposite?"
+          speakerNotes: >-
+            Clear the common myth early. Some products remember things. Some
+            systems collect feedback. But the base model is not silently training
+            itself every time someone chats with it.
+
+        - id: llm-predicts-text
+          variant: statement
+          title: "An LLM predicts text"
+          subtitle: "It is not doing a database lookup."
+          body: "A large language model predicts likely next tokens from the context it has been given."
+          speakerNotes: >-
+            Keep the intuition simple: text in, likely text out. The impressive
+            behavior comes from scale, training data, and the patterns learned
+            during training, not from a hidden database of verified facts.
+
+        - id: prompt-interface
+          variant: list
+          title: "The prompt is the interface"
+          subtitle: "Intent, context, constraints, and examples all matter."
+          bullets:
+            - "Tell it the job"
+            - "Give it the relevant context"
+            - "Set boundaries and acceptance criteria"
+            - "Show examples when quality matters"
+          speakerNotes: >-
+            Prompting is not magic wording. It is clear instruction design.
+            This is why business ownership matters: the business knows what
+            good output looks like and what bad output would cost.
+
+        - id: myth-knows-things
+          variant: question
+          title: "Myths: search and knowledge"
+          subtitle: "Web access is a tool. Inference is prediction."
+          body: "It learned patterns in text, not truth. Hallucination is a fundamental risk to manage, not a weird defect that disappears if we trust the model harder."
+          discussionPrompt: "Where would a confident wrong answer hurt us?"
+          speakerNotes: >-
+            Separate the model from the harness. Search is a tool, not the same
+            thing as inference. Use this as the bridge to governance and testing:
+            the answer is to know where verification, grounding, approval, or
+            human review is required.
+
+        - id: agent-brain-body
+          variant: statement
+          title: "An agent has a brain and a body"
+          subtitle: "The LLM reasons. The harness acts."
+          body: "LLM = brain. Harness = tools, memory, approvals, orchestration, and runtime."
+          speakerNotes: >-
+            This is the key mental model. A chatbot responds. An agent can act,
+            because the harness gives it controlled ways to call tools, inspect
+            context, request approval, and continue a workflow.
+
+        - id: tools-are-actions
+          variant: list
+          title: "Tools are actions"
+          subtitle: "They let the agent do something outside the model."
+          bullets:
+            - "Search or retrieve documents"
+            - "Query a system"
+            - "Create a ticket or draft a record"
+            - "Call an API or run an approved workflow"
+          speakerNotes: >-
+            Tools are the controlled verbs. This is where governance starts to
+            matter, because a tool can read or change real business systems.
+
+        - id: skills-are-reusable
+          variant: list
+          title: "Skills are reusable operating knowledge"
+          subtitle: "Instructions and workflows that agents can share."
+          bullets:
+            - "Package specialist instructions"
+            - "Reduce duplicated prompting"
+            - "Make good practice discoverable"
+            - "Create a path to versioning and reuse"
+          discussionPrompt: "Where should shared skills live so other teams can find them?"
+          speakerNotes: >-
+            Land the organisational skill registry theme here. If every team
+            builds skills independently, reuse will not happen by accident.
+            Skills need somewhere to live and some way to be discovered.
+
+        - id: agents-already-used
+          variant: list
+          title: "You already use agents"
+          subtitle: "The names are familiar even if the architecture is not."
+          bullets:
+            - "M365 Copilot"
+            - "Copilot Studio"
+            - "ChatGPT, Claude, and Gemini"
+            - "GitHub Copilot and Codex"
+          speakerNotes: >-
+            Demystify the landscape. Most people in the room have already used
+            systems with agent-like capabilities. The rest of the day is about
+            making those capabilities intentional and governed.
+
+        - id: platform-ladder-preview
+          variant: ladder
+          title: "Choose the right level of control"
+          subtitle: "Zero-code to low-code to custom development."
+          bullets:
+            - "M365 Copilot: use what already exists"
+            - "Copilot Studio: configure a governed business agent"
+            - "Custom Dev: build when flexibility or integration depth matters"
+          discussionPrompt: "Where does your use case belong?"
+          speakerNotes: >-
+            This previews the architecture section. Not every idea needs custom
+            development. The point is to choose the lowest-complexity platform
+            that can safely do the job.
+
+    - id: working-model
+      title: "The New Working Model"
+      shortTitle: "Model"
+      start: "60:00"
+      end: "75:00"
+      accent: "#67e8f9"
+      slides:
+        - id: request-to-ownership
+          variant: statement
+          title: "The model shifts from request to ownership"
+          subtitle: "The business does not throw ideas over the wall."
+          body: "Business builders configure outcomes inside governed platforms. Tech owns the rails, integration patterns, and risk controls."
+          speakerNotes: >-
+            Make the old and new model explicit. The old pattern is business
+            raises an idea, tech builds, everyone waits. The new pattern is
+            distributed capability inside safe boundaries.
+
+        - id: governed-fast
+          variant: statement
+          title: "Governed means safe to move fast"
+          subtitle: "It should not mean blocked."
+          body: "The community becomes the feedback loop for blockers, missing patterns, standards, and reusable examples."
+          speakerNotes: >-
+            Governance has to be practical. If the process only says no, people
+            will route around it. The goal is a platform model where the safe path
+            is also the easiest path.
+
+        - id: builder-owns-output
+          variant: question
+          title: "Builders own the output"
+          subtitle: "Prompting, testing, and outcomes are business responsibilities."
+          body: "Tech can provide plumbing and guardrails. The business owns whether the agent says the right thing and solves the right problem."
+          discussionPrompt: "What would ownership look like in your area?"
+          speakerNotes: >-
+            This is the accountability point. If someone configures an agent for
+            a business process, they cannot treat quality as purely a technology
+            problem. They own acceptance criteria and success measurement.
+
+    - id: platform-architecture
+      title: "Platform Architecture"
+      shortTitle: "Platforms"
+      start: "75:00"
+      end: "90:00"
+      accent: "#38bdf8"
+      slides:
+        - id: three-platforms
+          variant: ladder
+          title: "Three platforms, one landscape"
+          subtitle: "Pick the right tool for the use case."
+          bullets:
+            - "M365 Copilot: zero-code productivity"
+            - "Copilot Studio: governed low-code agents"
+            - "Custom Dev: full flexibility and deeper integration"
+          speakerNotes: >-
+            Keep the frame simple. The goal is not to crown one platform. The
+            goal is to show where each one fits so nobody gets stuck choosing a
+            tool that is too small or too complex.
+
+        - id: shared-spine
+          variant: list
+          title: "The shared spine is identity, data, and policy"
+          subtitle: "Different tools should still connect to common controls."
+          bullets:
+            - "Identity through Entra ID"
+            - "Data through Graph, SharePoint, and approved systems"
+            - "Governance through DLP, labels, approvals, and auditability"
+          speakerNotes: >-
+            This is the architecture picture behind the tools. A distributed
+            builder model only scales if access, data, and governance are not
+            reinvented for every use case.
+
+        - id: supported-vs-tolerated
+          variant: question
+          title: "Supported is different from tolerated"
+          subtitle: "The path matters before the prototype becomes critical."
+          body: "A platform can be useful and still not be ready for supported business use."
+          discussionPrompt: "What would make a platform safe enough for your team to depend on?"
+          speakerNotes: >-
+            Use this to set up the onboarding path. Experiments are useful, but
+            the community needs a way to move from discovery to supported
+            patterns without ambiguity.
+
+    - id: build-handoff
+      title: "Build Direction Handoff"
+      shortTitle: "Build"
+      start: "90:00"
+      end: "110:00"
+      accent: "#22d3ee"
+      slides:
+        - id: architecture-lenses
+          variant: list
+          title: "Shape the architecture picture together"
+          subtitle: "Use lenses, not conclusions."
+          bullets:
+            - "Shared knowledge"
+            - "Shared tools"
+            - "Specialist agents"
+            - "How users access them"
+          discussionPrompt: "What exists today, what is broken, and what would change how your area works?"
+          speakerNotes: >-
+            This is not a finished answer. Put the lenses on the board and let
+            the room make the picture honest. Capture what people recognise as
+            real, not what sounds polished.
+
+        - id: build-statement
+          variant: handoff
+          title: "The build brief must fit one sentence"
+          subtitle: "If we cannot say it simply, we cannot build it this afternoon."
+          body: "We will build [X] that helps [who] do [what], using [platform], and the demo will show [specific behaviour]."
+          speakerNotes: >-
+            Use the sentence format to stop scope creep. The room can debate
+            platform and behaviour, but the output needs to be a single build
+            statement that everyone can point to.
+
+        - id: smallest-demo
+          variant: statement
+          title: "Smallest demo wins"
+          subtitle: "A working slice beats an ambitious non-demo."
+          body: "The afternoon build does not need to solve the whole competition brief. It needs to prove one useful behaviour convincingly."
+          speakerNotes: >-
+            Push hard on scope. The C-suite deadline is real. A narrow demo that
+            works will create more confidence than a broad prototype that needs
+            explaining.
+
+    - id: showcase-frame
+      title: "Demo Prep and C-suite Frame"
+      shortTitle: "Showcase"
+      start: "110:00"
+      end: "120:00"
+      accent: "#67e8f9"
+      slides:
+        - id: demo-narrative
+          variant: list
+          title: "Agree the demo narrative"
+          subtitle: "Problem, build, proof, next step."
+          bullets:
+            - "What problem did we choose?"
+            - "How did each stream contribute?"
+            - "What can the demo actually show?"
+            - "What should happen next?"
+          speakerNotes: >-
+            During rehearsal, do not just click through the build. Agree the
+            story. The audience should understand why the problem matters, what
+            was built, and what support would turn it into the first sponsored
+            project.
+
+        - id: what-changed-today
+          variant: statement
+          title: "Show what changed today"
+          subtitle: "The working model matters as much as the artifact."
+          body: "Business contributors, low-code builders, and developers can build parallel layers of one solution when the brief is clear."
+          speakerNotes: >-
+            The C-suite should see more than a demo. They should see that the
+            community model can turn distributed capability into a real,
+            governed outcome in a single day.
+
+        - id: leadership-ask
+          variant: closing
+          title: "Leave with a named sponsor"
+          subtitle: "The ask is not generic support. It is a real use case with an executive who cares."
+          discussionPrompt: "Which leadership problem should become the community's first sponsored project?"
+          speakerNotes: >-
+            Close by making the ask concrete. The best outcome is at least one
+            executive personally interested in a named use case that the
+            community can take forward.
