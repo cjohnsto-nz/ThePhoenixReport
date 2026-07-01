@@ -1,338 +1,1158 @@
 presentation:
   title: "AI Community of Practice Offsite"
-  subtitle: "Getting on the same page before we build"
+  subtitle: "Shared language before shared build"
   totalDuration: 120
   segments:
     - id: getting-aligned
       title: "Getting Aligned"
       shortTitle: "Aligned"
+      sectionLabel: "Intro"
       start: "00:00"
       end: "05:00"
-      accent: "#22d3ee"
+      accent: "#94a3b8"
       slides:
         - id: welcome
           variant: title
           title: "AI Community of Practice"
-          subtitle: "Getting on the same page before we build"
+          subtitle: "Shared language before shared build"
           bullets:
-            - "Shared language"
-            - "Working model"
-            - "Platform landscape"
-            - "Build brief"
-          discussionPrompt: "What is top of mind as we start?"
+            - "Come together"
+            - "Set objectives"
+            - "Choose deliverables"
+            - "Establish ownership"
+          discussionPrompt: "How do we scale meaningful AI delivery at Ricoh?"
           speakerNotes: >-
-            Kick off by making the day practical. We are not here to admire AI
-            from a distance. We are here to build shared language, agree how the
-            community should work, understand the platform options, and shape an
-            achievable build brief.
+            The reason we are here is to get aligned before we build. I want us to leave
+            with shared language, a clear sense of what we are trying to deliver, and a
+            practical ownership model, so we can help the business build, test, and own
+            useful AI outcomes instead of talking about AI in the abstract. Everyone in
+            this room is here because they have already been seen building real AI
+            solutions that address business outcomes. They have demonstrated skills we
+            want to support and grow. This is also a chance for a diverse group of people
+            to meet each other and have a say in what gets built, and what Ricoh commits
+            time and energy to.
 
-        - id: builder-community
+        - id: working-session
           variant: statement
-          title: "This is a builder community"
-          subtitle: "The point is useful capability, not passive training."
-          body: "Everyone in the room should be able to contribute at their level today."
-          discussionPrompt: "What do you want to be able to build after today?"
+          title: "AI is an organizational capability"
+          subtitle: "Not just a technology product."
+          body: "AI literacy is now mandatory capability for every level of the business."
           speakerNotes: >-
-            Reinforce that mixed skill levels are intentional. Some people will
-            configure, some will build low-code flows, and some will work closer
-            to APIs and custom tools. The common expectation is contribution.
+            Technology still matters, but this is too big to treat as just a technology
+            product. AI is an organizational capability already. It affects every team,
+            every process, and every way we create work. The mandate comes from the
+            circumstances: AI literacy is no longer optional or specialist. The point
+            today is to build that capability at every level of the business before we get
+            into the detailed ownership model.
 
     - id: ai-101
       title: "AI 101"
       shortTitle: "AI 101"
+      sectionLabel: "Section 01"
       start: "05:00"
-      end: "60:00"
+      end: "65:00"
       accent: "#22d3ee"
       slides:
-        - id: ai-is-not-one-thing
+        - id: q-ai-definition
+          variant: question
+          title: "When we say AI, what do we mean?"
+          speakerNotes: >-
+            Pass this to the room. Before I define it, ask: what is AI? What does AI
+            mean to you when you hear the term? Then frame it historically: people have
+            been asking what machine intelligence means since Turing asked whether
+            machines can imitate intelligent behavior. Early AI was not chatbots; it was a
+            broad ambition around reasoning, games, planning, language, and symbolic
+            problem solving. Conway's Game of Life is a useful intuition too: simple rules
+            can create behavior that looks surprisingly rich. Today's generative AI is
+            one wave inside that longer story.
+
+        - id: ai-field
           variant: list
-          title: "AI is not one thing"
-          subtitle: "Use the terms carefully."
-          body: "AI is the umbrella. Models are trained. Inference runs a trained model against an input."
+          title: "AI isn't just chatbots"
+          subtitle: "Generative AI is the current wave, not the whole field."
           bullets:
-            - "Model: the trained statistical system"
-            - "Training: the process used to create or tune it"
-            - "Inference: using the trained model to produce an output"
+            - "AI: computer science focused on intelligent behavior"
+            - "Machine learning: systems shaped by data"
+            - "LLM: a model that predicts language tokens"
+            - "Agent: model plus action harness"
           speakerNotes: >-
-            Start broad and keep it plain. The goal is not academic precision.
-            The goal is a shared vocabulary that stops people mixing model,
-            training, inference, chatbot, and agent into one vague idea.
+            When I say AI, I do not just mean chatbots. AI is a broad field about getting
+            computers to do things that look intelligent. Turing gives us the question of
+            whether machines can appear intelligent. McCarthy and the Dartmouth workshop
+            helped name AI as a research field. Conway gives us a simple example of rich
+            behavior emerging from simple rules. Machine learning is one part of that
+            field, and generative AI is the current wave getting all the attention. For
+            today, most of our examples are going to center on LLMs and agents, because
+            those are the tools changing the work in front of us.
 
-        - id: model-is-frozen
-          variant: statement
-          title: "A model is frozen between training runs"
-          subtitle: "Your conversation does not rewrite the base model."
-          body: "Systems can add memory or logs, but that is not the same thing as the model learning from you in real time."
-          discussionPrompt: "Where have you heard the opposite?"
+        - id: q-llm-definition
+          variant: question
+          title: "What is an LLM?"
           speakerNotes: >-
-            Clear the common myth early. Some products remember things. Some
-            systems collect feedback. But the base model is not silently training
-            itself every time someone chats with it.
+            Pass this to the room. Before I explain it, ask what people think an LLM is:
+            is it a chatbot, a model, a knowledge engine, or something else?
 
-        - id: llm-predicts-text
+        - id: llm-text-predictor
           variant: statement
-          title: "An LLM predicts text"
-          subtitle: "It is not doing a database lookup."
-          body: "A large language model predicts likely next tokens from the context it has been given."
+          title: "An LLM is a text predictor"
+          subtitle: "Text in, context window, next token out."
+          body: "Text goes into a context window. The model predicts the next token, then repeats the loop until it has generated a response."
           speakerNotes: >-
-            Keep the intuition simple: text in, likely text out. The impressive
-            behavior comes from scale, training data, and the patterns learned
-            during training, not from a hidden database of verified facts.
+            At the simplest level, an LLM predicts text. We put text into a context
+            window, the model predicts the next token, and that output is fed back in so
+            the loop can continue. The result can feel like an answer or a conversation,
+            but mechanically it is generated text, one step at a time.
+
+        - id: attention-paper
+          variant: statement
+          title: "Attention made the LLM revolution possible"
+          subtitle: "Google's Transformer architecture changed how language models scaled."
+          body: "The key breakthrough was letting the model focus on the relevant parts of the input, in parallel, at scale."
+          image:
+            src: "papers/attention-is-all-you-need.png"
+            alt: "arXiv page for the paper Attention Is All You Need"
+            caption: "Vaswani et al., Attention Is All You Need, 2017"
+          speakerNotes: >-
+            This is the paper to call out. Google's Transformer architecture kicked off
+            the modern LLM wave because attention made it practical to process language in
+            parallel and learn relationships across a context. We do not need to teach the
+            math here. The message is that this architecture made scaling language models
+            much more practical, and that is what opened the door to GPT, Claude, Gemini,
+            Copilot, and the agent tools we use now.
+
+        - id: q-how-train-ai
+          variant: question
+          title: "How do you make an LLM?"
+          speakerNotes: >-
+            Before we talk about learning, how do we think AI is trained? What actually
+            happens to make a model better? I am looking for the words people naturally
+            use here: data, examples, feedback, reward, documents, the internet, or
+            prompts. Those are related ideas, but they are not all the same mechanism.
+
+        - id: llm-video
+          variant: statement
+          title: "Large language models, visually"
+          video:
+            provider: "youtube"
+            id: "LPZh9BOjkQs"
+            title: "Large Language Models explained briefly"
+            caption: "3Blue1Brown, Large Language Models explained briefly"
+          speakerNotes: >-
+            Use this video to do the heavy lifting on how large language models work. The
+            point for the room is not to become model researchers. The point is to build
+            an intuition for why training, context, and prediction are different ideas.
+
+        - id: scale-kept-working
+          variant: statement
+          title: "The surprising part was that scale kept working"
+          subtitle: "More model, data, and compute kept improving capability."
+          body: "The field learned that bigger language models often became more capable, more sample-efficient, and more general."
+          diagram:
+            kind: "scale-curve"
+            caption: "Conceptual scaling intuition: capability becomes more general as model, data, and compute increase"
+          speakerNotes: >-
+            One of the surprising discoveries was that scale kept working. Bigger models,
+            more data, and more compute often produced models that were more capable, more
+            general, and better at learning from examples. As scale increased, we started
+            seeing more general behavior emerge: models transferred patterns better, used
+            examples better, and sometimes appeared to suddenly grasp tasks after enough
+            training. That does not mean scale solves every problem, but it explains why
+            the field moved so quickly once the pattern became clear.
+
+        - id: gpt-history
+          variant: statement
+          title: "The curve got steeper"
+          timeline:
+            - year: "2017"
+              title: "Transformer"
+              detail: "Attention becomes the foundation."
+            - year: "2018"
+              title: "GPT"
+              detail: "Pre-training becomes reusable."
+            - year: "2019"
+              title: "GPT-2"
+              detail: "Zero-shot behavior gets attention."
+            - year: "2020"
+              title: "GPT-3"
+              detail: "Few-shot prompting becomes the headline."
+            - year: "2021"
+              title: "Codex and Copilot"
+              detail: "Natural language starts shaping code."
+            - year: "2022"
+              title: "ChatGPT"
+              detail: "The chat interface goes mainstream."
+            - year: "2023"
+              title: "GPT-4"
+              detail: "Reasoning and multimodal use jump forward."
+            - year: "2023"
+              title: "Claude"
+              detail: "Anthropic becomes a major assistant player."
+            - year: "2024"
+              title: "GPT-4o"
+              detail: "Voice, vision, and text move toward real time."
+            - year: "2024"
+              title: "Claude 3.5 Sonnet"
+              detail: "Frontier competition shifts into daily work."
+            - year: "2024"
+              title: "Coding agents"
+              detail: "Devin, Copilot Workspace, and computer-use workflows show multi-step software work."
+            - year: "2025"
+              title: "Operator"
+              detail: "Browser agents become a product surface."
+            - year: "2025"
+              title: "ChatGPT agent"
+              detail: "Research, browsing, and action converge."
+            - year: "2025"
+              title: "Claude 4"
+              detail: "Long-running coding and agent workflows advance."
+            - year: "2026"
+              title: "Project Glasswing"
+              detail: "Selected cybersecurity researchers get early Mythos access for defensive vulnerability work."
+            - year: "2026"
+              title: "Fable / Mythos export controls"
+              detail: "June 12 US export controls restrict access; June 30 access starts returning after review."
+          speakerNotes: >-
+            Use this as the acceleration story, not a trivia slide. The point is that the
+            pace is no longer linear. The distance between research, product, enterprise
+            use, agentic workflows, cybersecurity, and government oversight keeps
+            compressing. Do not over-explain the timeline; use it to show how quickly the
+            conversation moved from chatbots to delegated work and frontier-model control.
+
+        - id: q-does-ai-learn
+          variant: question
+          title: "Does AI learn?"
+          speakerNotes: >-
+            So with that in mind, does AI learn? I want the answer to feel a little
+            uncomfortable at first, because the truthful answer is not simply yes or no.
+            It depends on whether we mean the base model, the current context, or the
+            system around the model.
+
+        - id: yes-and-no-learning
+          variant: answer
+          title: "Yes and No"
+          speakerNotes: >-
+            Yes and no. The base model learned during training. The current prompt can
+            change its behavior through context. A harness can add memory by storing and
+            retrieving information. Those are different mechanisms, and mixing them
+            together is where a lot of confusion comes from.
+
+        - id: training-knowledge
+          variant: statement
+          title: "Training is built-in knowledge"
+          subtitle: "It stops accumulating when training stops."
+          body: "When training stops, built-in knowledge stops accumulating. A model carries patterns from training, but it does not keep absorbing new facts unless the system adds context, tools, memory, or retraining."
+          speakerNotes: >-
+            Training is the part that feels like built-in knowledge. This is how a model
+            can know patterns from the past without searching the web and without a
+            document being attached to the prompt. But that built-in knowledge stops
+            accumulating when training stops. If we need current facts, business data, or
+            process-specific knowledge, the harness has to provide it through context,
+            retrieval, tools, memory, or another training process.
+
+        - id: context-short-term
+          variant: statement
+          title: "Context is the model's attention span"
+          subtitle: "It is everything the model can currently see."
+          body: "The prompt, chat history, retrieved documents, tool results, and instructions all compete for attention inside the context window."
+          speakerNotes: >-
+            Context is better thought of as the model's attention span. It is everything
+            the model can currently see: the prompt, chat history, retrieved documents,
+            instructions, examples, and tool results. If something is not in training and
+            not in context, the model needs a tool to go and get it.
+
+        - id: few-shot-paper
+          variant: statement
+          title: "LLMs can learn from a single example"
+          subtitle: "GPT-3 made few-shot learning the headline."
+          body: "A worked example placed in context can change what the model does without retraining the model."
+          image:
+            src: "papers/language-models-are-few-shot-learners.png"
+            alt: "First page of the GPT-3 paper, Language Models are Few-Shot Learners"
+            caption: "Brown et al., Language Models are Few-Shot Learners, 2020"
+          speakerNotes: >-
+            This paper is important because GPT-3 made few-shot learning the headline. The
+            discovery was not just that the model was large. It was that examples placed
+            in context could teach the model what to do on the spot, without retraining
+            the model. That is why prompt and context design matter so much.
+
+        - id: memory-systems
+          variant: statement
+          title: "Memories aren't out of the box"
+          subtitle: "The harness has to store, retrieve, and supply them."
+          body: "The LLM does not keep memory by itself; the harness has to provide it."
+          speakerNotes: >-
+            Memory is not something the raw LLM just keeps for itself. The harness or app
+            has to store information, retrieve it later, and place it back into context
+            when it is useful. That is how a system can appear to learn across sessions
+            without the base model retraining itself.
+
+        - id: learning-mechanisms
+          variant: statement
+          title: "AI learns in different ways"
+          table:
+            columns:
+              - "Where it lives"
+              - "What changes"
+              - "Example"
+            rows:
+              - label: "Training"
+                cells:
+                  - "Inside the model"
+                  - "Model parameters"
+                  - "Pre-training or fine-tuning"
+              - label: "Context"
+                cells:
+                  - "Inside the current prompt"
+                  - "The model's current behavior"
+                  - "One example teaches the format"
+              - label: "Memory system"
+                cells:
+                  - "In the harness or app"
+                  - "Stored facts, preferences, or notes"
+                  - "An agent retrieves prior project context"
+          speakerNotes: >-
+            This table separates three things that often get called learning. Training
+            changes the model. Context changes what the model can use right now. A memory
+            system lets the application store and retrieve information across sessions.
+            All three are useful, but they have different owners, risks, and controls.
+
+        - id: q-trust-confidence
+          variant: question
+          title: "What is a hallucination?"
+          speakerNotes: >-
+            Now let us talk about hallucination. When people say an AI hallucinated, what
+            do they mean? Usually they mean a confident wrong answer, a made-up fact, an
+            invented citation, or something that sounds polished but is not grounded in
+            anything the system actually knows.
+
+        - id: plausible-not-verified
+          variant: statement
+          title: "Hallucination is an unsupported answer"
+          subtitle: "The model is still trying to produce useful text."
+          body: "It tends to happen when the answer is not in training, not in context, and not available through a tool."
+          speakerNotes: >-
+            A hallucination is an unsupported answer. The model is still trying to produce
+            useful text. If the answer is not in training, not in context, not available
+            through a tool, and the system has not been told that not knowing is
+            acceptable, the model may still generate something plausible.
+
+        - id: avoid-hallucination
+          variant: list
+          title: "Avoid hallucination by designing the answer path"
+          subtitle: "Give the model the smallest sufficient context and a way to verify."
+          bullets:
+            - "Put the required facts in context"
+            - "Tell it when to say it does not know"
+            - "Give it tools to retrieve or verify"
+            - "Test the failure cases"
+          speakerNotes: >-
+            The way to reduce hallucination is to design the answer path. Put the required
+            facts in context. Tell the model when it should say it does not know. Give it
+            tools to retrieve or verify missing information. Then test the failure cases,
+            not just the happy path.
+
+        - id: hallucination-video
+          variant: statement
+          title: "Why confident answers can still be wrong"
+          video:
+            provider: "youtube"
+            id: "cfqtFvWOfg0"
+            title: "Why Large Language Models Hallucinate"
+            caption: "IBM Technology, Why Large Language Models Hallucinate"
+          speakerNotes: >-
+            Use this video as the hallucination explainer. The key framing is that fluent
+            output is not the same as verified truth. The solution is not to stop using
+            AI; it is to design the context, retrieval, tools, and tests around the risk.
 
         - id: prompt-interface
           variant: list
-          title: "The prompt is the interface"
-          subtitle: "Intent, context, constraints, and examples all matter."
+          title: "The prompt is everything"
+          subtitle: "Clear intent, context, and constraints improve output."
           bullets:
-            - "Tell it the job"
-            - "Give it the relevant context"
-            - "Set boundaries and acceptance criteria"
-            - "Show examples when quality matters"
+            - "The job to perform"
+            - "Relevant context"
+            - "Boundaries and acceptance criteria"
+            - "Examples of good output"
           speakerNotes: >-
-            Prompting is not magic wording. It is clear instruction design.
-            This is why business ownership matters: the business knows what
-            good output looks like and what bad output would cost.
+            The prompt is everything because it defines the job. It tells the model what
+            role it is playing, what context matters, what boundaries apply, and what good
+            output looks like. Technology can provide the platform, but the business
+            usually knows the job, the examples, and the acceptance criteria.
 
-        - id: myth-knows-things
-          variant: question
-          title: "Myths: search and knowledge"
-          subtitle: "Web access is a tool. Inference is prediction."
-          body: "It learned patterns in text, not truth. Hallucination is a fundamental risk to manage, not a weird defect that disappears if we trust the model harder."
-          discussionPrompt: "Where would a confident wrong answer hurt us?"
-          speakerNotes: >-
-            Separate the model from the harness. Search is a tool, not the same
-            thing as inference. Use this as the bridge to governance and testing:
-            the answer is to know where verification, grounding, approval, or
-            human review is required.
-
-        - id: agent-brain-body
+        - id: good-prompt-patterns
           variant: statement
-          title: "An agent has a brain and a body"
-          subtitle: "The LLM reasons. The harness acts."
-          body: "LLM = brain. Harness = tools, memory, approvals, orchestration, and runtime."
+          title: "Good prompts are specific, not huge"
+          table:
+            labelColumn: "Area"
+            columns:
+              - "Better"
+              - "Avoid"
+            rows:
+              - label: "Goal"
+                cells:
+                  - "One clear job and outcome"
+                  - "A vague request to analyze everything"
+              - label: "Context"
+                cells:
+                  - "Only the facts needed for this task"
+                  - "Dumping the whole dataset or chat history"
+              - label: "Data"
+                cells:
+                  - "Retrieve the relevant records"
+                  - "Expecting the model to search a giant blob"
+              - label: "Quality"
+                cells:
+                  - "Acceptance criteria and examples"
+                  - "No definition of a good answer"
+              - label: "Tools"
+                cells:
+                  - "Give tools when data must be looked up"
+                  - "Pretend the prompt contains the whole world"
           speakerNotes: >-
-            This is the key mental model. A chatbot responds. An agent can act,
-            because the harness gives it controlled ways to call tools, inspect
-            context, request approval, and continue a workflow.
+            The common misconception is that more prompt is always better. It is not.
+            Larger prompts and long histories can make models miss important details,
+            especially when the relevant fact sits in the middle. The better pattern is
+            targeted context: retrieve the specific facts, provide the relevant examples,
+            and give tools when the model needs live data. Mention the "Lost in the
+            Middle" paper here if useful: long context is powerful, but models do not use
+            every part of it equally well.
 
-        - id: tools-are-actions
+        - id: q-agent-definition
+          variant: question
+          title: "What is an agent?"
+          speakerNotes: >-
+            Now that we have talked about models, what is an agent? I am interested in
+            what makes something feel like more than a chatbot. Maybe it can act, maybe it
+            has tools, maybe it has memory, maybe it can work through a task over multiple
+            steps.
+
+        - id: agent-harness
+          variant: statement
+          title: "An agent is model plus harness"
+          subtitle: "The model reasons. The harness controls how it acts."
+          body: "An agent is software that talks to an LLM, gives it tools and skills, and keeps the loop moving."
+          diagram:
+            kind: "agent-loop"
+            caption: "A simplified agent loop: prompt, reason, act, observe, repeat"
+          speakerNotes: >-
+            My working definition is model plus harness. The model reasons over the
+            context. The harness controls what the system can read, what tools it can
+            call, where it can run, when it needs approval, and how it keeps looping until
+            the work is complete, blocked, or should stop.
+
+        - id: q-harness-definition
+          variant: question
+          title: "What is a harness?"
+          speakerNotes: >-
+            The word harness is important, so let us define it. If the LLM is the model,
+            what is the software around it doing? That surrounding software prompts the
+            model, exposes tools, interprets tool requests, manages approvals, and
+            controls the loop.
+
+        - id: harness-loop
           variant: list
-          title: "Tools are actions"
-          subtitle: "They let the agent do something outside the model."
+          title: "The harness brings the agent to life"
+          subtitle: "It is the software layer the user actually interacts with."
           bullets:
-            - "Search or retrieve documents"
-            - "Query a system"
-            - "Create a ticket or draft a record"
-            - "Call an API or run an approved workflow"
+            - "Builds the prompt and context"
+            - "Provides tools, skills, and memory"
+            - "Runs actions and approvals"
+            - "Loops until done, blocked, or escalated"
           speakerNotes: >-
-            Tools are the controlled verbs. This is where governance starts to
-            matter, because a tool can read or change real business systems.
+            The harness does more than just run a loop. It brings the agent to life. It
+            builds the prompt, supplies context, exposes tools and skills, manages memory,
+            runs approved actions, feeds results back to the model, and decides when the
+            work is complete, blocked, or needs a human. That is why the product around a
+            model matters so much.
 
-        - id: skills-are-reusable
+        - id: brain-and-body
+          variant: statement
+          title: |-
+            The LLM is the brain.
+            The harness is the body.
+          body: "The experience people use is usually the harness, not the raw model."
+          speakerNotes: >-
+            The LLM is the brain and the harness is the body. ChatGPT, Copilot, Claude
+            Code, Codex, and similar tools are harnessed experiences. The raw model is
+            only one part of what the user sees. An agent does not have to live inside a
+            special control platform. It is software that talks to an LLM, gives it tools
+            and skills, and runs a loop.
+
+        - id: products-and-models
+          variant: statement
+          title: "The product is not the same thing as the model"
+          table:
+            labelColumn: "Product"
+            columns:
+              - "Model layer"
+              - "Harness / experience"
+              - "Tools and data"
+            rows:
+              - label: "ChatGPT"
+                cells:
+                  - "GPT family"
+                  - "Chat, agent, custom GPT surface"
+                  - "Web, files, connectors, code tools"
+              - label: "Microsoft Copilot"
+                cells:
+                  - "Microsoft-hosted frontier models"
+                  - "M365 productivity surface"
+                  - "Graph, Office files, tenant data, plugins"
+              - label: "Claude / Claude Code"
+                cells:
+                  - "Claude Opus and Sonnet"
+                  - "Chat and coding harness"
+                  - "Files, repo context, terminal, MCP tools"
+              - label: "Perplexity"
+                cells:
+                  - "Multiple model options"
+                  - "Answer engine and deep research surface"
+                  - "Web retrieval, citations, source pages"
+              - label: "Gemini"
+                cells:
+                  - "Gemini model family"
+                  - "Google app and workspace surface"
+                  - "Search, Workspace, files, extensions"
+          speakerNotes: >-
+            This is a common source of confusion. ChatGPT, Copilot, Claude, Perplexity,
+            Gemini, Claude Code, and Codex are products or experiences. They may use
+            different models underneath, and their tools, memory, policies, and harnesses
+            change what the user can do. For design work, those layers need to be
+            separated.
+
+        - id: q-tool-definition
+          variant: question
+          title: "What is a tool?"
+          speakerNotes: >-
+            So what is a tool in this context? It is not a vague capability. It is a
+            controlled action the harness exposes to the model. The model can request it,
+            but the harness decides whether and how it actually runs.
+
+        - id: tools-actions
           variant: list
-          title: "Skills are reusable operating knowledge"
-          subtitle: "Instructions and workflows that agents can share."
+          title: "Tools are controlled actions"
+          subtitle: "They let the system do something outside the model."
           bullets:
-            - "Package specialist instructions"
-            - "Reduce duplicated prompting"
-            - "Make good practice discoverable"
-            - "Create a path to versioning and reuse"
-          discussionPrompt: "Where should shared skills live so other teams can find them?"
+            - "Search and retrieve"
+            - "Talk to external systems"
+            - "Execute code"
+            - "Take real-world action"
           speakerNotes: >-
-            Land the organisational skill registry theme here. If every team
-            builds skills independently, reuse will not happen by accident.
-            Skills need somewhere to live and some way to be discovered.
+            Tools are controlled verbs. They let the system retrieve documents, call APIs,
+            run code, start workflows, or take real-world action. That is why permissions,
+            logging, approvals, and rollback matter. Once tools exist, the system is not
+            just generating text anymore.
 
-        - id: agents-already-used
+        - id: tool-definition-example
+          variant: statement
+          title: "A tool is described in a structure"
+          subtitle: "The harness gives the model the shape of what it can call."
+          body: "The harness declares the tool. The LLM requests it. The harness validates it, runs it, and returns the result."
+          code: |-
+            {
+              "name": "find_contact",
+              "description": "Find a person in the company directory.",
+              "input_schema": {
+                "first_name": "string",
+                "last_name": "string",
+                "email": "string | optional"
+              }
+            }
+          speakerNotes: >-
+            A tool has a shape. The harness declares the tool name, what it is for, and
+            what inputs it accepts. The model requests a tool call in that structure. The
+            harness validates the request, runs the tool if it is allowed, and feeds the
+            result back into the model.
+
+        - id: q-reusable-knowledge
+          variant: question
+          title: "What is a skill?"
+          speakerNotes: >-
+            Now let us separate tools from skills. What is a skill? For me, a skill is
+            reusable know-how: instructions, examples, workflow knowledge, or team
+            practice that an agent can load when it needs to do a job well.
+
+        - id: skills-portable
           variant: list
-          title: "You already use agents"
-          subtitle: "The names are familiar even if the architecture is not."
+          title: "Skills make good practice reusable"
+          subtitle: "A skill packages instructions, examples, and workflow knowledge."
           bullets:
-            - "M365 Copilot"
-            - "Copilot Studio"
-            - "ChatGPT, Claude, and Gemini"
-            - "GitHub Copilot and Codex"
+            - "Make knowledge durable"
+            - "Describe repeatable processes"
+            - "Load specialist context on demand"
+            - "Reduce context waste"
           speakerNotes: >-
-            Demystify the landscape. Most people in the room have already used
-            systems with agent-like capabilities. The rest of the day is about
-            making those capabilities intentional and governed.
+            Skills make good practice reusable. They are more than prompt snippets. A
+            skill can describe a process, show examples, preserve standards, and help an
+            agent pick up specialist context on demand. That means we can improve the work
+            once and reuse that improvement across agents.
 
-        - id: platform-ladder-preview
+        - id: skill-example
+          variant: statement
+          title: "A skill looks like reusable working instructions"
+          body: "The harness can load a skill when the task matches the description, then give the agent the workflow details only when they are needed."
+          code: |-
+            ---
+            name: ai-offsite-presentation-editor
+            description: Edit the offsite deck, slide flow,
+              speaker notes, and presenter controls.
+            ---
+
+            # Source of truth
+            - src/data/deck.yaml
+            - src/components/ContentArea.tsx
+
+            # Rules
+            1. Keep one clear assertion or question per slide.
+            2. Put room prompts in visible slide content.
+            3. Put presenter talk track in speaker notes.
+            4. Validate the deck before handoff.
+          speakerNotes: >-
+            This is a concrete example from this project. The skill has metadata that
+            helps the harness decide when to load it, then instructions that tell the
+            agent how to do the work consistently. The important difference is that a
+            skill is reusable process knowledge, while a tool is an action the harness can
+            run.
+
+        - id: business-skill-examples
+          variant: list
+          title: "Business processes can become skills"
+          subtitle: "The goal is reusable practice, not one-off prompting."
+          columns:
+            - title: "Service"
+              items:
+                - "new-user-onboarding.md"
+                - "service-review-prep.md"
+                - "post-incident-review.md"
+            - title: "Sales"
+              items:
+                - "opportunity-brief.md"
+                - "proposal-review.md"
+                - "customer-meeting-prep.md"
+            - title: "Operations"
+              items:
+                - "purchase-order-request.md"
+                - "invoice-query-triage.md"
+                - "policy-exception-check.md"
+            - title: "IT / Governance"
+              items:
+                - "access-request-triage.md"
+                - "change-risk-review.md"
+                - "knowledge-article-update.md"
+          speakerNotes: >-
+            This is the business outcome I want to point at. We should start converting
+            real business processes into reusable skills: onboarding, purchase orders,
+            sales briefs, service reviews, incident reviews, access requests, policy
+            checks, and knowledge updates. The modern Agent Skills pattern was defined by
+            Anthropic for Claude as packaged instructions and supporting files, commonly
+            centered on a SKILL.md file. It is not as universal a standard as MCP, but the
+            pattern is useful: versioned process knowledge that a harness can load when it
+            is relevant. External references: platform.claude.com docs for Agent Skills,
+            and github.com/anthropics/skills for examples.
+
+        - id: skills-and-tools-access
+          variant: statement
+          title: "Skills and tools are usually deferred"
+          subtitle: "The agent does not need everything in context at once."
+          body: "The harness can expose a catalog, let the agent choose what it needs, and load details only when relevant."
+          speakerNotes: >-
+            Skills and tools are often deferred. The agent does not need every full
+            instruction and every full tool definition in context all the time. The
+            harness can expose a catalog first, then load the specific skill or tool
+            detail when the task calls for it. That keeps context smaller and more
+            relevant.
+
+        - id: q-mcp-server
+          variant: question
+          title: "What is an MCP server?"
+          speakerNotes: >-
+            Pass this to the room first. Ask what people think an MCP server is. The
+            important thing is not the acronym. The important thing is that agents need a
+            standard way to connect to tools, data, and reusable workflows without every
+            product inventing a custom integration from scratch.
+
+        - id: mcp-server-explained
+          variant: statement
+          title: "An MCP server is a reusable connector for agents"
+          body: "It is a piece of software an AI application can connect to so the agent can safely reach external systems."
+          columns:
+            - title: "AI application"
+              items:
+                - "ChatGPT, Claude, Copilot, IDE, custom app"
+                - "Hosts the conversation and the model"
+            - title: "MCP server"
+              items:
+                - "Standard connection point"
+                - "Packages available capabilities"
+            - title: "Business systems"
+              items:
+                - "Files, APIs, databases, SaaS tools"
+                - "Protected by auth and policy"
+          speakerNotes: >-
+            Explain MCP in simple terms: it is a standard connector pattern. The AI app is
+            the host. The MCP server is the reusable connector. The external system is the
+            thing we want to read from or act on. Instead of building a special
+            integration for every agent and every system, MCP gives the industry a shared
+            protocol. The official docs describe it as an open-source standard for
+            connecting AI applications to external systems.
+
+        - id: mcp-server-contents
+          variant: statement
+          title: "MCP packages capabilities the agent can use"
+          table:
+            labelColumn: "Capability"
+            columns:
+              - "What it means"
+              - "Business example"
+            rows:
+              - label: "Tools"
+                cells:
+                  - "Actions the agent can ask the server to run"
+                  - "Create ticket, search account, check order status"
+              - label: "Resources"
+                cells:
+                  - "Data or documents the server can provide"
+                  - "Policy page, customer record, service history"
+              - label: "Prompts"
+                cells:
+                  - "Reusable prompt templates or workflows"
+                  - "Incident summary, sales brief, onboarding checklist"
+              - label: "Access"
+                cells:
+                  - "Authentication, permissions, and boundaries around the connection"
+                  - "Use the current user's rights and keep an audit trail"
+          speakerNotes: >-
+            The MCP standard talks about tools, resources, and prompts. People may use the
+            word skills for reusable workflows around those capabilities, but the standard
+            names are tools, resources, and prompts. For a business audience, the useful
+            simplification is that an MCP server is a reusable package of capabilities:
+            actions, data, workflow prompts, and the access boundary around them. External
+            references: modelcontextprotocol.io for the specification, Anthropic's MCP
+            announcement, and OpenAI's Agents SDK MCP docs showing broader adoption.
+
+        - id: what-ai-sees
+          variant: statement
+          title: "What does the AI see?"
+          subtitle: "Usually a system prompt before the user prompt."
+          code: |-
+            SYSTEM PROMPT EXAMPLE
+
+            You are an agent helping prepare an AI offsite presentation.
+
+            Loaded tools:
+            - read_file(path): read files in the workspace
+            - run_command(command): run safe local commands
+            - find_contact(first_name, last_name, email?): search directory records
+
+            More tools can be requested from the harness:
+            - web_search
+            - screenshot_page
+            - open_pull_request
+
+            Available skills:
+            - ai-offsite-presentation-editor
+            - frontend-testing-debugging
+            - openai-docs
+
+            If a skill is needed, ask the harness to load it before continuing.
+          speakerNotes: >-
+            This is what the AI actually sees. It sees the current prompt and whatever the
+            harness has loaded: a small set of active tools, a catalog of deferred skills,
+            and instructions for how to ask for more. It is not magically aware of every
+            action or document unless the harness makes those things available.
+
+        - id: q-platform-choice
+          variant: question
+          title: "What do all agents have in common?"
+          speakerNotes: >-
+            Bring this back to first principles. An agent is not defined by one platform.
+            It is a pattern we can recognize in many systems. Before we talk about
+            products, ask what every useful agent needs in order to do work safely.
+
+        - id: agent-recipe
+          variant: list
+          title: "Every agent starts with four plain questions"
+          columns:
+            - title: "1. Job"
+              items:
+                - "What work should it do?"
+                - "What does good look like?"
+            - title: "2. Knowledge"
+              items:
+                - "What should it know?"
+                - "What examples should it follow?"
+            - title: "3. Tools"
+              items:
+                - "What can it read or change?"
+                - "Which actions need approval?"
+            - title: "4. Loop"
+              items:
+                - "How does it check progress?"
+                - "When should it stop or ask?"
+          speakerNotes: >-
+            This is the simplest recipe. Give the agent a job, give it the knowledge it
+            needs, give it tools if it has to act, and define the loop that lets it check
+            progress, ask for help, or stop. That recipe applies whether the agent is a
+            Copilot instruction, a Copilot Studio agent, a Claude Code session, or custom
+            software.
+
+        - id: lowest-safe-control
           variant: ladder
-          title: "Choose the right level of control"
-          subtitle: "Zero-code to low-code to custom development."
-          bullets:
-            - "M365 Copilot: use what already exists"
-            - "Copilot Studio: configure a governed business agent"
-            - "Custom Dev: build when flexibility or integration depth matters"
-          discussionPrompt: "Where does your use case belong?"
+          title: "Then choose where the recipe should run"
+          subtitle: "Same ingredients, different levels of control."
+          columns:
+            - title: "M365 Copilot + CoWork"
+              items:
+                - "Best for personal or team work"
+                - "Uses existing Microsoft context"
+                - "Light configuration"
+                - "Least custom control"
+            - title: "Copilot Studio"
+              items:
+                - "Best for guided business workflows"
+                - "Add knowledge and topics"
+                - "Connect approved actions"
+                - "Low-code governance"
+            - title: "Custom agent"
+              items:
+                - "Best for purpose-built work"
+                - "Custom UX and backend"
+                - "Full tool and loop control"
+                - "Deep integrations"
           speakerNotes: >-
-            This previews the architecture section. Not every idea needs custom
-            development. The point is to choose the lowest-complexity platform
-            that can safely do the job.
+            Once we know the recipe, platform choice becomes less mysterious. We are not
+            choosing between magic boxes. We are choosing where the same basic ingredients
+            should run. If the job lives in Microsoft 365 and the actions are light, start
+            there. If we need a governed business workflow, use Copilot Studio. If the
+            experience, data, or integrations need deeper control, build custom software.
+
+        - id: q-organizational-knowledge
+          variant: question
+          title: "Where should agents learn the organization?"
+          speakerNotes: >-
+            If agents can load tools and skills, where should organizational knowledge
+            live? That is the scaling question. We do not want every agent and every
+            builder reinventing the same process knowledge in separate prompts.
+
+        - id: shared-knowledge-layer
+          variant: statement
+          title: "Agents need a shared knowledge layer"
+          body: "A useful agent has to find its way around our people, processes, systems, documents, and reusable skills."
+          columns:
+            - title: "Processes"
+              items:
+                - "How work actually happens"
+                - "Policies, exceptions, standards"
+            - title: "People"
+              items:
+                - "Owners and subject-matter experts"
+                - "Approvals and escalation paths"
+            - title: "Systems"
+              items:
+                - "Where data lives"
+                - "Which tools are safe to use"
+            - title: "Skills"
+              items:
+                - "Reusable instructions"
+                - "Examples of good work"
+          speakerNotes: >-
+            Agents need a shared knowledge layer. That might include governed catalogs,
+            skill stores, knowledge graphs, process libraries, and approved document
+            sources. The implementation can vary, but the need is consistent: agents need
+            a common way to discover people, processes, systems, and reusable ways of
+            working.
+
+        - id: knowledge-store-outcome
+          variant: statement
+          title: "The asset is not one agent"
+          body: "The asset is an organizational store of knowledge that many agents can use."
+          discussionPrompt: "What knowledge would be most valuable if every agent could find it?"
+          speakerNotes: >-
+            The asset is not one agent. The more durable asset is the shared knowledge,
+            skills, examples, and governance that many agents can reuse. The business owns
+            the process knowledge and examples. Technology owns the store, connectors,
+            permissions, and retrieval patterns that make it dependable.
 
     - id: working-model
       title: "The New Working Model"
       shortTitle: "Model"
-      start: "60:00"
-      end: "75:00"
-      accent: "#67e8f9"
+      sectionLabel: "Section 02"
+      start: "65:00"
+      end: "80:00"
+      accent: "#facc15"
       slides:
-        - id: request-to-ownership
+        - id: ai-business-capability
           variant: statement
-          title: "The model shifts from request to ownership"
-          subtitle: "The business does not throw ideas over the wall."
-          body: "Business builders configure outcomes inside governed platforms. Tech owns the rails, integration patterns, and risk controls."
+          title: "AI is a business capability"
+          body: "It is not an IT problem. It is an everyone problem."
           speakerNotes: >-
-            Make the old and new model explicit. The old pattern is business
-            raises an idea, tech builds, everyone waits. The new pattern is
-            distributed capability inside safe boundaries.
+            AI is not an IT-owned technology project. It is a capability shift across the
+            business. Technology matters, but the value comes from each team changing work
+            it already owns: decisions, process, customer interactions, knowledge, and
+            output quality.
 
-        - id: governed-fast
+        - id: everyday-work-shift
           variant: statement
-          title: "Governed means safe to move fast"
-          subtitle: "It should not mean blocked."
-          body: "The community becomes the feedback loop for blockers, missing patterns, standards, and reusable examples."
+          title: "The everyday skills are changing"
+          comparisons:
+            beforeLabel: "Then"
+            afterLabel: "Now"
+            rows:
+              - before: "Write a Google search"
+                after: "Write a useful prompt"
+              - before: "Create slides, spreadsheets, and documents"
+                after: "Specify the work and iterate with an agent"
+              - before: "Click through repeatable system tasks"
+                after: "Supervise delegated system work"
           speakerNotes: >-
-            Governance has to be practical. If the process only says no, people
-            will route around it. The goal is a platform model where the safe path
-            is also the easiest path.
+            This is about skills, not just tools. The new skill is not merely using a
+            different application. It is writing useful prompts, creating detailed
+            specifications, iterating with an agent, and supervising delegated work
+            instead of personally clicking every step.
 
-        - id: builder-owns-output
+        - id: delivery-model-change
+          variant: statement
+          title: "The delivery model has to change"
+          body: "The old model asks technology to discover use cases across the business and deliver them end to end at scale. That does not work for AI."
+          speakerNotes: >-
+            The old delivery model does not scale well for AI. Technology cannot discover
+            every use case, translate every business need, build every solution, and own
+            every result. The useful detail sits inside the work, so the people closest to
+            the work have to own more of the outcome.
+
+        - id: outcome-ownership
+          variant: statement
+          title: "Technology owns the rails. The business owns the outcome."
+          columns:
+            - title: "Technology owns"
+              items:
+                - "Platforms and licensing"
+                - "Identity, security, and governance"
+                - "Connectors, tools, and data access"
+                - "Reusable integration patterns"
+                - "Code and deployments"
+            - title: "Business owns"
+              items:
+                - "The use case and process design"
+                - "Prompts, instructions, and skills"
+                - "Testing and acceptance criteria"
+                - "Adoption and measurable outcome"
+          speakerNotes: >-
+            This is the ownership model I want to make explicit. Technology owns the
+            rails: platforms, licensing, identity, security, governance, connectors, data
+            access, reusable integration patterns, code, and deployments. The business
+            owns the outcome: the use case, prompts, skills, testing, adoption, and
+            definition of good.
+
+        - id: problem-first
           variant: question
-          title: "Builders own the output"
-          subtitle: "Prompting, testing, and outcomes are business responsibilities."
-          body: "Tech can provide plumbing and guardrails. The business owns whether the agent says the right thing and solves the right problem."
-          discussionPrompt: "What would ownership look like in your area?"
+          title: "The question is not \"where can we use AI?\""
+          body: "The question is what problems are worth solving, and what kind of solution fits."
+          discussionPrompt: "Which business problem would still matter if AI was not in the room?"
           speakerNotes: >-
-            This is the accountability point. If someone configures an agent for
-            a business process, they cannot treat quality as purely a technology
-            problem. They own acceptance criteria and success measurement.
+            The question is not where can we use AI. The question is what problems are
+            worth solving and what kind of solution fits. Sometimes AI will be central.
+            Sometimes it will be a small part. Sometimes the right answer will be a normal
+            process or system change.
+
+        - id: ai-role-spectrum
+          variant: list
+          title: "AI can be the whole solution or just a component"
+          columns:
+            - title: "Personal agent"
+              items:
+                - "A person chats with an assistant"
+                - "AI is the main interface"
+            - title: "Assisted workflow"
+              items:
+                - "AI drafts, checks, or recommends"
+                - "A person reviews and directs"
+            - title: "Embedded automation"
+              items:
+                - "AI cleanses, summarizes, or extracts"
+                - "Most of the process is traditional software"
+          speakerNotes: >-
+            AI solutions do not all have the same shape. Sometimes AI is the whole
+            interaction. Sometimes it is an assistant inside a workflow. Sometimes it is a
+            small component inside a traditional automation, such as data cleansing,
+            summarization, classification, or extraction.
+
+        - id: working-model-summary
+          variant: list
+          title: "What changes for the people in this room?"
+          columns:
+            - title: "Own the problem"
+              items:
+                - "Identify use cases"
+                - "Define the process and outcome"
+            - title: "Shape the solution"
+              items:
+                - "Write prompts and skills"
+                - "Build or configure AI workflows"
+            - title: "Prove it works"
+              items:
+                - "Test the output"
+                - "Lead adoption and real outcomes"
+            - title: "Partner with tech"
+              items:
+                - "Ask for access to systems and data"
+                - "Use the right infrastructure and controls"
+          speakerNotes: >-
+            This is the wrap-up for section two. The responsibility shift is concrete:
+            people in the room identify use cases, shape prompts and skills, test
+            quality, lead adoption, and own real outcomes. Technology partners by
+            providing the systems, data, infrastructure, code, deployments, and controls
+            needed to do that safely.
 
     - id: platform-architecture
       title: "Platform Architecture"
       shortTitle: "Platforms"
-      start: "75:00"
-      end: "90:00"
+      sectionLabel: "Section 03"
+      start: "80:00"
+      end: "95:00"
       accent: "#38bdf8"
       slides:
-        - id: three-platforms
-          variant: ladder
-          title: "Three platforms, one landscape"
-          subtitle: "Pick the right tool for the use case."
-          bullets:
-            - "M365 Copilot: zero-code productivity"
-            - "Copilot Studio: governed low-code agents"
-            - "Custom Dev: full flexibility and deeper integration"
+        - id: target-architecture
+          variant: statement
+          title: "Target architecture centers on knowledge and data"
+          diagram:
+            kind: "target-architecture"
+            caption: "Draft architecture: multiple agent lanes, shared knowledge, shared data, governed connectors"
           speakerNotes: >-
-            Keep the frame simple. The goal is not to crown one platform. The
-            goal is to show where each one fits so nobody gets stuck choosing a
-            tool that is too small or too complex.
+            This is a draft architecture picture for feedback. The lanes are different
+            agent surfaces: self-managed Copilots and CoWork, configured Copilot Studio
+            agents, customer-facing chatbots, and custom agents. The center of the
+            architecture is shared knowledge and shared data. Knowledge means the wiki,
+            versioned skills, prompts, examples, process maps, owners, and standards. Data
+            and connectors include Snowflake, Graph, SharePoint, line-of-business systems,
+            hosted MCP servers, and approved APIs. The foundation is identity, Azure AI
+            Foundry, Azure hosting, GitHub, code, deployments, audit, policy, and
+            monitoring.
 
         - id: shared-spine
           variant: list
-          title: "The shared spine is identity, data, and policy"
-          subtitle: "Different tools should still connect to common controls."
-          bullets:
-            - "Identity through Entra ID"
-            - "Data through Graph, SharePoint, and approved systems"
-            - "Governance through DLP, labels, approvals, and auditability"
+          title: "Agents should act on behalf of the user"
+          subtitle: "Access and action should inherit the user's permissions wherever possible."
+          columns:
+            - title: "Access"
+              items:
+                - "What should this user be able to see?"
+                - "Which data should stay restricted?"
+            - title: "Action"
+              items:
+                - "What should this user be able to do?"
+                - "Which actions need approval?"
+            - title: "Audit"
+              items:
+                - "Who did what, when, and why?"
+                - "Can we review and recover?"
           speakerNotes: >-
-            This is the architecture picture behind the tools. A distributed
-            builder model only scales if access, data, and governance are not
-            reinvented for every use case.
+            The core governance message is on-behalf-of access wherever possible. The
+            agent should not become a magic shared super-user. Ask what the user should be
+            able to see, what actions the user should be able to take, what needs
+            approval, how we audit it, and how we stop or recover if the agent goes off
+            track.
 
-        - id: supported-vs-tolerated
-          variant: question
-          title: "Supported is different from tolerated"
-          subtitle: "The path matters before the prototype becomes critical."
-          body: "A platform can be useful and still not be ready for supported business use."
-          discussionPrompt: "What would make a platform safe enough for your team to depend on?"
+        - id: supported-commitment
+          variant: statement
+          title: "Supported is a commitment"
+          subtitle: "Useful experiments need a path to dependable use."
+          body: "A prototype becomes a business system only when ownership, access, monitoring, and support are clear."
+          discussionPrompt: "Who owns this once people rely on it?"
           speakerNotes: >-
-            Use this to set up the onboarding path. Experiments are useful, but
-            the community needs a way to move from discovery to supported
-            patterns without ambiguity.
+            Supported needs to mean something. A prototype can be useful, but a business
+            system needs clear ownership, access, monitoring, support, and risk controls.
+            Experiments are welcome, but dependable use needs a path from interesting to
+            supported.
 
     - id: build-handoff
       title: "Build Direction Handoff"
       shortTitle: "Build"
-      start: "90:00"
-      end: "110:00"
-      accent: "#22d3ee"
+      sectionLabel: "Section 04"
+      start: "95:00"
+      end: "112:00"
+      accent: "#a78bfa"
       slides:
-        - id: architecture-lenses
+        - id: four-lenses
           variant: list
-          title: "Shape the architecture picture together"
-          subtitle: "Use lenses, not conclusions."
+          title: "Use four lenses for the build brief"
+          subtitle: "The brief should be honest before it is polished."
           bullets:
-            - "Shared knowledge"
-            - "Shared tools"
-            - "Specialist agents"
-            - "How users access them"
-          discussionPrompt: "What exists today, what is broken, and what would change how your area works?"
+            - "Knowledge"
+            - "Tools"
+            - "Agents"
+            - "User access"
+          discussionPrompt: "What is available, missing, or risky?"
           speakerNotes: >-
-            This is not a finished answer. Put the lenses on the board and let
-            the room make the picture honest. Capture what people recognise as
-            real, not what sounds polished.
+            For the build brief, I want us to look through four lenses: knowledge, tools,
+            agents, and user access. What knowledge does the solution need? What tools or
+            systems does it need to touch? What should the agent be allowed to do? And who
+            should be able to use it?
 
-        - id: build-statement
+        - id: one-sentence-brief
           variant: handoff
-          title: "The build brief must fit one sentence"
-          subtitle: "If we cannot say it simply, we cannot build it this afternoon."
+          title: "A useful brief fits one sentence"
+          subtitle: "Simple enough to build, specific enough to test."
           body: "We will build [X] that helps [who] do [what], using [platform], and the demo will show [specific behaviour]."
           speakerNotes: >-
-            Use the sentence format to stop scope creep. The room can debate
-            platform and behaviour, but the output needs to be a single build
-            statement that everyone can point to.
+            A useful brief should fit in one sentence. We will build this thing, for this
+            group of people, to help them do this job, using this platform, and the demo
+            will prove this specific behavior. If we cannot say it that simply, the scope
+            is probably still too fuzzy.
 
         - id: smallest-demo
           variant: statement
-          title: "Smallest demo wins"
+          title: "The smallest convincing demo wins"
           subtitle: "A working slice beats an ambitious non-demo."
-          body: "The afternoon build does not need to solve the whole competition brief. It needs to prove one useful behaviour convincingly."
+          body: "Prove one behavior clearly enough that leaders understand the opportunity and the next ask."
           speakerNotes: >-
-            Push hard on scope. The C-suite deadline is real. A narrow demo that
-            works will create more confidence than a broad prototype that needs
-            explaining.
+            The smallest convincing demo wins. We do not need to prove every future
+            possibility today. We need one working slice that makes the opportunity clear
+            and gives leaders confidence that the next step is worth backing.
 
     - id: showcase-frame
       title: "Demo Prep and C-suite Frame"
       shortTitle: "Showcase"
-      start: "110:00"
+      sectionLabel: "Section 05"
+      start: "112:00"
       end: "120:00"
-      accent: "#67e8f9"
+      accent: "#fb7185"
       slides:
-        - id: demo-narrative
+        - id: demo-story
           variant: list
-          title: "Agree the demo narrative"
+          title: "The demo story is simple"
           subtitle: "Problem, build, proof, next step."
           bullets:
             - "What problem did we choose?"
-            - "How did each stream contribute?"
-            - "What can the demo actually show?"
+            - "What did we build?"
+            - "What can we prove?"
             - "What should happen next?"
+          discussionPrompt: "What will the audience remember in one sentence?"
           speakerNotes: >-
-            During rehearsal, do not just click through the build. Agree the
-            story. The audience should understand why the problem matters, what
-            was built, and what support would turn it into the first sponsored
-            project.
+            The demo story should be simple: problem, build, proof, next step. What
+            problem did we choose? What did we build? What can we prove? What should
+            happen next? If the audience remembers one sentence, it should be the business
+            reason to keep going.
 
-        - id: what-changed-today
+        - id: working-model-proof
           variant: statement
-          title: "Show what changed today"
-          subtitle: "The working model matters as much as the artifact."
-          body: "Business contributors, low-code builders, and developers can build parallel layers of one solution when the brief is clear."
+          title: "Show the working model, not just the artifact"
+          subtitle: "The collaboration pattern is part of the proof."
+          body: "Business expertise, low-code build, and custom development can move as parallel layers of one solution."
           speakerNotes: >-
-            The C-suite should see more than a demo. They should see that the
-            community model can turn distributed capability into a real,
-            governed outcome in a single day.
+            The artifact is only part of the proof. The C-suite should also see the
+            working model: business expertise, low-code build, custom development, and
+            governance moving together. The collaboration pattern is part of what we are
+            demonstrating.
 
-        - id: leadership-ask
+        - id: named-sponsor
           variant: closing
           title: "Leave with a named sponsor"
-          subtitle: "The ask is not generic support. It is a real use case with an executive who cares."
-          discussionPrompt: "Which leadership problem should become the community's first sponsored project?"
+          subtitle: "The ask is a real use case with an executive who cares."
+          body: "The best next step is a sponsored problem and a team ready to own it."
+          discussionPrompt: "Which leadership problem should become the first sponsored project?"
           speakerNotes: >-
-            Close by making the ask concrete. The best outcome is at least one
-            executive personally interested in a named use case that the
-            community can take forward.
+            The best next step is a named sponsor for a real use case. If we can leave
+            with an executive who cares about a specific problem and a team ready to own
+            it, the community has a concrete path from offsite energy to business
+            delivery.

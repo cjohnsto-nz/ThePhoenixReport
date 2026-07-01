@@ -1,4 +1,4 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { useControls } from '../ControlsContext';
 import { usePresentation } from '../PresentationContext';
 import { WindowPortal } from './WindowPortal';
@@ -86,9 +86,41 @@ function RemoteControlsView() {
     split,
   } = usePresentation();
   const { setIsPopped } = useControls();
+  const rootRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const popupWindow = rootRef.current?.ownerDocument.defaultView;
+    if (!popupWindow) return;
+
+    rootRef.current?.focus();
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.repeat) return;
+
+      const target = event.target as HTMLElement | null;
+      const isEditable =
+        target?.tagName === 'INPUT' ||
+        target?.tagName === 'TEXTAREA' ||
+        target?.isContentEditable;
+      if (isEditable) return;
+
+      if (event.key === 'ArrowRight' || event.key === 'PageDown') {
+        event.preventDefault();
+        dispatch({ type: 'NEXT_SLIDE' });
+      }
+
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        event.preventDefault();
+        dispatch({ type: 'PREV_SLIDE' });
+      }
+    };
+
+    popupWindow.addEventListener('keydown', handleKeyDown);
+    return () => popupWindow.removeEventListener('keydown', handleKeyDown);
+  }, [dispatch]);
 
   return (
-    <div className="flex h-screen flex-col bg-[#030506] text-white">
+    <div ref={rootRef} tabIndex={-1} className="flex h-screen flex-col bg-[#030506] text-white">
       <div className="border-b border-white/12 px-8 py-6">
         <div className="font-mono text-xs uppercase text-cyan-300">Remote Presenter</div>
         <h1 className="mt-2 text-3xl font-semibold">{currentSlide.title}</h1>

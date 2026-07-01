@@ -34,32 +34,75 @@ The schema is:
 ```yaml
 presentation:
   title: "AI Community of Practice Offsite"
-  subtitle: "Getting on the same page before we build"
+  subtitle: "Shared language before shared build"
   totalDuration: 120
   segments:
     - id: ai-101
       title: "AI 101"
       shortTitle: "AI 101"
+      sectionLabel: "Section 01"
       start: "05:00"
       end: "60:00"
       accent: "#22d3ee"
       slides:
-        - id: model-is-frozen
+        - id: everyday-work-shift
           variant: statement
-          title: "A model is frozen between training runs"
-          subtitle: "Your conversation does not rewrite the base model."
-          body: "Systems can add memory or logs, but that is not the same thing as the model learning from you in real time."
-          discussionPrompt: "Where have you heard the opposite?"
-          speakerNotes: "Use this to clear a common misconception early."
+          title: "The everyday tools are changing"
+          comparisons:
+            beforeLabel: "Then"
+            afterLabel: "Now"
+            rows:
+              - before: "Search for an answer"
+                after: "Prompt for a useful starting point"
+              - before: "Build slides and spreadsheets by hand"
+                after: "Use agents to draft, analyze, and iterate"
+          speakerNotes: "Use this as the adoption point: prompting is becoming the new Googling."
+
+        - id: llm-history
+          variant: statement
+          title: "In less than a decade, the interface changed"
+          timeline:
+            - year: "2024"
+              title: "GPT-4o"
+              detail: "Text, vision, and voice moved toward real-time use."
+
+        - id: llm-video
+          variant: statement
+          title: "Large language models, visually"
+          video:
+            provider: "youtube"
+            id: "LPZh9BOjkQs"
+            title: "Large Language Models explained briefly"
+            caption: "3Blue1Brown"
+
+        - id: learning-summary
+          variant: statement
+          title: "AI learns in different ways"
+          table:
+            labelColumn: "Mechanism"
+            columns: ["Where it lives", "What changes", "Example"]
+            rows:
+              - label: "Context"
+                cells: ["Inside the current prompt", "The model's current behavior", "One example teaches the format"]
+
+        - id: products-and-models
+          variant: statement
+          title: "The product is not the same thing as the model"
+          brandGroups:
+            - title: "Products and harnesses people use"
+              items:
+                - name: "ChatGPT"
+                  detail: "App and agent experience"
 ```
 
-One slide equals one presenter step. Speaker notes appear in the right rail and in the popout presenter view.
+One slide equals one presenter step. Slides can use `body`, `bullets`, `columns`, `comparisons`, `timeline`, `video`, `diagram`, `table`, `brandGroups`, `image`, `code`, and `discussionPrompt` as needed. Speaker notes and transport controls appear in the popout presenter view only.
 
 ## Authoring Rules
 
 - Keep each slide to one clear assertion or question.
 - Put room facilitation prompts in `discussionPrompt`.
 - Put presenter-only wording in `speakerNotes`.
+- For AI 101, prefer short room-question slides before the clarification or explanation slide.
 - Keep visible slide text short enough to read from a distance.
 - Use stable, unique `id` values for segments and slides.
 - Run `npm run validate:deck` after editing `deck.yaml`.
