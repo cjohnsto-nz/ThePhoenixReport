@@ -14,6 +14,10 @@ body {
   background: #030506;
 }
 
+.print-deck {
+  display: none;
+}
+
 button,
 textarea,
 input {
@@ -50,5 +54,121 @@ input {
     animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  @page slides-16-9 {
+    size: 20in 11.25in;
+    margin: 0;
+  }
+
+  @page slides-16-10 {
+    size: 20in 12.5in;
+    margin: 0;
+  }
+
+  @page slides-3-2 {
+    size: 20in 13.3333in;
+    margin: 0;
+  }
+
+  @page slides-4-3 {
+    size: 20in 15in;
+    margin: 0;
+  }
+
+  html,
+  body,
+  #root {
+    width: 20in;
+    min-height: 15in;
+    margin: 0;
+    background: #030506 !important;
+  }
+
+  body {
+    overflow: visible !important;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .screen-deck {
+    display: none !important;
+  }
+
+  .print-deck {
+    display: block !important;
+    background: #030506 !important;
+  }
+
+  .print-page {
+    position: relative !important;
+    overflow: hidden !important;
+    break-after: page;
+    page-break-after: always;
+    background: #030506 !important;
+  }
+
+  .print-page:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+
+  .print-slide-canvas {
+    font-size: calc(16px * var(--pdf-font-scale, 1));
+    background: #030506 !important;
+  }
+
+  .print-ratio-16-9 .print-page {
+    page: slides-16-9;
+  }
+
+  .print-ratio-16-10 .print-page {
+    page: slides-16-10;
+  }
+
+  .print-ratio-3-2 .print-page {
+    page: slides-3-2;
+  }
+
+  .print-ratio-4-3 .print-page {
+    page: slides-4-3;
+  }
+
+  .print-ratio-16-9 .print-page,
+  .print-ratio-16-9 .print-slide-canvas {
+    width: 20in !important;
+    height: 11.25in !important;
+    min-height: 11.25in !important;
+  }
+
+  .print-ratio-16-10 .print-page,
+  .print-ratio-16-10 .print-slide-canvas {
+    width: 20in !important;
+    height: 12.5in !important;
+    min-height: 12.5in !important;
+  }
+
+  .print-ratio-3-2 .print-page,
+  .print-ratio-3-2 .print-slide-canvas {
+    width: 20in !important;
+    height: 13.3333in !important;
+    min-height: 13.3333in !important;
+  }
+
+  .print-ratio-4-3 .print-page,
+  .print-ratio-4-3 .print-slide-canvas {
+    width: 20in !important;
+    height: 15in !important;
+    min-height: 15in !important;
   }
 }

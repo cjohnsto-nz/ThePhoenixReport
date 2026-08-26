@@ -45,6 +45,23 @@ presentation:
             today is to build that capability at every level of the business before we get
             into the detailed ownership model.
 
+        - id: today-objectives
+          variant: list
+          title: "What we need to achieve today"
+          bullets:
+            - "Share our experiences and builds"
+            - "Align our base AI knowledge"
+            - "Establish the new working model"
+            - "Set our objectives as a community"
+            - "Identify our core challenges and opportunities"
+            - "Build some cool stuff"
+            - "Get to know each other"
+          speakerNotes: >-
+            Keep this high level and human. The point is to make the day feel practical,
+            social, and outcome-oriented. We are here to learn from what people have
+            already built, level-set the language, agree how the community should work, and
+            leave with enough clarity and momentum to build useful things together.
+
     - id: ai-101
       title: "AI 101"
       shortTitle: "AI 101"
@@ -763,68 +780,68 @@ presentation:
 
         - id: q-platform-choice
           variant: question
-          title: "What do all agents have in common?"
+          title: "What does every agent need?"
           speakerNotes: >-
-            Bring this back to first principles. An agent is not defined by one platform.
-            It is a pattern we can recognize in many systems. Before we talk about
-            products, ask what every useful agent needs in order to do work safely.
+            Bring this back to first principles. An agent is not defined by one product
+            name. It is a pattern we can recognize in many systems. Before we talk about
+            platforms, ask what every useful agent needs in order to do work safely.
 
         - id: agent-recipe
           variant: list
-          title: "Every agent starts with four plain questions"
+          title: "An agent needs a job, knowledge, tools, and a loop"
           columns:
-            - title: "1. Job"
+            - title: "Job"
               items:
-                - "What work should it do?"
-                - "What does good look like?"
-            - title: "2. Knowledge"
+                - "What result are we asking for?"
+                - "How will we know it is right?"
+            - title: "Knowledge"
               items:
-                - "What should it know?"
-                - "What examples should it follow?"
-            - title: "3. Tools"
+                - "What context, examples, or rules does it need?"
+                - "Where should that come from?"
+            - title: "Tools"
               items:
-                - "What can it read or change?"
-                - "Which actions need approval?"
-            - title: "4. Loop"
+                - "What can it read, create, or change?"
+                - "What requires approval?"
+            - title: "Loop"
               items:
-                - "How does it check progress?"
-                - "When should it stop or ask?"
+                - "How does it check its work?"
+                - "When should it stop or ask a person?"
           speakerNotes: >-
-            This is the simplest recipe. Give the agent a job, give it the knowledge it
-            needs, give it tools if it has to act, and define the loop that lets it check
-            progress, ask for help, or stop. That recipe applies whether the agent is a
-            Copilot instruction, a Copilot Studio agent, a Claude Code session, or custom
+            This is the plain-language recipe. Give the agent a clear job, give it the
+            knowledge needed for that job, decide what tools it may use, and define the
+            loop for checking work, asking for help, and stopping. That same recipe applies
+            whether the surface is Copilot, Copilot Studio, Claude Code, Codex, or custom
             software.
 
         - id: lowest-safe-control
           variant: ladder
-          title: "Then choose where the recipe should run"
-          subtitle: "Same ingredients, different levels of control."
+          title: "Pick the right tool for the job"
+          subtitle: "Same recipe, different amount of control."
           columns:
             - title: "M365 Copilot + CoWork"
               items:
-                - "Best for personal or team work"
-                - "Uses existing Microsoft context"
-                - "Light configuration"
-                - "Least custom control"
+                - "Personal and team productivity"
+                - "Works where Microsoft 365 already has context"
+                - "Fastest to try"
+                - "Limited custom actions"
             - title: "Copilot Studio"
               items:
-                - "Best for guided business workflows"
-                - "Add knowledge and topics"
-                - "Connect approved actions"
+                - "Guided business process agents"
+                - "Custom knowledge, topics, and prompts"
+                - "Approved connectors and actions"
                 - "Low-code governance"
             - title: "Custom agent"
               items:
-                - "Best for purpose-built work"
-                - "Custom UX and backend"
-                - "Full tool and loop control"
-                - "Deep integrations"
+                - "Purpose-built app experience"
+                - "Full control over UX, data, and backend"
+                - "Deep integrations and custom loops"
+                - "Higher engineering ownership"
           speakerNotes: >-
-            Once we know the recipe, platform choice becomes less mysterious. We are not
-            choosing between magic boxes. We are choosing where the same basic ingredients
-            should run. If the job lives in Microsoft 365 and the actions are light, start
-            there. If we need a governed business workflow, use Copilot Studio. If the
-            experience, data, or integrations need deeper control, build custom software.
+            Once the recipe is clear, choosing a platform becomes a practical decision. If
+            the work lives in Microsoft 365 and the actions are light, start there. If the
+            business needs a governed workflow with custom knowledge and approved actions,
+            Copilot Studio is a better fit. If the experience, data, or integrations need
+            deeper control, it becomes a custom software problem.
 
         - id: q-organizational-knowledge
           variant: question

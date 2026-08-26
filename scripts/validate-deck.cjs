@@ -279,8 +279,8 @@ if (!isRecord(deck?.presentation)) {
       });
     });
 
-    if (slideCount < 32 || slideCount > 64) {
-      issues.push(`deck should contain 32-64 slides; found ${slideCount}`);
+    if (slideCount < 32 || slideCount > 72) {
+      issues.push(`deck should contain 32-72 slides; found ${slideCount}`);
     }
   }
 }

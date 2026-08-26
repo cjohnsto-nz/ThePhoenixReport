@@ -1,5 +1,12 @@
 import { useEffect, useRef, type ReactNode } from 'react';
-import { useControls } from '../ControlsContext';
+import {
+  EXPORT_ASPECT_RATIOS,
+  DEFAULT_EXPORT_ZOOM_PERCENT,
+  type ExportAspectRatio,
+  MAX_EXPORT_ZOOM_PERCENT,
+  MIN_EXPORT_ZOOM_PERCENT,
+  useControls,
+} from '../ControlsContext';
 import { usePresentation } from '../PresentationContext';
 import { WindowPortal } from './WindowPortal';
 
@@ -75,6 +82,107 @@ function PlayIcon({ isRunning }: { isRunning: boolean }) {
   );
 }
 
+function PrintIcon() {
+  return (
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+      <path d="M7 8V3H17V8" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
+      <path d="M7 17H5C3.9 17 3 16.1 3 15V10C3 8.9 3.9 8 5 8H19C20.1 8 21 8.9 21 10V15C21 16.1 20.1 17 19 17H17" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
+      <path d="M7 14H17V21H7V14Z" stroke="currentColor" strokeWidth="2" strokeLinecap="square" />
+    </svg>
+  );
+}
+
+function exportSlidesToPdf() {
+  window.print();
+}
+
+function ZoomControl({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  const setSteppedValue = (delta: number) => {
+    onChange(value + delta);
+  };
+
+  return (
+    <div className="border border-white/12 bg-white/[0.025] p-4">
+      <div className="flex items-center justify-between gap-4">
+        <div className="font-mono text-xs uppercase text-white/38">PDF Zoom</div>
+        <div className="font-mono text-lg text-cyan-200">{value}%</div>
+      </div>
+      <div className="mt-4 grid grid-cols-[44px_minmax(0,1fr)_44px] items-center gap-3">
+        <button
+          type="button"
+          title="Zoom PDF out"
+          onClick={() => setSteppedValue(-5)}
+          className="flex h-10 items-center justify-center border border-white/12 font-mono text-lg text-white/70 transition hover:border-white/24 hover:text-white"
+        >
+          -
+        </button>
+        <input
+          aria-label="PDF zoom"
+          type="range"
+          min={MIN_EXPORT_ZOOM_PERCENT}
+          max={MAX_EXPORT_ZOOM_PERCENT}
+          step={5}
+          value={value}
+          onChange={(event) => onChange(Number.parseInt(event.currentTarget.value, 10))}
+          className="h-2 w-full accent-cyan-300"
+        />
+        <button
+          type="button"
+          title="Zoom PDF in"
+          onClick={() => setSteppedValue(5)}
+          className="flex h-10 items-center justify-center border border-white/12 font-mono text-lg text-white/70 transition hover:border-white/24 hover:text-white"
+        >
+          +
+        </button>
+      </div>
+      <button
+        type="button"
+        onClick={() => onChange(DEFAULT_EXPORT_ZOOM_PERCENT)}
+        className="mt-3 font-mono text-xs uppercase text-white/45 transition hover:text-white/80"
+      >
+        Reset to TV fit
+      </button>
+    </div>
+  );
+}
+
+function AspectRatioControl({
+  value,
+  onChange,
+}: {
+  value: ExportAspectRatio;
+  onChange: (value: ExportAspectRatio) => void;
+}) {
+  return (
+    <div className="border border-white/12 bg-white/[0.025] p-4">
+      <div className="font-mono text-xs uppercase text-white/38">Aspect Ratio</div>
+      <div className="mt-4 grid grid-cols-2 gap-2">
+        {EXPORT_ASPECT_RATIOS.map((ratio) => (
+          <button
+            key={ratio}
+            type="button"
+            title={`Export PDF as ${ratio}`}
+            onClick={() => onChange(ratio)}
+            className={`h-10 border font-mono text-xs uppercase transition ${
+              value === ratio
+                ? 'border-cyan-300/55 bg-cyan-300/10 text-cyan-100'
+                : 'border-white/12 text-white/58 hover:border-white/24 hover:text-white'
+            }`}
+          >
+            {ratio}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function RemoteControlsView() {
   const {
     state,
@@ -85,7 +193,13 @@ function RemoteControlsView() {
     nextStep,
     split,
   } = usePresentation();
-  const { setIsPopped } = useControls();
+  const {
+    exportAspectRatio,
+    exportZoomPercent,
+    setExportAspectRatio,
+    setExportZoomPercent,
+    setIsPopped,
+  } = useControls();
   const rootRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
@@ -168,6 +282,22 @@ function RemoteControlsView() {
             >
               <PlayIcon isRunning={state.isRunning} />
               <span className="ml-3">{state.isRunning ? 'Pause' : 'Start'}</span>
+            </ControlButton>
+            <ZoomControl
+              value={exportZoomPercent}
+              onChange={setExportZoomPercent}
+            />
+            <AspectRatioControl
+              value={exportAspectRatio}
+              onChange={setExportAspectRatio}
+            />
+            <ControlButton
+              title="Export slides to PDF"
+              onClick={exportSlidesToPdf}
+              tone="subtle"
+            >
+              <PrintIcon />
+              <span className="ml-3">Export PDF</span>
             </ControlButton>
             <ControlButton
               title="Dock controls"

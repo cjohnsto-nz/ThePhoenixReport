@@ -1,7 +1,15 @@
 import { AnimatePresence, motion } from 'framer-motion';
 import type { CSSProperties } from 'react';
+import { useControls } from '../ControlsContext';
 import { usePresentation } from '../PresentationContext';
-import type { DeckSlide } from '../types';
+import type { DeckSegment, DeckSlide, PresentationStepInfo } from '../types';
+
+interface SlideEntry {
+  segment: DeckSegment;
+  segmentIndex: number;
+  slide: DeckSlide;
+  slideIndex: number;
+}
 
 function twoDigit(value: number) {
   return value.toString().padStart(2, '0');
@@ -211,10 +219,28 @@ function SlideTimeline({ slide }: { slide: DeckSlide }) {
   );
 }
 
-function SlideVideo({ slide }: { slide: DeckSlide }) {
+function SlideVideo({ slide, printable = false }: { slide: DeckSlide; printable?: boolean }) {
   if (!slide.video) return null;
 
+  const watchUrl = `https://www.youtube.com/watch?v=${slide.video.id}`;
   const src = `https://www.youtube-nocookie.com/embed/${slide.video.id}?rel=0`;
+
+  if (printable) {
+    return (
+      <figure className="mt-10 max-w-5xl">
+        <div className="aspect-video border border-white/16 bg-black p-10 shadow-[0_0_48px_var(--segment-accent-glow)]">
+          <div className="font-mono text-xs uppercase text-[var(--segment-accent)]">Video</div>
+          <div className="mt-8 text-4xl font-semibold leading-tight text-white">{slide.video.title}</div>
+          <div className="mt-8 max-w-3xl font-mono text-lg leading-relaxed text-white/62">{watchUrl}</div>
+        </div>
+        {slide.video.caption && (
+          <figcaption className="mt-3 font-mono text-xs uppercase text-white/48">
+            {slide.video.caption}
+          </figcaption>
+        )}
+      </figure>
+    );
+  }
 
   return (
     <figure className="mt-10 max-w-5xl">
@@ -728,46 +754,87 @@ function SlideColumns({ slide }: { slide: DeckSlide }) {
   );
 }
 
-function ProgressRail() {
-  const { slides, currentAbsoluteIndex, dispatch } = usePresentation();
-
+function ProgressRail({
+  slides,
+  currentAbsoluteIndex,
+  onGoToSlide,
+}: {
+  slides: SlideEntry[];
+  currentAbsoluteIndex: number;
+  onGoToSlide?: (absoluteIndex: number) => void;
+}) {
   return (
     <div
       className="grid min-w-0 items-center gap-1"
       style={{ gridTemplateColumns: `repeat(${slides.length}, minmax(0, 1fr))` }}
     >
-      {slides.map((entry, index) => (
-        <button
-          key={`${entry.segment.id}-${entry.slide.id}`}
-          type="button"
-          onClick={() => dispatch({ type: 'GO_TO_SLIDE', absoluteIndex: index })}
-          title={entry.slide.title}
-          style={index === currentAbsoluteIndex ? {
-            backgroundColor: 'var(--segment-accent)',
-            boxShadow: '0 0 18px var(--segment-accent-glow)',
-          } : undefined}
-          className={`h-1 w-full rounded-full transition-all ${
-            index === currentAbsoluteIndex
-              ? ''
-              : index < currentAbsoluteIndex
-                ? 'bg-white/35'
-                : 'bg-white/16 hover:bg-white/28'
-          }`}
-        />
-      ))}
+      {slides.map((entry, index) => {
+        const className = `h-1 w-full rounded-full transition-all ${
+          index === currentAbsoluteIndex
+            ? ''
+            : index < currentAbsoluteIndex
+              ? 'bg-white/35'
+              : 'bg-white/16 hover:bg-white/28'
+        }`;
+        const style = index === currentAbsoluteIndex ? {
+          backgroundColor: 'var(--segment-accent)',
+          boxShadow: '0 0 18px var(--segment-accent-glow)',
+        } : undefined;
+
+        if (!onGoToSlide) {
+          return (
+            <span
+              key={`${entry.segment.id}-${entry.slide.id}`}
+              title={entry.slide.title}
+              style={style}
+              className={className}
+            />
+          );
+        }
+
+        return (
+          <button
+            key={`${entry.segment.id}-${entry.slide.id}`}
+            type="button"
+            onClick={() => onGoToSlide(index)}
+            title={entry.slide.title}
+            style={style}
+            className={className}
+          />
+        );
+      })}
     </div>
   );
 }
 
-export function ContentArea() {
-  const {
-    currentSegment,
-    currentSlide,
-    currentStep,
-    currentAbsoluteIndex,
-    slides,
-  } = usePresentation();
+function buildStepInfo(segment: DeckSegment, slide: DeckSlide, absoluteIndex: number, totalSlides: number): PresentationStepInfo {
+  return {
+    id: slide.id,
+    name: slide.title,
+    script: slide.speakerNotes,
+    segmentTitle: segment.title,
+    slideNumber: absoluteIndex + 1,
+    totalSlides,
+  };
+}
 
+export function SlideCanvas({
+  currentSegment,
+  currentSlide,
+  currentStep,
+  currentAbsoluteIndex,
+  slides,
+  isPrint = false,
+  onGoToSlide,
+}: {
+  currentSegment: DeckSegment;
+  currentSlide: DeckSlide;
+  currentStep: PresentationStepInfo;
+  currentAbsoluteIndex: number;
+  slides: SlideEntry[];
+  isPrint?: boolean;
+  onGoToSlide?: (absoluteIndex: number) => void;
+}) {
   const titleClass = `whitespace-pre-line font-semibold leading-[1.02] text-white ${
     currentSlide.variant === 'title'
       ? 'text-8xl'
@@ -805,14 +872,73 @@ export function ContentArea() {
       <SlideComparisons slide={currentSlide} />
       <SlideColumns slide={currentSlide} />
       <SlideCode slide={currentSlide} />
-      <SlideVideo slide={currentSlide} />
+      <SlideVideo slide={currentSlide} printable={isPrint} />
       {!currentSlide.image && <SlideImage slide={currentSlide} />}
       <DiscussionPrompt slide={currentSlide} />
     </>
   );
 
+  const slideContent = currentSlide.variant === 'answer' ? (
+    <div className="flex min-h-[32rem] items-center justify-center">
+      <h1 className="flex items-center justify-center gap-12 text-center font-semibold leading-none text-white">
+        {isPrint ? (
+          <>
+            <span className="text-[10rem]">Yes</span>
+            <span className="text-6xl font-medium text-white/56">and</span>
+            <span className="text-[10rem]">No</span>
+          </>
+        ) : (
+          <>
+            <motion.span
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.32, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+              className="text-[10rem]"
+            >
+              Yes
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.32, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+              className="text-6xl font-medium text-white/56"
+            >
+              and
+            </motion.span>
+            <motion.span
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.32, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="text-[10rem]"
+            >
+              No
+            </motion.span>
+          </>
+        )}
+      </h1>
+    </div>
+  ) : currentSlide.image ? (
+    <div className="grid max-w-[95rem] grid-cols-[minmax(0,1fr)_minmax(28rem,36rem)] items-center gap-12">
+      <div className="min-w-0">
+        <h1 className={titleClass}>{currentSlide.title}</h1>
+        {contentBlocks}
+      </div>
+      <SlideImage slide={currentSlide} prominent />
+    </div>
+  ) : (
+    <div className={contentWidthClass}>
+      <h1 className={titleClass}>{currentSlide.title}</h1>
+      {contentBlocks}
+    </div>
+  );
+
+  const sectionClassName = 'flex h-full min-h-0 flex-col justify-center pb-32 pt-24';
+
   return (
-    <main className="relative h-full overflow-hidden px-16 py-12" style={accentStyle}>
+    <main
+      className={`slide-canvas relative h-full overflow-hidden px-16 py-12 ${isPrint ? 'print-slide-canvas' : ''}`}
+      style={accentStyle}
+    >
       <header className="absolute left-16 right-16 top-12 z-10">
         <div className="min-w-0">
           <div className="flex items-center gap-4 font-mono text-sm">
@@ -825,68 +951,84 @@ export function ContentArea() {
         </div>
       </header>
 
-      <AnimatePresence mode="wait">
+      {isPrint ? (
+        <section className={sectionClassName}>
+          {slideContent}
+        </section>
+      ) : (
+        <AnimatePresence mode="wait">
         <motion.section
           key={currentSlide.id}
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -18 }}
           transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          className="flex h-full min-h-0 flex-col justify-center pb-32 pt-24"
+          className={sectionClassName}
         >
-          {currentSlide.variant === 'answer' ? (
-            <div className="flex min-h-[32rem] items-center justify-center">
-              <h1 className="flex items-center justify-center gap-12 text-center font-semibold leading-none text-white">
-                <motion.span
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.32, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-[10rem]"
-                >
-                  Yes
-                </motion.span>
-                <motion.span
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.32, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-6xl font-medium text-white/56"
-                >
-                  and
-                </motion.span>
-                <motion.span
-                  initial={{ opacity: 0, y: 18 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.32, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                  className="text-[10rem]"
-                >
-                  No
-                </motion.span>
-              </h1>
-            </div>
-          ) : currentSlide.image ? (
-            <div className="grid max-w-[95rem] grid-cols-[minmax(0,1fr)_minmax(28rem,36rem)] items-center gap-12">
-              <div className="min-w-0">
-                <h1 className={titleClass}>{currentSlide.title}</h1>
-                {contentBlocks}
-              </div>
-              <SlideImage slide={currentSlide} prominent />
-            </div>
-          ) : (
-            <div className={contentWidthClass}>
-              <h1 className={titleClass}>{currentSlide.title}</h1>
-              {contentBlocks}
-            </div>
-          )}
+          {slideContent}
         </motion.section>
-      </AnimatePresence>
+        </AnimatePresence>
+      )}
 
       <footer className="absolute bottom-9 left-16 right-16 z-10 grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-8 font-mono text-xs text-white/52">
         <span>
           {currentStep.slideNumber} / {currentStep.totalSlides}
         </span>
-        <ProgressRail />
+        <ProgressRail
+          slides={slides}
+          currentAbsoluteIndex={currentAbsoluteIndex}
+          onGoToSlide={onGoToSlide}
+        />
         <span>{currentSegment.shortTitle}</span>
       </footer>
     </main>
+  );
+}
+
+export function ContentArea() {
+  const {
+    currentSegment,
+    currentSlide,
+    currentStep,
+    currentAbsoluteIndex,
+    slides,
+    dispatch,
+  } = usePresentation();
+
+  return (
+    <SlideCanvas
+      currentSegment={currentSegment}
+      currentSlide={currentSlide}
+      currentStep={currentStep}
+      currentAbsoluteIndex={currentAbsoluteIndex}
+      slides={slides}
+      onGoToSlide={(absoluteIndex) => dispatch({ type: 'GO_TO_SLIDE', absoluteIndex })}
+    />
+  );
+}
+
+export function PrintableDeck() {
+  const { slides } = usePresentation();
+  const { exportAspectRatio, exportZoomPercent } = useControls();
+  const printDeckStyle = {
+    '--pdf-font-scale': Number((exportZoomPercent / 100).toFixed(3)),
+  } as CSSProperties;
+  const aspectRatioClass = `print-ratio-${exportAspectRatio.replace(':', '-')}`;
+
+  return (
+    <div className={`print-deck ${aspectRatioClass}`} aria-hidden="true" style={printDeckStyle}>
+      {slides.map((entry, index) => (
+        <div key={`${entry.segment.id}-${entry.slide.id}`} className="print-page">
+          <SlideCanvas
+            currentSegment={entry.segment}
+            currentSlide={entry.slide}
+            currentStep={buildStepInfo(entry.segment, entry.slide, index, slides.length)}
+            currentAbsoluteIndex={index}
+            slides={slides}
+            isPrint
+          />
+        </div>
+      ))}
+    </div>
   );
 }
